@@ -1,0 +1,25 @@
+.navBar {
+  & > div > div > span {
+    color: black;
+  }
+
+  button > span {
+    background-color: black;
+  }
+}
+
+.navBtn {
+  & > span {
+    background-color: black;
+  }
+}
+
+.navList {
+  li {
+    cursor: pointer;
+    color: black;
+  }
+  a {
+    color: black;
+  }
+}
