@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link, Outlet } from 'react-router-dom'
 import MDSpinner from 'react-md-spinner'
 import { useApiData } from '../../utils/hooks'
 
@@ -6,7 +7,9 @@ const Display = () => {
   const [urls, setUrls] = useState([])
   const [apiData, dataProcessed] = useApiData(urls)
 
-  let urlInit = 'https://pokeapi.co/api/v2/pokemon/?limit=151'
+  const limit = '3'
+
+  let urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${limit}`
 
   useEffect(() => {
     const fetchUrls = async (urlInit) => {
@@ -29,7 +32,7 @@ const Display = () => {
               key={i}
             >
               <h3 className="capitalize text-gray-800 text-2xl underline font-bold">
-                {el.name}
+                <Link to={`/${el.name}`}>{el.name}</Link>
               </h3>
               <div className="mt-2">
                 <img
@@ -41,6 +44,7 @@ const Display = () => {
           ))
         )}
       </div>
+      <Outlet />
     </div>
   )
 }
