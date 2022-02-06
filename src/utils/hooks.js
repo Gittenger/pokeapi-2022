@@ -28,24 +28,18 @@ export const useApiData = (urls) => {
       const {
         id,
         name,
-        species,
-        forms,
-        types,
         sprites: { front_default, back_default, other },
       } = result[i]
 
       const shrink = {
         name,
         id,
-        species,
-        forms,
-        types,
         sprites: {
           front_default,
           back_default,
           other: {
-            dream_world: result[i].sprites.other.dream_world,
-            'official-artwork': result[i].sprites.other['official-artwork'],
+            dream_world: other.dream_world,
+            'official-artwork': other['official-artwork'],
           },
         },
       }
@@ -95,29 +89,36 @@ export const useFullData = (urls) => {
       const {
         id,
         name,
+        abilities,
         species,
         forms,
         types,
-        sprites: { front_default, back_default, other },
+        order,
+        base_experience,
+        height,
+        weight,
+        stats,
+        // location_area_encounters,
+        // moves,
+        sprites,
       } = result[i]
 
-      // const shrink = {
-      //   name,
-      //   id,
-      //   species,
-      //   forms,
-      //   types,
-      //   sprites: {
-      //     front_default,
-      //     back_default,
-      //     other: {
-      //       dream_world: result[i].sprites.other.dream_world,
-      //       'official-artwork': result[i].sprites.other['official-artwork'],
-      //     },
-      //   },
-      // }
-      fullData[urls[i]] = result[i]
-      finalData.push(result[i])
+      const shrink = {
+        id,
+        name,
+        abilities,
+        species,
+        forms,
+        types,
+        order,
+        base_experience,
+        height,
+        weight,
+        stats,
+        sprites,
+      }
+      fullData[urls[i]] = shrink
+      finalData.push(shrink)
     })
     localStorage.setItem('fullData', JSON.stringify(fullData))
     setFullData(finalData)
