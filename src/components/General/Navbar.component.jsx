@@ -14,7 +14,7 @@ import styles from './styles/Navbar.module.css'
 import images from '../../assets/img/img-index.js'
 
 const {
-  img: { NpmLogo },
+  img: { PokeLogo },
 } = images
 
 export default function NavBar() {
@@ -25,7 +25,7 @@ export default function NavBar() {
       <NavbarContainer>
         <NavbarWrapper>
           <NavbarBrand>
-            <img className="w-20" src={NpmLogo} alt="" />
+            <img className="w-32" src={PokeLogo} alt="" />
           </NavbarBrand>
           <NavbarToggler
             className={`${styles.navBtn}`}
