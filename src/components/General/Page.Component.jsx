@@ -1,11 +1,13 @@
 import React, { useEffect, useContext } from 'react'
+import { useParams } from 'react-router-dom'
 import PageContext from '../../contexts/PageContext.js'
 
 import CIndex from '../components.index.js'
 
-const Page = ({ title, Component, ...props }) => {
+const Page = ({ title, Component, props }) => {
   const { Layout } = CIndex
   const { setPage } = useContext(PageContext)
+  const { pokemon } = useParams()
 
   useEffect(() => {
     document.title = `${process.env.MAIN_TITLE} | ${title}`
@@ -14,7 +16,7 @@ const Page = ({ title, Component, ...props }) => {
 
   return (
     <Layout>
-      <Component {...props} />
+      <Component {...props} name={pokemon ? pokemon : ''} />
     </Layout>
   )
 }
