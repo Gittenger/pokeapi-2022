@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-export const useApiData = (urls) => {
-  const [apiData, setApiData] = useState([])
-  const [dataProcessed, setDataProcessed] = useState(false)
+export const usePartialData = (urls) => {
+  const [partialData, setPartialData] = useState([])
+  const [partialDataProcessed, setDataProcessed] = useState(false)
 
   const localPartials = JSON.parse(localStorage.getItem('partials'))
 
@@ -47,28 +47,28 @@ export const useApiData = (urls) => {
       finalData.push(shrink)
     })
     localStorage.setItem('partials', JSON.stringify(partials))
-    setApiData(finalData)
+    setPartialData(finalData)
     setDataProcessed(true)
   }
 
   useEffect(() => {
-    console.log('lP', localPartials)
+    // console.log('lP', localPartials)
     if (urls !== []) fetchData(urls, localPartials)
   }, [urls])
 
-  return [apiData, dataProcessed]
+  return [partialData, partialDataProcessed]
 }
 
 export const useFullData = (urls) => {
   const [fullData, setFullData] = useState([])
-  const [dataProcessed, setDataProcessed] = useState(false)
+  const [fullDataProcessed, setDataProcessed] = useState(false)
 
-  const localFullData = JSON.parse(localStorage.getItem('fullData'))
+  let localFullData = JSON.parse(localStorage.getItem('fullData'))
 
   const fetchData = async (urls, localFullData) => {
     setDataProcessed(false)
     if (urls.length === 0) return
-    console.log('urls not empty, continuing')
+    // console.log('urls not empty, continuing')
     const result = await Promise.all(
       urls.map((url) => {
         if (localFullData == null || !localFullData[url]) {
@@ -81,10 +81,10 @@ export const useFullData = (urls) => {
       })
     )
 
-    console.log(result)
+    // console.log(result)
     const finalData = []
 
-    const fullData = {}
+    let fullData = {}
     result.forEach((url, i) => {
       const {
         id,
@@ -117,19 +117,21 @@ export const useFullData = (urls) => {
         stats,
         sprites,
       }
-      fullData[urls[i]] = shrink
+      console.log(shrink)
       finalData.push(shrink)
+      fullData = { ...localFullData, [urls[i]]: shrink }
     })
+
     localStorage.setItem('fullData', JSON.stringify(fullData))
     setFullData(finalData)
     setDataProcessed(true)
   }
 
   useEffect(() => {
-    console.log('urls', urls)
-    console.log('localFull', localFullData)
+    // console.log('urls', urls)
+    // console.log('localFull', localFullData)
     if (urls !== []) fetchData(urls, localFullData)
   }, [urls])
 
-  return [fullData, dataProcessed]
+  return [fullData, fullDataProcessed]
 }
