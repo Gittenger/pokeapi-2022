@@ -68,7 +68,6 @@ export const useFullData = (urls) => {
   const fetchData = async (urls, localFullData) => {
     setDataProcessed(false)
     if (urls.length === 0) return
-    // console.log('urls not empty, continuing')
     const result = await Promise.all(
       urls.map((url) => {
         if (localFullData == null || !localFullData[url]) {
@@ -81,7 +80,6 @@ export const useFullData = (urls) => {
       })
     )
 
-    // console.log(result)
     const finalData = []
 
     let fullData = {}
@@ -117,7 +115,6 @@ export const useFullData = (urls) => {
         stats,
         sprites,
       }
-      console.log(shrink)
       finalData.push(shrink)
       fullData = { ...localFullData, [urls[i]]: shrink }
     })
@@ -128,8 +125,6 @@ export const useFullData = (urls) => {
   }
 
   useEffect(() => {
-    // console.log('urls', urls)
-    // console.log('localFull', localFullData)
     if (urls !== []) fetchData(urls, localFullData)
   }, [urls])
 

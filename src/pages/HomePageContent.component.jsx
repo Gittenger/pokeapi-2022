@@ -6,7 +6,7 @@ import CIndex from '../components/components.index.js'
 const HomePageContent = () => {
   const { Display } = CIndex
   useEffect(() => {
-    window.scrollTo(0, 0)
+    // window.scrollTo(0, 0)
   }, [])
 
   return (
