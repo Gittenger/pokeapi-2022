@@ -1,44 +1,45 @@
 import React, { useEffect, useState } from 'react'
+import MDSpinner from 'react-md-spinner'
+import { useApiData } from '../../utils/hooks'
 
 const Display = () => {
-  const [pokemon, setPokemon] = useState([])
+  const [urls, setUrls] = useState([])
+  const [apiData, dataProcessed] = useApiData(urls)
 
-  let api = 'https://pokeapi.co/api/v2/pokemon/?limit=50'
+  let urlInit = 'https://pokeapi.co/api/v2/pokemon/?limit=151'
 
   useEffect(() => {
-    const fetchData = async (urls) => {
-      const result = await Promise.all(
-        [...urls].map((url) => {
-          return fetch(url).then((res) => res.json())
-        })
-      )
-      const imgs = []
-      result.forEach((el) => {
-        const imgSrc = el.sprites.other['official-artwork'].front_default
-        imgs.push(imgSrc)
-      })
-      setPokemon(imgs)
+    const fetchUrls = async (urlInit) => {
+      const data = await fetch(urlInit).then((res) => res.json())
+      setUrls(data.results.map((el) => el.url))
     }
 
-    fetch(api)
-      .then((res) => res.json())
-      .then((res) => {
-        let urls = []
-        res.results.forEach((el) => {
-          urls.push(el.url)
-        })
-        fetchData(urls)
-      })
+    fetchUrls(urlInit)
   }, [])
 
   return (
-    <div>
-      <div>
-        {pokemon.map((el, i) => (
-          <div key={i}>
-            <img src={el} alt="" />
-          </div>
-        ))}
+    <div className="flex-col items-center px-6 py-8">
+      <div className="grid gap-y-14 gap-x-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {!dataProcessed ? (
+          <MDSpinner />
+        ) : (
+          apiData.map((el, i) => (
+            <div
+              className="flex flex-col justify-start items-center p-5 bg-slate-200 ring-4 ring-gray-800 shadow-2xl rounded-3xl"
+              key={i}
+            >
+              <h3 className="capitalize text-gray-800 text-2xl underline font-bold">
+                {el.name}
+              </h3>
+              <div className="mt-2">
+                <img
+                  src={el.sprites.other['official-artwork'].front_default}
+                  alt=""
+                />
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )
