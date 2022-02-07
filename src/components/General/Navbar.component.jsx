@@ -3,12 +3,12 @@ import Navbar from '@material-tailwind/react/Navbar'
 import NavbarContainer from '@material-tailwind/react/NavbarContainer'
 import NavbarWrapper from '@material-tailwind/react/NavbarWrapper'
 import NavbarBrand from '@material-tailwind/react/NavbarBrand'
-import NavbarToggler from '@material-tailwind/react/NavbarToggler'
-import NavbarCollapse from '@material-tailwind/react/NavbarCollapse'
-import Nav from '@material-tailwind/react/Nav'
-import NavItem from '@material-tailwind/react/NavItem'
-import NavLink from '@material-tailwind/react/NavLink'
-import Icon from '@material-tailwind/react/Icon'
+// import NavbarToggler from '@material-tailwind/react/NavbarToggler'
+// import NavbarCollapse from '@material-tailwind/react/NavbarCollapse'
+// import Nav from '@material-tailwind/react/Nav'
+// import NavItem from '@material-tailwind/react/NavItem'
+// import NavLink from '@material-tailwind/react/NavLink'
+// import Icon from '@material-tailwind/react/Icon'
 
 import styles from './styles/Navbar.module.css'
 import images from '../../assets/img/img-index.js'
@@ -18,23 +18,25 @@ const {
 } = images
 
 export default function NavBar() {
-  const [openNavbar, setOpenNavbar] = useState(false)
+  // const [openNavbar, setOpenNavbar] = useState(false)
 
   return (
     <Navbar className={`${styles.navBar}`} color="cyan" navbar>
       <NavbarContainer>
         <NavbarWrapper>
           <NavbarBrand>
-            <img className="w-32" src={PokeLogo} alt="" />
+            <a href="1">
+              <img className="w-52" src={PokeLogo} alt="" />
+            </a>
           </NavbarBrand>
-          <NavbarToggler
+          {/* <NavbarToggler
             className={`${styles.navBtn}`}
             onClick={() => setOpenNavbar(!openNavbar)}
             ripple="dark"
-          />
+          /> */}
         </NavbarWrapper>
 
-        <NavbarCollapse open={openNavbar}>
+        {/* <NavbarCollapse open={openNavbar}>
           <Nav className={`${styles.navList}`}>
             <NavItem active="light" ripple="dark">
               <Icon color="black" name="language" size="xl" />
@@ -49,7 +51,7 @@ export default function NavBar() {
               Settings
             </NavItem>
           </Nav>
-        </NavbarCollapse>
+        </NavbarCollapse> */}
       </NavbarContainer>
     </Navbar>
   )
