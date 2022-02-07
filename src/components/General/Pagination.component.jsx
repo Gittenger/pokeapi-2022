@@ -1,0 +1,27 @@
+import React from 'react'
+import PaginationComponent from '@material-tailwind/react/Pagination'
+import PaginationItem from '@material-tailwind/react/PaginationItem'
+import Icon from '@material-tailwind/react/Icon'
+
+export default function Pagination({ pageCount, activePage }) {
+  return (
+    <PaginationComponent>
+      <PaginationItem href="#last" ripple="dark">
+        <Icon name="keyboard_arrow_left" />
+      </PaginationItem>
+      {Array.from(Array(pageCount)).map((el, i) => (
+        <PaginationItem
+          key={i}
+          color={`${i + 1 == activePage ? 'cyan' : ''}`}
+          href={`${(i + 1).toString()}`}
+          ripple="light"
+        >
+          {i + 1}
+        </PaginationItem>
+      ))}
+      <PaginationItem href="#last" ripple="dark">
+        <Icon name="keyboard_arrow_right" />
+      </PaginationItem>
+    </PaginationComponent>
+  )
+}

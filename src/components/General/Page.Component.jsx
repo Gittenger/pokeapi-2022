@@ -7,7 +7,7 @@ import CIndex from '../components.index.js'
 const Page = ({ title, Component, props }) => {
   const { Layout } = CIndex
   const { setPage } = useContext(PageContext)
-  const { pokemon } = useParams()
+  const { pokemon, id } = useParams()
 
   useEffect(() => {
     document.title = `${process.env.MAIN_TITLE} | ${title}`
@@ -16,7 +16,7 @@ const Page = ({ title, Component, props }) => {
 
   return (
     <Layout>
-      <Component {...props} name={pokemon ? pokemon : ''} />
+      <Component {...props} id={id ? id : ''} name={pokemon ? pokemon : ''} />
     </Layout>
   )
 }

@@ -55,7 +55,7 @@ const PokemonDetailContent = ({ name }) => {
       // if no partial data exists
     } else {
       // later, set this in context/env
-      const limit = '151'
+      const limit = '20'
       const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${limit}`
       // fetch urls, then use urls to get partial, then re-run useEffect
       fetchUrls(urlInit)

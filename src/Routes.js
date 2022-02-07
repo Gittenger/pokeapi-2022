@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import { HomePage } from './pages/pages-index.js'
+import HomePage from './pages/HomePageContent.component.jsx'
 import PokemonDetailContent from './pages/PokemonDetailContent.component.jsx'
 import Page from './components/General/Page.Component.jsx'
 
@@ -9,9 +9,10 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" exact element={<HomePage />} />
+        <Route path="/" exact element={<Page Component={HomePage} />} />
+        <Route path="/:id" exact element={<Page Component={HomePage} />} />
         <Route
-          path=":pokemon"
+          path="/pokemon/:pokemon"
           exact
           element={<Page Component={PokemonDetailContent} />}
         />

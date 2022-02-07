@@ -3,7 +3,7 @@ import Button from '@material-tailwind/react/Button'
 
 import CIndex from '../components/components.index.js'
 
-const HomePageContent = () => {
+const HomePageContent = ({ id }) => {
   const { Display } = CIndex
   useEffect(() => {
     // window.scrollTo(0, 0)
@@ -16,7 +16,7 @@ const HomePageContent = () => {
           Button
         </Button>
 
-        <Display />
+        <Display id={id} />
       </div>
     </main>
   )
