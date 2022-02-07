@@ -219,3 +219,109 @@ export const useFullDataFetch = (name) => {
 
   return [fullData]
 }
+
+export const useAssignedFullData = (fullData) => {
+  const [dataValues, setDataValues] = useState({
+    id: 0,
+    name: '',
+    height: '',
+    weight: '',
+    sprites: {
+      front_default: '',
+      other: {
+        dream_world: {
+          front_default: '',
+        },
+        home: {
+          front_default: '',
+          front_shiny: '',
+        },
+      },
+      versions: {
+        generationI: {
+          redBlue: { front_transparent: '' },
+          yellow: { front_transparent: '' },
+        },
+        generationII: {
+          crystal: { front_transparent: '', front_shiny_transparent: '' },
+          gold: { front_transparent: '' },
+          silver: { front_transparent: '' },
+        },
+      },
+    },
+  })
+
+  useEffect(() => {
+    if (fullData.length > 0) {
+      console.log(fullData)
+
+      // convert to obj
+      let obj = {
+        ...fullData[0],
+      }
+
+      // destructure desired vals
+      const {
+        id,
+        name,
+        height,
+        weight,
+        sprites: {
+          front_default,
+          other: { dream_world, home },
+          versions: {
+            'generation-i': generationI,
+            'generation-ii': generationII,
+          },
+        },
+      } = obj
+      console.log(generationI, generationII)
+
+      // set vals
+      setDataValues({
+        ...dataValues,
+        id,
+        name,
+        height,
+        weight,
+        sprites: {
+          front_default,
+          other: {
+            dream_world: {
+              front_default: dream_world.front_default,
+            },
+            home: {
+              front_default: home.front_default,
+              front_shiny: home.front_shiny,
+            },
+          },
+          versions: {
+            generationI: {
+              redBlue: {
+                front_transparent: generationI['red-blue'].front_transparent,
+              },
+              yellow: {
+                front_transparent: generationI['yellow'].front_transparent,
+              },
+            },
+            generationII: {
+              crystal: {
+                front_transparent: generationII['crystal'].front_transparent,
+                front_shiny_transparent:
+                  generationII['crystal'].front_shiny_transparent,
+              },
+              gold: {
+                front_transparent: generationII['gold'].front_transparent,
+              },
+              silver: {
+                front_transparent: generationII['silver'].front_transparent,
+              },
+            },
+          },
+        },
+      })
+    }
+  }, [fullData])
+
+  return [dataValues]
+}
