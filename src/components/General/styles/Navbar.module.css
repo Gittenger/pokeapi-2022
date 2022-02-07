@@ -1,6 +1,15 @@
 .navBar {
+  & > div {
+    justify-content: center;
+  }
+
+  & > div > div {
+    justify-content: center;
+  }
+
   & > div > div > span {
     color: black;
+    margin: 0;
   }
 
   button > span {
