@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import MDSpinner from 'react-md-spinner'
-import { usePartialData } from '../../utils/hooks'
+import { usePartialData, usePagination } from '../../utils/hooks'
 import CIndex from '../components.index.js'
 
-const Display = ({ id }) => {
+const Display = ({ id: currentPage }) => {
   const { Pagination } = CIndex
+  const { pageCount, offset, urlLimit, pageLimit } = usePagination(
+    currentPage,
+    '151',
+    13
+  )
+
   const [urls, setUrls] = useState([])
-  const [pageCount, setPageCount] = useState(1)
-  const [offset, setOffset] = useState(0)
-  const [activePage, setActivePage] = useState('1')
   const [partialData, partialDataProcessed] = usePartialData(urls)
+  const [activePage, setActivePage] = useState('1')
 
-  const limit = '151'
-  const pageLimit = 13
-
-  let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
+  let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${urlLimit}`
 
   useEffect(() => {
-    if (id) setActivePage(id)
+    if (currentPage) setActivePage(currentPage)
+
     const fetchUrls = async (urlInit) => {
       const data = await fetch(urlInit).then((res) => res.json())
       setUrls(data.results.map((el) => el.url))
-
-      let count = Math.ceil(parseInt(limit) / pageLimit)
-      setPageCount(count)
-      let offsetCalc = pageLimit * id - pageLimit
-      if (offsetCalc < 0) offsetCalc = 0
-      setOffset(offsetCalc)
     }
 
     fetchUrls(urlInit)
@@ -62,8 +58,6 @@ const Display = ({ id }) => {
         )}
       </div>
       <Pagination pageCount={pageCount} activePage={activePage} />
-
-      <Outlet />
     </div>
   )
 }
