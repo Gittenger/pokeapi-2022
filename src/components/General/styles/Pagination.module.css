@@ -1,6 +1,8 @@
-.paginationComponent {
+.listWrap {
+  margin-top: 2.5rem;
   ul {
     width: 100%;
     flex-wrap: wrap;
+    justify-content: center;
   }
 }
