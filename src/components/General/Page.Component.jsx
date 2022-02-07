@@ -4,19 +4,13 @@ import PageContext from '../../contexts/PageContext.js'
 
 import CIndex from '../components.index.js'
 
-const Page = ({ title, Component, props }) => {
+const Page = ({ Component, props }) => {
   const { Layout } = CIndex
-  const { setPage } = useContext(PageContext)
-  const { pokemon, id } = useParams()
-
-  useEffect(() => {
-    document.title = `${process.env.MAIN_TITLE} | ${title}`
-    setPage(title)
-  }, [title, setPage])
+  const { ...params } = useParams()
 
   return (
     <Layout>
-      <Component {...props} id={id ? id : ''} name={pokemon ? pokemon : ''} />
+      <Component {...props} {...params} />
     </Layout>
   )
 }
