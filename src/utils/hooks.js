@@ -1,5 +1,33 @@
 import { useEffect, useState } from 'react'
 
+export const useTitle = (title) => {
+  useEffect(() => {
+    document.title = `${process.env.MAIN_TITLE} | ${title}`
+  }, [title])
+}
+
+export const usePagination = (currentPage, urlLimit, pageLimit) => {
+  const [pageCount, setPageCount] = useState(1)
+  const [offset, setOffset] = useState(0)
+
+  const setLimits = (currentPage, urlLimit, pageLimit) => {
+    // how many pages
+    let count = Math.ceil(parseInt(urlLimit) / pageLimit)
+    setPageCount(count)
+
+    // calculate offset based on current page
+    let offsetCalc = 0
+    if (!!currentPage) offsetCalc = pageLimit * currentPage - pageLimit
+    setOffset(offsetCalc)
+  }
+
+  useEffect(() => {
+    setLimits(currentPage, urlLimit, pageLimit)
+  }, [])
+
+  return { pageCount, offset, urlLimit, pageLimit }
+}
+
 export const usePartialData = (urls) => {
   const [partialData, setPartialData] = useState([])
   const [partialDataProcessed, setDataProcessed] = useState(false)
