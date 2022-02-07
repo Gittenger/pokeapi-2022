@@ -4,9 +4,9 @@ import PaginationItem from '@material-tailwind/react/PaginationItem'
 import Icon from '@material-tailwind/react/Icon'
 import styles from './styles/Pagination.module.css'
 
-export default function Pagination({ pageCount, activePage }) {
+export default function Pagination({ className, pageCount, activePage }) {
   return (
-    <div className={`${styles.listWrap}`}>
+    <div className={`${styles.listWrap} ${className}`}>
       <PaginationComponent>
         {/* <PaginationItem href="#last" ripple="dark">
           <Icon name="keyboard_arrow_left" />
