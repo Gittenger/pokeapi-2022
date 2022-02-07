@@ -42,7 +42,10 @@ const PostCSSLoader = {
 
 module.exports = {
   // need this for async/await
-  entry: ['regenerator-runtime/runtime.js', './src/index.js'],
+  entry: [
+    'regenerator-runtime/runtime.js',
+    path.join(__dirname, 'src/index.js'),
+  ],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
@@ -113,6 +116,7 @@ module.exports = {
     }),
     new HtmlWebPackPlugin({
       template: './public/index.html',
+      publicPath: '/',
     }),
     new CopyPlugin({
       patterns: [
