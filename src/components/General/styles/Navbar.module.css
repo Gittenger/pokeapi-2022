@@ -1,4 +1,5 @@
 .navBar {
+  margin-bottom: 0 !important;
   & > div {
     justify-content: center;
   }
