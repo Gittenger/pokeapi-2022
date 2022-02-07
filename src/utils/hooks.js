@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import MainContext from '../contexts/MainContext'
 
 export const useTitle = (title) => {
   useEffect(() => {
@@ -6,9 +7,11 @@ export const useTitle = (title) => {
   }, [title])
 }
 
-export const usePagination = (currentPage, urlLimit, pageLimit) => {
+export const usePagination = (currentPage) => {
   const [pageCount, setPageCount] = useState(1)
   const [offset, setOffset] = useState(0)
+
+  const { urlLimit, pageLimit } = useContext(MainContext)
 
   const setLimits = (currentPage, urlLimit, pageLimit) => {
     // how many pages
@@ -25,7 +28,7 @@ export const usePagination = (currentPage, urlLimit, pageLimit) => {
     setLimits(currentPage, urlLimit, pageLimit)
   }, [])
 
-  return { pageCount, offset, urlLimit, pageLimit }
+  return { pageCount, offset }
 }
 
 export const usePartialData = (urls) => {
@@ -173,6 +176,8 @@ export const useFullDataFetch = (name) => {
   const [fullData, fullDataProcessed] = useFullData(urlForFullData)
   const [partialData, partialDataProcessed] = usePartialData(urlsForPartials)
 
+  const { urlLimit } = useContext(MainContext)
+
   useEffect(() => {
     // fetch urls to get partial data if needed
     const fetchUrls = async (urlInit) => {
@@ -210,8 +215,7 @@ export const useFullDataFetch = (name) => {
       // if no partial data exists
     } else {
       // later, set this in context/env
-      const limit = '151'
-      const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${limit}`
+      const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
       // fetch urls, then use urls to get partial, then re-run useEffect
       fetchUrls(urlInit)
     }

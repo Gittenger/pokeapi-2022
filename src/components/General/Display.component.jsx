@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import MDSpinner from 'react-md-spinner'
+import MainContext from '../../contexts/MainContext'
+
 import { usePartialData, usePagination } from '../../utils/hooks'
 import isIndexInBounds from '../../utils/checkBounds'
 import CIndex from '../components.index.js'
@@ -9,12 +11,9 @@ const Display = ({ id: currentPage }) => {
   const [urls, setUrls] = useState([])
   const [partialData, partialDataProcessed] = usePartialData(urls)
   const [activePage, setActivePage] = useState('1')
+  const { urlLimit, pageLimit } = useContext(MainContext)
 
-  const { pageCount, offset, urlLimit, pageLimit } = usePagination(
-    currentPage,
-    '151',
-    13
-  )
+  const { pageCount, offset } = usePagination(currentPage, 13)
 
   let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${urlLimit}`
 

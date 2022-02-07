@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import PageContext from '../../contexts/PageContext.js'
 
 import CIndex from '../components.index.js'
 
