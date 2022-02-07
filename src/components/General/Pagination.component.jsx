@@ -6,25 +6,25 @@ import styles from './styles/Pagination.module.css'
 
 export default function Pagination({ pageCount, activePage }) {
   return (
-    // <div className={`${styles.listWrap}`}>
-    <PaginationComponent>
-      <PaginationItem href="#last" ripple="dark">
-        <Icon name="keyboard_arrow_left" />
-      </PaginationItem>
-      {Array.from(Array(pageCount)).map((el, i) => (
-        <PaginationItem
-          key={i}
-          color={`${i + 1 == activePage ? 'cyan' : ''}`}
-          href={`${(i + 1).toString()}`}
-          ripple="light"
-        >
-          {i + 1}
-        </PaginationItem>
-      ))}
-      <PaginationItem href="#last" ripple="dark">
-        <Icon name="keyboard_arrow_right" />
-      </PaginationItem>
-    </PaginationComponent>
-    // </div>
+    <div className={`${styles.listWrap}`}>
+      <PaginationComponent>
+        {/* <PaginationItem href="#last" ripple="dark">
+          <Icon name="keyboard_arrow_left" />
+        </PaginationItem> */}
+        {Array.from(Array(pageCount)).map((el, i) => (
+          <PaginationItem
+            key={i}
+            color={`${i + 1 == activePage ? 'red' : ''}`}
+            href={`${(i + 1).toString()}`}
+            ripple="light"
+          >
+            {i + 1}
+          </PaginationItem>
+        ))}
+        {/* <PaginationItem href="#last" ripple="dark">
+          <Icon name="keyboard_arrow_right" />
+        </PaginationItem> */}
+      </PaginationComponent>
+    </div>
   )
 }
