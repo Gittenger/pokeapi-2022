@@ -6,16 +6,15 @@ import isIndexInBounds from '../../utils/checkBounds'
 import CIndex from '../components.index.js'
 
 const Display = ({ id: currentPage }) => {
-  const { Pagination } = CIndex
+  const [urls, setUrls] = useState([])
+  const [partialData, partialDataProcessed] = usePartialData(urls)
+  const [activePage, setActivePage] = useState('1')
+
   const { pageCount, offset, urlLimit, pageLimit } = usePagination(
     currentPage,
     '151',
     13
   )
-
-  const [urls, setUrls] = useState([])
-  const [partialData, partialDataProcessed] = usePartialData(urls)
-  const [activePage, setActivePage] = useState('1')
 
   let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${urlLimit}`
 
@@ -29,6 +28,8 @@ const Display = ({ id: currentPage }) => {
 
     fetchUrls(urlInit)
   }, [])
+
+  const { Pagination } = CIndex
 
   return (
     <div className="flex-col items-center px-6 py-8">
