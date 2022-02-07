@@ -1,23 +1,15 @@
-import React, { useEffect } from 'react'
-import Button from '@material-tailwind/react/Button'
+import React from 'react'
 
 import CIndex from '../components/components.index.js'
+import { useTitle } from '../utils/hooks.js'
 
 const HomePageContent = ({ id }) => {
   const { Display } = CIndex
-  useEffect(() => {
-    // window.scrollTo(0, 0)
-  }, [])
+  useTitle('Home')
 
   return (
     <main className="flex flex-col items-center justify-start pb-10">
-      <div className="flex flex-col justify-center items-center space-x-4">
-        <Button color="cyan" ripple="dark">
-          Button
-        </Button>
-
-        <Display id={id} />
-      </div>
+      <Display id={id} />
     </main>
   )
 }

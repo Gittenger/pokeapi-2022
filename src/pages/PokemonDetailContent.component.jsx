@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import CIndex from '../components/components.index.js'
-import { usePartialData, useFullData } from '../utils/hooks.js'
+import { usePartialData, useFullData, useTitle } from '../utils/hooks.js'
 
 /*
 name -> check for existing name in localPartials
@@ -12,7 +12,8 @@ then use component state for partialData to identify current pokemon
 with id, update urlForFullData
 */
 
-const PokemonDetailContent = ({ name }) => {
+const PokemonDetailContent = ({ pokemon: name }) => {
+  useTitle(name.charAt(0).toUpperCase() + name.slice(1))
   const [urlsForPartials, setUrlsForPartials] = useState([])
   const [urlForFullData, setUrlForFullData] = useState([])
   const [fullData, fullDataProcessed] = useFullData(urlForFullData)
