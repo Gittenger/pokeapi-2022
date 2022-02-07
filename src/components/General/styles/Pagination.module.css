@@ -1,0 +1,6 @@
+.paginationComponent {
+  ul {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}

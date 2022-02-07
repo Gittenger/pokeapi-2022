@@ -8,13 +8,14 @@ const Display = ({ id }) => {
   const { Pagination } = CIndex
   const [urls, setUrls] = useState([])
   const [pageCount, setPageCount] = useState(1)
+  const [offset, setOffset] = useState(0)
   const [activePage, setActivePage] = useState('1')
   const [partialData, partialDataProcessed] = usePartialData(urls)
 
-  const limit = '20'
-  const pageLimit = 10
+  const limit = '151'
+  const pageLimit = 13
 
-  let urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${limit}`
+  let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
 
   useEffect(() => {
     if (id) setActivePage(id)
@@ -24,6 +25,9 @@ const Display = ({ id }) => {
 
       let count = Math.ceil(parseInt(limit) / pageLimit)
       setPageCount(count)
+      let offsetCalc = pageLimit * id - pageLimit
+      if (offsetCalc < 0) offsetCalc = 0
+      setOffset(offsetCalc)
     }
 
     fetchUrls(urlInit)
@@ -35,22 +39,26 @@ const Display = ({ id }) => {
         {!partialDataProcessed ? (
           <MDSpinner />
         ) : (
-          partialData.map((el, i) => (
-            <div
-              className="flex flex-col justify-start items-center p-5 bg-slate-200 ring-4 ring-gray-800 shadow-2xl rounded-3xl"
-              key={i}
-            >
-              <h3 className="capitalize text-gray-800 text-2xl underline font-bold">
-                <Link to={`/pokemon/${el.name}`}>{el.name}</Link>
-              </h3>
-              <div className="mt-2">
-                <img
-                  src={el.sprites.other['official-artwork'].front_default}
-                  alt=""
-                />
+          partialData.map((el, i) =>
+            i > offset - 1 && i < offset + pageLimit - 1 ? (
+              <div
+                className="flex flex-col justify-start items-center p-5 bg-slate-200 ring-4 ring-gray-800 shadow-2xl rounded-3xl"
+                key={i}
+              >
+                <h3 className="capitalize text-gray-800 text-2xl underline font-bold">
+                  <Link to={`/pokemon/${el.name}`}>{el.name}</Link>
+                </h3>
+                <div className="mt-2">
+                  <img
+                    src={el.sprites.other['official-artwork'].front_default}
+                    alt=""
+                  />
+                </div>
               </div>
-            </div>
-          ))
+            ) : (
+              ''
+            )
+          )
         )}
       </div>
       <Pagination pageCount={pageCount} activePage={activePage} />
