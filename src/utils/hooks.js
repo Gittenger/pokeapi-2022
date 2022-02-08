@@ -96,7 +96,7 @@ export const usePokemonData = () => {
     const finalData = []
 
     urls.map((url, i) => {
-      if (i > parseInt(urlLimit) - 1) return
+      if (i > parseInt(urlLimit) - 1 || !url) return
       if (!!localPokemonData && localPokemonData[url]) {
         const { types, abilities, stats, held_items, moves } =
           localPokemonData[url]
@@ -245,6 +245,7 @@ export const useAssignedFullData = (pokemon) => {
     name: '',
     height: '',
     weight: '',
+    abilities: [{ name: '', url: '' }],
     sprites: {
       front_default: '',
       other: {
@@ -278,12 +279,14 @@ export const useAssignedFullData = (pokemon) => {
       currentPokemon = {
         ...currentPokemon[0],
       }
+      // console.log(currentPokemon)
       // destructure desired vals
       const {
         id,
         name,
         height,
         weight,
+        abilities,
         sprites: {
           front_default,
           other: { dream_world, home },
@@ -293,7 +296,6 @@ export const useAssignedFullData = (pokemon) => {
           },
         },
       } = currentPokemon
-      console.log(generationI, generationII)
 
       // set vals
       setDataValues({
@@ -302,6 +304,7 @@ export const useAssignedFullData = (pokemon) => {
         name,
         height,
         weight,
+        abilities,
         sprites: {
           front_default,
           other: {
