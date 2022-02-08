@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
 export const MainContext = createContext({
-  urlLimit: '151',
+  urlLimit: '12',
   pageLimit: 13,
 })
 

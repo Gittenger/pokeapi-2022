@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import MainContext from './MainContext.js'
 
 export const MainProvider = ({ children }) => {
-  const [urlLimit] = useState('151')
+  const [urlLimit] = useState('12')
   const [pageLimit] = useState(13)
 
   return (
