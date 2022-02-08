@@ -94,6 +94,7 @@ export const usePokemonData = () => {
 
     const finalData = []
     const pokemonData = {}
+    console.log(result)
 
     result.forEach((url, i) => {
       if (i > parseInt(urlLimit) - 1) return
@@ -102,34 +103,69 @@ export const usePokemonData = () => {
       const {
         id,
         name,
-        abilities,
-        species,
-        forms,
-        types,
-        order,
         base_experience,
         height,
         weight,
-        stats,
-        // location_area_encounters,
-        // moves,
+        location_area_encounters,
         sprites,
+        types,
+        abilities,
+        stats,
+        held_items,
+        moves,
       } = result[i]
 
       const shrink = {
         id,
         name,
-        abilities,
-        species,
-        forms,
-        types,
-        order,
         base_experience,
         height,
         weight,
-        stats,
+        location_area_encounters,
         sprites,
+        types: types.map(({ type: { name, url } }) => {
+          return {
+            type: {
+              name,
+              url,
+            },
+          }
+        }),
+        abilities: abilities.map(({ ability: { name, url } }) => {
+          return {
+            ability: {
+              name,
+              url,
+            },
+          }
+        }),
+        stats: stats.map(({ stat: { name }, base_stat, effort }) => {
+          return {
+            stat: {
+              name,
+            },
+            base_stat,
+            effort,
+          }
+        }),
+        held_items: held_items.map(({ item: { name, url } }) => {
+          return {
+            item: {
+              name,
+              url,
+            },
+          }
+        }),
+        moves: moves.map(({ move: { name, url } }) => {
+          return {
+            move: {
+              name,
+              url,
+            },
+          }
+        }),
       }
+
       // array to send to component
       finalData.push(shrink)
 

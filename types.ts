@@ -7,35 +7,25 @@ interface pokemonData {
 	location_area_encounters: string //url
 	sprites: [{}],
 	types: [{
-		type: {
-			name: string,
-			url: string //url
-		}
+		name: string,
+		url: string //url
 	}],
 	abilities: [{
-		ability: {
-			name: string,
-			url: string //url
-		}
+		name: string,
+		url: string //url
 	}],
 	moves: [{
-		move: {
-			name: string,
-			url: string //url
-		}
+		name: string,
+		url: string //url
 	}],
 	stats: [{
-		stat: {
-			name: string,
-			base_stat: number,
-			effort: number
-		}
+		name: string,
+		base_stat: number,
+		effort: number
 	}],
 	held_items: [{
-		item: {
-			name: string,
-			url: string //url
-		}
+		name: string,
+		url: string //url
 	}],
 }
 
