@@ -1,9 +1,10 @@
 import actions from './actions'
 
-const { SET_URLS } = actions
+const { SET_URLS, SET_POKEMON_DATA } = actions
 
 export const initState = {
   urlsInit: [],
+  pokemonData: [],
 }
 
 export const reducer = (state, action) => {
@@ -14,6 +15,11 @@ export const reducer = (state, action) => {
         urlsInit: action.payload,
       }
     }
+    case SET_POKEMON_DATA:
+      return {
+        ...state,
+        pokemonData: action.payload,
+      }
     default:
       console.log('oops, something went wrong')
   }
