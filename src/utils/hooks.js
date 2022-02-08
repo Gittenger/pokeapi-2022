@@ -73,6 +73,7 @@ export const usePokemonData = () => {
   const [pokemonDataProcessed, setDataProcessed] = useState(false)
 
   let localPokemonData = JSON.parse(localStorage.getItem('pokemonData'))
+  let pokemonData = {}
 
   const fetchData = async (urls, localPokemonData) => {
     setDataProcessed(false)
@@ -93,84 +94,136 @@ export const usePokemonData = () => {
     )
 
     const finalData = []
-    const pokemonData = {}
-    console.log(result)
 
-    result.forEach((url, i) => {
+    urls.map((url, i) => {
       if (i > parseInt(urlLimit) - 1) return
+      if (!!localPokemonData && localPokemonData[url]) {
+        const { types, abilities, stats, held_items, moves } =
+          localPokemonData[url]
 
-      // choose fields
-      const {
-        id,
-        name,
-        base_experience,
-        height,
-        weight,
-        location_area_encounters,
-        sprites,
-        types,
-        abilities,
-        stats,
-        held_items,
-        moves,
-      } = result[i]
+        const {
+          id,
+          name,
+          base_experience,
+          height,
+          weight,
+          location_area_encounters,
+          sprites,
+        } = result[i]
 
-      const shrink = {
-        id,
-        name,
-        base_experience,
-        height,
-        weight,
-        location_area_encounters,
-        sprites,
-        types: types.map(({ type: { name, url } }) => {
-          return {
-            type: {
+        // importing from local is in diff format,
+        // since when save from api, i save cust format below
+        const dataFromLocal = {
+          id,
+          name,
+          base_experience,
+          height,
+          weight,
+          location_area_encounters,
+          sprites,
+          types: types.map(({ name, url }) => {
+            return {
               name,
               url,
-            },
-          }
-        }),
-        abilities: abilities.map(({ ability: { name, url } }) => {
-          return {
-            ability: {
+            }
+          }),
+          abilities: abilities.map(({ name, url }) => {
+            return {
               name,
               url,
-            },
-          }
-        }),
-        stats: stats.map(({ stat: { name }, base_stat, effort }) => {
-          return {
-            stat: {
+            }
+          }),
+          stats: stats.map(({ name, base_stat, effort }) => {
+            return {
               name,
-            },
-            base_stat,
-            effort,
-          }
-        }),
-        held_items: held_items.map(({ item: { name, url } }) => {
-          return {
-            item: {
+              base_stat,
+              effort,
+            }
+          }),
+          held_items: held_items.map(({ name, url }) => {
+            return {
               name,
               url,
-            },
-          }
-        }),
-        moves: moves.map(({ move: { name, url } }) => {
-          return {
-            move: {
+            }
+          }),
+          moves: moves.map(({ name, url }) => {
+            return {
               name,
               url,
-            },
-          }
-        }),
+            }
+          }),
+        }
+
+        finalData[i] = dataFromLocal
+        pokemonData[urls[i]] = dataFromLocal
+      } else {
+        const {
+          id,
+          name,
+          base_experience,
+          height,
+          weight,
+          location_area_encounters,
+          sprites,
+          types,
+          abilities,
+          stats,
+          held_items,
+          moves,
+        } = result[i]
+
+        // save to local in custom format
+        const dataFromApi = {
+          id,
+          name,
+          base_experience,
+          height,
+          weight,
+          location_area_encounters,
+          sprites,
+          types: types.map(({ type: { name, url } }) => {
+            return {
+              name,
+              url,
+            }
+          }),
+          abilities: abilities.map(({ ability: { name, url } }) => {
+            return {
+              name,
+              url,
+            }
+          }),
+          stats: stats.map(({ stat: { name }, base_stat, effort }) => {
+            return {
+              name,
+              base_stat,
+              effort,
+            }
+          }),
+          held_items: held_items.map(({ item: { name, url } }) => {
+            return {
+              name,
+              url,
+            }
+          }),
+          moves: moves.map(({ move: { name, url } }) => {
+            return {
+              name,
+              url,
+            }
+          }),
+        }
+
+        // prev data set above from local
+        // array to send to component
+        finalData[i] = { ...dataFromApi, ...finalData[i] }
+
+        // obj for caching
+        pokemonData[urls[i]] = {
+          ...pokemonData[urls[i]],
+          ...dataFromApi,
+        }
       }
-
-      // array to send to component
-      finalData.push(shrink)
-
-      // obj for caching
-      pokemonData[urls[i]] = shrink
     })
 
     // cache, then dispatch
