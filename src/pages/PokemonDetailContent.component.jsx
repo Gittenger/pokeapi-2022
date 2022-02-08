@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 
 // import CIndex from '../components/components.index.js'
-import {
-  useAssignedFullData,
-  useFullDataFetch,
-  useTitle,
-} from '../utils/hooks.js'
+import { useAssignedFullData, useTitle } from '../utils/hooks.js'
 
 const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
-  const [fullData] = useFullDataFetch(pokemon)
-  const [dataValues] = useAssignedFullData(fullData)
+
+  const [dataValues] = useAssignedFullData(pokemon)
 
   const {
     id,
@@ -26,6 +22,8 @@ const PokemonDetailContent = ({ pokemon }) => {
       },
     },
   } = dataValues
+
+  useEffect(() => {})
 
   return (
     <main className="flex flex-col items-center justify-start bg-slate-700 pt-8 pb-52">

@@ -1,20 +1,116 @@
 import { useEffect, useState, useContext, useReducer } from 'react'
 import MainContext from '../contexts/MainContext'
 import { reducer, initState } from '../reducer/reducer'
-import { SET_URLS } from '../reducer/actions.js'
+import { SET_URLS, SET_POKEMON_DATA } from '../reducer/actions.js'
 
 export const useUrlsInit = (urlInit) => {
   const [state, dispatch] = useReducer(reducer, initState)
-  useEffect(() => {
-    const fetchUrls = async (urlInit) => {
-      const data = await fetch(urlInit).then((res) => res.json())
-      dispatch({ type: SET_URLS, payload: data.results.map((el) => el.url) })
-    }
+  const { urlLimit } = useContext(MainContext)
 
-    fetchUrls(urlInit)
+  const fetchUrls = async (urlInit) => {
+    const data = await fetch(urlInit).then((res) => res.json())
+    // map payload as urls, dispatch, cache
+    const payload = data.results.map((el) => el.url)
+    dispatch({ type: SET_URLS, payload })
+    localStorage.setItem('urlsInit', JSON.stringify(payload))
+  }
+
+  useEffect(() => {
+    // if cached & correct length, dispatch from cache, else fetch
+    const localUrlsInit = JSON.parse(localStorage.getItem('urlsInit'))
+    if (!localUrlsInit || localUrlsInit.length != urlLimit) fetchUrls(urlInit)
+    else {
+      dispatch({ type: SET_URLS, payload: localUrlsInit })
+    }
   }, [])
 
   return [state]
+}
+
+export const usePokemonData = () => {
+  const [state, dispatch] = useReducer(reducer, initState)
+  const { urlLimit } = useContext(MainContext)
+  const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
+
+  const [urlInitState] = useUrlsInit(urlInit)
+  const [pokemonDataProcessed, setDataProcessed] = useState(false)
+
+  let localPokemonData = JSON.parse(localStorage.getItem('pokemonData'))
+
+  const fetchData = async (urls, localPokemonData) => {
+    setDataProcessed(false)
+    // if no urls exit
+    if (urls.length === 0) return
+    // await resolved map
+    const result = await Promise.all(
+      urls.map((url) => {
+        // if local key exists, use, else fetch
+        if (localPokemonData == null || !localPokemonData[url]) {
+          console.log(`fetching from ${url}`)
+          return fetch(url).then((res) => res.json())
+        } else {
+          console.log('from local!')
+          return localPokemonData[url]
+        }
+      })
+    )
+
+    const finalData = []
+    const pokemonData = {}
+
+    result.forEach((url, i) => {
+      if (i > parseInt(urlLimit) - 1) return
+
+      // choose fields
+      const {
+        id,
+        name,
+        abilities,
+        species,
+        forms,
+        types,
+        order,
+        base_experience,
+        height,
+        weight,
+        stats,
+        // location_area_encounters,
+        // moves,
+        sprites,
+      } = result[i]
+
+      const shrink = {
+        id,
+        name,
+        abilities,
+        species,
+        forms,
+        types,
+        order,
+        base_experience,
+        height,
+        weight,
+        stats,
+        sprites,
+      }
+      // array to send to component
+      finalData.push(shrink)
+
+      // obj for caching
+      pokemonData[urls[i]] = shrink
+    })
+
+    // cache, then dispatch
+    localStorage.setItem('pokemonData', JSON.stringify(pokemonData))
+    dispatch({ type: SET_POKEMON_DATA, payload: finalData })
+    setDataProcessed(true)
+  }
+
+  useEffect(() => {
+    fetchData(urlInitState.urlsInit, localPokemonData)
+  }, [urlInitState.urlsInit])
+
+  return [state, pokemonDataProcessed]
 }
 
 export const useTitle = (title) => {
@@ -47,204 +143,7 @@ export const usePagination = (currentPage) => {
   return { pageCount, offset }
 }
 
-export const usePartialData = (urls) => {
-  const [partialData, setPartialData] = useState([])
-  const [partialDataProcessed, setDataProcessed] = useState(false)
-  const { urlLimit } = useContext(MainContext)
-
-  const localPartials = JSON.parse(localStorage.getItem('partials'))
-
-  const fetchData = async (urls, localPartials) => {
-    setDataProcessed(false)
-    if (urls.length === 0) return
-    const result = await Promise.all(
-      urls.map((url) => {
-        if (localPartials == null || !localPartials[url]) {
-          console.log(`fetching from ${url}`)
-          return fetch(url).then((res) => res.json())
-        } else {
-          console.log('from local!')
-          return localPartials[url]
-        }
-      })
-    )
-
-    const finalData = []
-
-    const partials = {}
-    result.forEach((url, i) => {
-      if (i > parseInt(urlLimit) - 1) return
-      const {
-        id,
-        name,
-        types,
-        sprites: { front_default, back_default, other },
-      } = result[i]
-
-      const shrink = {
-        name,
-        id,
-        types,
-        sprites: {
-          front_default,
-          back_default,
-          other: {
-            dream_world: other.dream_world,
-            'official-artwork': other['official-artwork'],
-          },
-        },
-      }
-      partials[urls[i]] = shrink
-      finalData.push(shrink)
-    })
-    localStorage.setItem('partials', JSON.stringify(partials))
-    setPartialData(finalData)
-    setDataProcessed(true)
-  }
-
-  useEffect(() => {
-    // console.log('lP', localPartials)
-    if (urls !== []) fetchData(urls, localPartials)
-  }, [urls])
-
-  return [partialData, partialDataProcessed]
-}
-
-export const useFullData = (urls) => {
-  const [fullData, setFullData] = useState([])
-  const [fullDataProcessed, setDataProcessed] = useState(false)
-
-  let localFullData = JSON.parse(localStorage.getItem('fullData'))
-
-  const fetchData = async (urls, localFullData) => {
-    setDataProcessed(false)
-    if (urls.length === 0) return
-    const result = await Promise.all(
-      urls.map((url) => {
-        if (localFullData == null || !localFullData[url]) {
-          console.log(`fetching from ${url}`)
-          return fetch(url).then((res) => res.json())
-        } else {
-          console.log('from local!')
-          return localFullData[url]
-        }
-      })
-    )
-
-    const finalData = []
-
-    let fullData = {}
-    result.forEach((url, i) => {
-      const {
-        id,
-        name,
-        abilities,
-        species,
-        forms,
-        types,
-        order,
-        base_experience,
-        height,
-        weight,
-        stats,
-        // location_area_encounters,
-        // moves,
-        sprites,
-      } = result[i]
-
-      const shrink = {
-        id,
-        name,
-        abilities,
-        species,
-        forms,
-        types,
-        order,
-        base_experience,
-        height,
-        weight,
-        stats,
-        sprites,
-      }
-      finalData.push(shrink)
-      fullData = { ...localFullData, [urls[i]]: shrink }
-    })
-
-    localStorage.setItem('fullData', JSON.stringify(fullData))
-    setFullData(finalData)
-    setDataProcessed(true)
-  }
-
-  useEffect(() => {
-    if (urls !== []) fetchData(urls, localFullData)
-  }, [urls])
-
-  return [fullData, fullDataProcessed]
-}
-
-/*
-name -> check for existing name in localPartials
-if name in localPartials, find Id, send single Url to fullData
-if name not in localPartials, fetch urlForPartials
-then, send urlForPartials to usePartialData
-then use component state for partialData to identify current pokemon
-with id, update urlForFullData
-*/
-export const useFullDataFetch = (name) => {
-  const [urlsForPartials, setUrlsForPartials] = useState([])
-  const [urlForFullData, setUrlForFullData] = useState([])
-  const [fullData, fullDataProcessed] = useFullData(urlForFullData)
-  const [partialData, partialDataProcessed] = usePartialData(urlsForPartials)
-
-  const { urlLimit } = useContext(MainContext)
-
-  useEffect(() => {
-    // fetch urls to get partial data if needed
-    const fetchUrls = async (urlInit) => {
-      const data = await fetch(urlInit).then((res) => res.json())
-      setUrlsForPartials(data.results.map((el) => el.url))
-    }
-
-    // check local storage for partial data
-    const localPartialData = JSON.parse(localStorage.getItem('partials'))
-    // prevent null converted to Obj errors
-    if (!!localPartialData) {
-      const keys = Object.keys(localPartialData)
-      if (keys.length != 0) {
-        const currentPokemon = keys
-          // map to array of values (eliminate url as key)
-          .map((key) => {
-            return localPartialData[key]
-          })
-          // then filter by name from urlParam
-          .filter((el) => el.name == name)
-
-        const localId = currentPokemon[0].id
-        const fullUrl = `https://pokeapi.co/api/v2/pokemon/${localId}/`
-        setUrlForFullData([fullUrl])
-
-        // if no local data but component data (prob never happen)
-      } else {
-        const currentPokemon = partialData.filter((el) => el.name == name)
-
-        const componentStateId = currentPokemon[0].id
-        const fullUrl = `https://pokeapi.co/api/v2/pokemon/${componentStateId}/`
-        setUrlForFullData([fullUrl])
-      }
-
-      // if no partial data exists
-    } else {
-      // later, set this in context/env
-      const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
-      // fetch urls, then use urls to get partial, then re-run useEffect
-      fetchUrls(urlInit)
-    }
-  }, [partialData])
-
-  return [fullData]
-}
-
-export const useAssignedFullData = (fullData) => {
+export const useAssignedFullData = (pokemon) => {
   const [dataValues, setDataValues] = useState({
     id: 0,
     name: '',
@@ -274,16 +173,17 @@ export const useAssignedFullData = (fullData) => {
       },
     },
   })
+  const [pokemonData] = usePokemonData()
 
   useEffect(() => {
-    if (fullData.length > 0) {
-      console.log(fullData)
+    if (pokemonData.pokemonData.length > 0) {
+      let currentPokemon = pokemonData.pokemonData.filter(
+        (el) => el.name == pokemon
+      )
 
-      // convert to obj
-      let obj = {
-        ...fullData[0],
+      currentPokemon = {
+        ...currentPokemon[0],
       }
-
       // destructure desired vals
       const {
         id,
@@ -298,7 +198,7 @@ export const useAssignedFullData = (fullData) => {
             'generation-ii': generationII,
           },
         },
-      } = obj
+      } = currentPokemon
       console.log(generationI, generationII)
 
       // set vals
@@ -345,7 +245,7 @@ export const useAssignedFullData = (fullData) => {
         },
       })
     }
-  }, [fullData])
+  }, [pokemon, pokemonData])
 
   return [dataValues]
 }

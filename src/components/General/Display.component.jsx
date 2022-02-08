@@ -3,19 +3,18 @@ import { Link } from 'react-router-dom'
 import MDSpinner from 'react-md-spinner'
 import MainContext from '../../contexts/MainContext'
 
-import { usePartialData, usePagination, useUrlsInit } from '../../utils/hooks'
+import { usePagination, usePokemonData } from '../../utils/hooks'
 import isIndexInBounds from '../../utils/checkBounds'
 import CIndex from '../components.index.js'
 
 const Display = ({ id: currentPage }) => {
-  const { urlLimit, pageLimit } = useContext(MainContext)
-  let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${urlLimit}`
+  // page settings
+  const { pageLimit } = useContext(MainContext)
   const [activePage, setActivePage] = useState('1')
   const { pageCount, offset } = usePagination(currentPage, 13)
 
-  const [state] = useUrlsInit(urlInit)
-
-  const [partialData, partialDataProcessed] = usePartialData(state.urlsInit)
+  // get pokemon data -- later: split into multiple reducers
+  const [pokemonData, pokemonDataProcessed] = usePokemonData()
 
   useEffect(() => {
     if (currentPage) setActivePage(currentPage)
@@ -25,7 +24,7 @@ const Display = ({ id: currentPage }) => {
 
   return (
     <div className="flex-col items-center px-6 py-8">
-      {!partialDataProcessed ? (
+      {!pokemonDataProcessed ? (
         <MDSpinner />
       ) : (
         <>
@@ -35,12 +34,12 @@ const Display = ({ id: currentPage }) => {
             activePage={activePage}
           />
           <div className="grid gap-y-14 gap-x-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {state.results?.map((el) => (
+            {pokemonData.results?.map((el) => (
               <div>
                 <p>{el}</p>
               </div>
             ))}
-            {partialData
+            {pokemonData.pokemonData
               // .map((el) => {
               //   return {
               //     ...el,
