@@ -1,31 +1,24 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useReducer } from 'react'
 import { Link } from 'react-router-dom'
 import MDSpinner from 'react-md-spinner'
 import MainContext from '../../contexts/MainContext'
 
-import { usePartialData, usePagination } from '../../utils/hooks'
+import { usePartialData, usePagination, useUrlsInit } from '../../utils/hooks'
 import isIndexInBounds from '../../utils/checkBounds'
 import CIndex from '../components.index.js'
 
 const Display = ({ id: currentPage }) => {
-  const [urls, setUrls] = useState([])
-  const [partialData, partialDataProcessed] = usePartialData(urls)
-  const [activePage, setActivePage] = useState('1')
   const { urlLimit, pageLimit } = useContext(MainContext)
-
+  let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${urlLimit}`
+  const [activePage, setActivePage] = useState('1')
   const { pageCount, offset } = usePagination(currentPage, 13)
 
-  let urlInit = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${urlLimit}`
+  const [state] = useUrlsInit(urlInit)
+
+  const [partialData, partialDataProcessed] = usePartialData(state.urlsInit)
 
   useEffect(() => {
     if (currentPage) setActivePage(currentPage)
-
-    const fetchUrls = async (urlInit) => {
-      const data = await fetch(urlInit).then((res) => res.json())
-      setUrls(data.results.map((el) => el.url))
-    }
-
-    fetchUrls(urlInit)
   }, [])
 
   const { Pagination } = CIndex
@@ -42,16 +35,21 @@ const Display = ({ id: currentPage }) => {
             activePage={activePage}
           />
           <div className="grid gap-y-14 gap-x-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {state.results?.map((el) => (
+              <div>
+                <p>{el}</p>
+              </div>
+            ))}
             {partialData
-              .map((el) => {
-                return {
-                  ...el,
-                  types: el.types.filter((type) => {
-                    return type.type.name == 'grass'
-                  }),
-                }
-              })
-              .filter((el) => el.types.length > 0)
+              // .map((el) => {
+              //   return {
+              //     ...el,
+              //     types: el.types.filter((type) => {
+              //       return type.type.name == 'grass'
+              //     }),
+              //   }
+              // })
+              // .filter((el) => el.types.length > 0)
               .map((el, i) => {
                 return isIndexInBounds(offset, pageLimit, i) ? (
                   <div

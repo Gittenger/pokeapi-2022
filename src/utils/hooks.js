@@ -1,5 +1,21 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useReducer } from 'react'
 import MainContext from '../contexts/MainContext'
+import { reducer, initState } from '../reducer/reducer'
+import { SET_URLS } from '../reducer/actions.js'
+
+export const useUrlsInit = (urlInit) => {
+  const [state, dispatch] = useReducer(reducer, initState)
+  useEffect(() => {
+    const fetchUrls = async (urlInit) => {
+      const data = await fetch(urlInit).then((res) => res.json())
+      dispatch({ type: SET_URLS, payload: data.results.map((el) => el.url) })
+    }
+
+    fetchUrls(urlInit)
+  }, [])
+
+  return [state]
+}
 
 export const useTitle = (title) => {
   useEffect(() => {
