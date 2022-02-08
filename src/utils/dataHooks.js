@@ -50,7 +50,7 @@ export const useAbilitiesData = (urls) => {
           id,
           name,
           effect_changes,
-          flavor_text_entries,
+          flavor_text,
           effect_entries,
           pokemon,
         } = localAbilitiesData[url]
@@ -59,7 +59,7 @@ export const useAbilitiesData = (urls) => {
           id,
           name,
           effect_changes,
-          flavor_text_entries,
+          flavor_text,
           effect_entries,
           pokemon,
         }
@@ -80,13 +80,30 @@ export const useAbilitiesData = (urls) => {
           id,
           name,
           effect_changes,
-          flavor_text_entries,
-          effect_entries: effect_entries
-            ? effect_entries.filter((el) => {
-                return el.language.name == 'en'
-              })[0]
-            : {},
-          pokemon,
+          flavor_text: {
+            text: flavor_text_entries
+              ? flavor_text_entries.filter((el) => {
+                  return el.language.name == 'en'
+                })[0]?.flavor_text
+              : {},
+          },
+          effect_entries: {
+            effect: effect_entries
+              ? effect_entries.filter((el) => {
+                  return el.language.name == 'en'
+                })[0]?.effect
+              : {},
+            short_effect: effect_entries
+              ? effect_entries.filter((el) => {
+                  return el.language.name == 'en'
+                })[0]?.short_effect
+              : {},
+          },
+          pokemon: pokemon.filter((el, i) => {
+            const regex = /https:\/\/pokeapi.co\/api\/v2\/pokemon\/(\d+)/
+            const match = el.pokemon.url.match(regex)
+            return match ? parseInt(match[1]) <= urlLimit : false
+          }),
         }
 
         finalData[i] = { ...finalData[i], ...dataFromApi }
