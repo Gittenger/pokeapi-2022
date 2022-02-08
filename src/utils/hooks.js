@@ -1,10 +1,14 @@
 import { useEffect, useState, useContext, useReducer } from 'react'
 import MainContext from '../contexts/MainContext'
-import { reducer, initState } from '../reducer/reducer'
+import {
+  pokemonReducerInit,
+  pokemonReducer,
+} from '../reducer/pokemonReducer.js'
+import { urlsReducerInit, urlsReducer } from '../reducer/urlsReducer.js'
 import { SET_URLS, SET_POKEMON_DATA } from '../reducer/actions.js'
 
 export const useUrlsInit = (urlInit) => {
-  const [state, dispatch] = useReducer(reducer, initState)
+  const [urlsInitState, dispatch] = useReducer(urlsReducer, urlsReducerInit)
   const { urlLimit } = useContext(MainContext)
 
   const fetchUrls = async (urlInit) => {
@@ -24,15 +28,18 @@ export const useUrlsInit = (urlInit) => {
     }
   }, [])
 
-  return [state]
+  return [urlsInitState]
 }
 
 export const usePokemonData = () => {
-  const [state, dispatch] = useReducer(reducer, initState)
+  const [pokemonState, dispatch] = useReducer(
+    pokemonReducer,
+    pokemonReducerInit
+  )
   const { urlLimit } = useContext(MainContext)
   const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
 
-  const [urlInitState] = useUrlsInit(urlInit)
+  const [urlsInitState] = useUrlsInit(urlInit)
   const [pokemonDataProcessed, setDataProcessed] = useState(false)
 
   let localPokemonData = JSON.parse(localStorage.getItem('pokemonData'))
@@ -107,10 +114,10 @@ export const usePokemonData = () => {
   }
 
   useEffect(() => {
-    fetchData(urlInitState.urlsInit, localPokemonData)
-  }, [urlInitState.urlsInit])
+    fetchData(urlsInitState, localPokemonData)
+  }, [urlsInitState])
 
-  return [state, pokemonDataProcessed]
+  return [pokemonState, pokemonDataProcessed]
 }
 
 export const useTitle = (title) => {
@@ -176,10 +183,8 @@ export const useAssignedFullData = (pokemon) => {
   const [pokemonData] = usePokemonData()
 
   useEffect(() => {
-    if (pokemonData.pokemonData.length > 0) {
-      let currentPokemon = pokemonData.pokemonData.filter(
-        (el) => el.name == pokemon
-      )
+    if (pokemonData.length > 0) {
+      let currentPokemon = pokemonData.filter((el) => el.name == pokemon)
 
       currentPokemon = {
         ...currentPokemon[0],

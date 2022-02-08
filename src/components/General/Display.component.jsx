@@ -13,7 +13,7 @@ const Display = ({ id: currentPage }) => {
   const [activePage, setActivePage] = useState('1')
   const { pageCount, offset } = usePagination(currentPage, 13)
 
-  // get pokemon data -- later: split into multiple reducers
+  // get pokemon data
   const [pokemonData, pokemonDataProcessed] = usePokemonData()
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Display = ({ id: currentPage }) => {
                 <p>{el}</p>
               </div>
             ))}
-            {pokemonData.pokemonData
+            {pokemonData
               // .map((el) => {
               //   return {
               //     ...el,
