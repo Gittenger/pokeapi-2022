@@ -79,7 +79,17 @@ export const useAbilitiesData = (urls) => {
         const dataFromApi = {
           id,
           name,
-          effect_changes,
+          effect_changes:
+            effect_changes.length > 0
+              ? effect_changes.map((el) => {
+                  return {
+                    effect: el.effect_entries.filter(
+                      (el) => el.language.name == 'en'
+                    )[0]?.effect,
+                  }
+                })
+              : //  maybe shrink to first entry only, later
+                [],
           flavor_text: {
             text: flavor_text_entries
               ? flavor_text_entries.filter((el) => {
