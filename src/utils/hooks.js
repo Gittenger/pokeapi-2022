@@ -34,6 +34,7 @@ export const usePagination = (currentPage) => {
 export const usePartialData = (urls) => {
   const [partialData, setPartialData] = useState([])
   const [partialDataProcessed, setDataProcessed] = useState(false)
+  const { urlLimit } = useContext(MainContext)
 
   const localPartials = JSON.parse(localStorage.getItem('partials'))
 
@@ -56,15 +57,18 @@ export const usePartialData = (urls) => {
 
     const partials = {}
     result.forEach((url, i) => {
+      if (i > parseInt(urlLimit) - 1) return
       const {
         id,
         name,
+        types,
         sprites: { front_default, back_default, other },
       } = result[i]
 
       const shrink = {
         name,
         id,
+        types,
         sprites: {
           front_default,
           back_default,
