@@ -81,7 +81,11 @@ export const useAbilitiesData = (urls) => {
           name,
           effect_changes,
           flavor_text_entries,
-          effect_entries,
+          effect_entries: effect_entries
+            ? effect_entries.filter((el) => {
+                return el.language.name == 'en'
+              })[0]
+            : {},
           pokemon,
         }
 
