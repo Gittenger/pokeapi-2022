@@ -7,6 +7,36 @@ import {
 import { urlsReducerInit, urlsReducer } from '../reducer/urlsReducer.js'
 import { SET_URLS, SET_POKEMON_DATA } from '../reducer/actions.js'
 
+export const useTitle = (title) => {
+  useEffect(() => {
+    document.title = `${process.env.MAIN_TITLE} | ${title}`
+  }, [title])
+}
+
+export const usePagination = (currentPage) => {
+  const [pageCount, setPageCount] = useState(1)
+  const [offset, setOffset] = useState(0)
+
+  const { urlLimit, pageLimit } = useContext(MainContext)
+
+  const setLimits = (currentPage, urlLimit, pageLimit) => {
+    // how many pages
+    let count = Math.ceil(parseInt(urlLimit) / pageLimit)
+    setPageCount(count)
+
+    // calculate offset based on current page
+    let offsetCalc = 0
+    if (!!currentPage) offsetCalc = pageLimit * currentPage - pageLimit
+    setOffset(offsetCalc)
+  }
+
+  useEffect(() => {
+    setLimits(currentPage, urlLimit, pageLimit)
+  }, [])
+
+  return { pageCount, offset }
+}
+
 export const useUrlsInit = (urlInit) => {
   const [urlsInitState, dispatch] = useReducer(urlsReducer, urlsReducerInit)
   const { urlLimit } = useContext(MainContext)
@@ -118,36 +148,6 @@ export const usePokemonData = () => {
   }, [urlsInitState])
 
   return [pokemonState, pokemonDataProcessed]
-}
-
-export const useTitle = (title) => {
-  useEffect(() => {
-    document.title = `${process.env.MAIN_TITLE} | ${title}`
-  }, [title])
-}
-
-export const usePagination = (currentPage) => {
-  const [pageCount, setPageCount] = useState(1)
-  const [offset, setOffset] = useState(0)
-
-  const { urlLimit, pageLimit } = useContext(MainContext)
-
-  const setLimits = (currentPage, urlLimit, pageLimit) => {
-    // how many pages
-    let count = Math.ceil(parseInt(urlLimit) / pageLimit)
-    setPageCount(count)
-
-    // calculate offset based on current page
-    let offsetCalc = 0
-    if (!!currentPage) offsetCalc = pageLimit * currentPage - pageLimit
-    setOffset(offsetCalc)
-  }
-
-  useEffect(() => {
-    setLimits(currentPage, urlLimit, pageLimit)
-  }, [])
-
-  return { pageCount, offset }
 }
 
 export const useAssignedFullData = (pokemon) => {
