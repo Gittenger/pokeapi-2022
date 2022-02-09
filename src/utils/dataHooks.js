@@ -126,13 +126,12 @@ export const useArrayData = (url, dataCategory) => {
       console.log(`fetching ${category} from ${url}`)
       const result = await fetch(url).then((res) => res.json())
 
-      let transformedResult = [...result]
-
       if (result.length === 0) {
         arrayToSave = []
       } else if (category == dataCategories.urlsInit.category) {
         arrayToSave = result.results.map((el) => el.url)
       } else {
+        let transformedResult = [...result]
         // create transformations on each element of result, then prepare for saving
         transformedResult.forEach((obj, i) => {
           let newObj = {}
