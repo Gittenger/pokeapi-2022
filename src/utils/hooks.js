@@ -53,6 +53,17 @@ export const usePokemonData = () => {
 }
 
 export const useAssignedFullData = (pokemon) => {
+  // const { urlLimit } = useContext(MainContext)
+  // const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
+  const [abilitiesMap, setAbilitiesMap] = useState([])
+  const [movesMap, setMovesMap] = useState([])
+  const [encountersUrl, setEncountersUrl] = useState('')
+
+  // maps of urls to get more data, updates when states above update
+  useDetailsData(abilitiesMap, dataCategories.abilities)
+  useDetailsData(movesMap, dataCategories.moves)
+  useArrayData(encountersUrl, dataCategories.encounters)
+
   const [dataValues, setDataValues] = useState({
     id: 0,
     name: '',
@@ -90,8 +101,11 @@ export const useAssignedFullData = (pokemon) => {
       },
     },
   })
+
+  // get top level pokemon data (usually just from local)
   const [pokemonData] = usePokemonData()
 
+  // create curated data from incoming pokemonData
   useEffect(() => {
     if (pokemonData.length > 0) {
       let currentPokemon = pokemonData.filter((el) => el.name == pokemon)
@@ -167,6 +181,24 @@ export const useAssignedFullData = (pokemon) => {
       })
     }
   }, [pokemon, pokemonData])
+
+  // set maps of secondary urls
+  // hook will return details of these maps
+  useEffect(() => {
+    setAbilitiesMap(
+      dataValues.abilities.map((el) => {
+        return el.url
+      })
+    )
+
+    setMovesMap(
+      dataValues.moves.map((el) => {
+        return el.url
+      })
+    )
+
+    setEncountersUrl(dataValues.location_area_encounters)
+  }, [dataValues])
 
   return [dataValues]
 }

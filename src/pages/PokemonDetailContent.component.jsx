@@ -9,12 +9,6 @@ const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
 
   const [dataValues] = useAssignedFullData(pokemon)
-  const [abilitiesMap, setAbilitiesMap] = useState([])
-  const [movesMap, setMovesMap] = useState([])
-  const [encountersUrl, setEncountersUrl] = useState('')
-  useDetailsData(abilitiesMap, dataCategories.abilities)
-  useDetailsData(movesMap, dataCategories.moves)
-  useArrayData(encountersUrl, dataCategories.encounters)
 
   const {
     id,
@@ -31,21 +25,7 @@ const PokemonDetailContent = ({ pokemon }) => {
     },
   } = dataValues
 
-  useEffect(() => {
-    setAbilitiesMap(
-      dataValues.abilities.map((el) => {
-        return el.url
-      })
-    )
-
-    setMovesMap(
-      dataValues.moves.map((el) => {
-        return el.url
-      })
-    )
-
-    setEncountersUrl(dataValues.location_area_encounters)
-  }, [dataValues])
+  // useEffect(() => {}, [])
 
   return (
     <main className="flex flex-col items-center justify-start bg-slate-700 pt-8 pb-52">
