@@ -14,7 +14,7 @@ const Display = ({ id: currentPage }) => {
   const { pageCount, offset } = usePagination(currentPage, 13)
 
   // get pokemon data
-  const [pokemonData, pokemonDataProcessed] = usePokemonData()
+  const [pokemonData] = usePokemonData()
 
   useEffect(() => {
     if (currentPage) setActivePage(currentPage)
@@ -24,7 +24,7 @@ const Display = ({ id: currentPage }) => {
 
   return (
     <div className="flex-col items-center px-6 py-8">
-      {!pokemonDataProcessed ? (
+      {false ? (
         <MDSpinner />
       ) : (
         <>

@@ -5,6 +5,93 @@ export const dataCategories = {
     localKey: 'urlsInitData',
     transformationKeys: [],
   },
+  pokemon: {
+    options: { useUrlIndex: true, arrayOnly: false },
+    category: 'pokemon',
+    localKey: 'pokemonData',
+    transformationKeys: [
+      {
+        key: 'id',
+        transformation: null,
+      },
+      {
+        key: 'name',
+        transformation: null,
+      },
+      {
+        key: 'height',
+        transformation: null,
+      },
+      {
+        key: 'weight',
+        transformation: null,
+      },
+      {
+        key: 'base_experience',
+        transformation: null,
+      },
+      {
+        key: 'sprites',
+        transformation: null,
+      },
+      {
+        key: 'types',
+        transformation: (value) => {
+          return value.map((el) => {
+            return {
+              name: el.type.name,
+              url: el.type.url,
+            }
+          })
+        },
+      },
+      {
+        key: 'stats',
+        transformation: (value) => {
+          return value.map((el) => {
+            return {
+              name: el.stat.name,
+              base_stat: el.base_stat,
+              effort: el.effort,
+            }
+          })
+        },
+      },
+      {
+        key: 'abilities',
+        transformation: (value) => {
+          return value.map((el) => {
+            return {
+              name: el.ability.name,
+              url: el.ability.url,
+            }
+          })
+        },
+      },
+      {
+        key: 'held_items',
+        transformation: (value) => {
+          return value.map((el) => {
+            return {
+              name: el.item.name,
+              url: el.item.url,
+            }
+          })
+        },
+      },
+      {
+        key: 'moves',
+        transformation: (value) => {
+          return value.map((el) => {
+            return {
+              name: el.move.name,
+              url: el.move.url,
+            }
+          })
+        },
+      },
+    ],
+  },
   abilities: {
     options: { useUrlIndex: false, arrayOnly: false },
     category: 'abilities',

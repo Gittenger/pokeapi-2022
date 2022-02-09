@@ -5,7 +5,8 @@ import {
   pokemonReducer,
 } from '../reducer/pokemonReducer.js'
 import { SET_POKEMON_DATA } from '../reducer/actions.js'
-import { useArrayData } from './dataHooks.js'
+import { reducer, reducerInit } from '../reducer/reducer'
+import { useArrayData, useDetailsData } from './dataHooks.js'
 import dataCategories from './dataCategories'
 
 export const useTitle = (title) => {
@@ -39,181 +40,16 @@ export const usePagination = (currentPage) => {
 }
 
 export const usePokemonData = () => {
-  const [pokemonState, dispatch] = useReducer(
-    pokemonReducer,
-    pokemonReducerInit
-  )
   const { urlLimit } = useContext(MainContext)
+
   const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
-
   const [urlsInitState] = useArrayData(urlInit, dataCategories.urlsInit)
-  const [pokemonDataProcessed, setDataProcessed] = useState(false)
 
-  let localPokemonData = JSON.parse(localStorage.getItem('pokemonData'))
-  let pokemonData = {}
+  const [pokemonState] = useDetailsData(urlsInitState, dataCategories.pokemon)
 
-  const fetchData = async (urls, localPokemonData) => {
-    setDataProcessed(false)
-    // if no urls exit
-    if (urls.length === 0) return
-    // await resolved map
-    const result = await Promise.all(
-      urls.map((url) => {
-        // if local key exists, use, else fetch
-        if (localPokemonData == null || !localPokemonData[url]) {
-          console.log(`fetching from ${url}`)
-          return fetch(url).then((res) => res.json())
-        } else {
-          console.log('pokemon data from local!')
-          return localPokemonData[url]
-        }
-      })
-    )
+  // const [pokemonDataProcessed, setDataProcessed] = useState(false)
 
-    const finalData = []
-
-    urls.map((url, i) => {
-      if (i > parseInt(urlLimit) - 1 || !url) return
-      if (!!localPokemonData && localPokemonData[url]) {
-        const { types, abilities, stats, held_items, moves } =
-          localPokemonData[url]
-
-        const {
-          id,
-          name,
-          base_experience,
-          height,
-          weight,
-          location_area_encounters,
-          sprites,
-        } = result[i]
-
-        // importing from local is in diff format,
-        // since when save from api, i save cust format below
-        const dataFromLocal = {
-          id,
-          name,
-          base_experience,
-          height,
-          weight,
-          location_area_encounters,
-          sprites,
-          types: types.map(({ name, url }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-          abilities: abilities.map(({ name, url }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-          stats: stats.map(({ name, base_stat, effort }) => {
-            return {
-              name,
-              base_stat,
-              effort,
-            }
-          }),
-          held_items: held_items.map(({ name, url }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-          moves: moves.map(({ name, url }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-        }
-
-        finalData[i] = dataFromLocal
-        pokemonData[urls[i]] = dataFromLocal
-      } else {
-        const {
-          id,
-          name,
-          base_experience,
-          height,
-          weight,
-          location_area_encounters,
-          sprites,
-          types,
-          abilities,
-          stats,
-          held_items,
-          moves,
-        } = result[i]
-
-        // save to local in custom format
-        const dataFromApi = {
-          id,
-          name,
-          base_experience,
-          height,
-          weight,
-          location_area_encounters,
-          sprites,
-          types: types.map(({ type: { name, url } }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-          abilities: abilities.map(({ ability: { name, url } }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-          stats: stats.map(({ stat: { name }, base_stat, effort }) => {
-            return {
-              name,
-              base_stat,
-              effort,
-            }
-          }),
-          held_items: held_items.map(({ item: { name, url } }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-          moves: moves.map(({ move: { name, url } }) => {
-            return {
-              name,
-              url,
-            }
-          }),
-        }
-
-        // prev data set above from local
-        // array to send to component
-        finalData[i] = { ...dataFromApi, ...finalData[i] }
-
-        // obj for caching
-        pokemonData[urls[i]] = {
-          ...pokemonData[urls[i]],
-          ...dataFromApi,
-        }
-      }
-    })
-
-    // cache, then dispatch
-    localStorage.setItem('pokemonData', JSON.stringify(pokemonData))
-    dispatch({ type: SET_POKEMON_DATA, payload: finalData })
-    setDataProcessed(true)
-  }
-
-  useEffect(() => {
-    fetchData(urlsInitState, localPokemonData)
-  }, [urlsInitState])
-
-  return [pokemonState, pokemonDataProcessed]
+  return [pokemonState]
 }
 
 export const useAssignedFullData = (pokemon) => {
