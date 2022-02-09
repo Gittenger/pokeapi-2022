@@ -133,6 +133,8 @@ export const useAssignedFullData = (pokemon) => {
         },
       } = currentPokemon
 
+      console.log(currentPokemon)
+
       // set vals
       setDataValues({
         ...dataValues,
@@ -196,6 +198,8 @@ export const useAssignedFullData = (pokemon) => {
         return el.url
       })
     )
+
+    // console.log(dataValues)
 
     setEncountersUrl(dataValues.location_area_encounters)
   }, [dataValues])

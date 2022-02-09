@@ -31,6 +31,10 @@ export const dataCategories = {
         transformation: null,
       },
       {
+        key: 'location_area_encounters',
+        transformation: null,
+      },
+      {
         key: 'sprites',
         transformation: null,
       },
