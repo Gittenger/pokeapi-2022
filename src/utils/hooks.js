@@ -53,15 +53,15 @@ export const usePokemonData = () => {
 }
 
 export const useAssignedFullData = (pokemon) => {
-  // const { urlLimit } = useContext(MainContext)
-  // const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
   const [abilitiesMap, setAbilitiesMap] = useState([])
   const [movesMap, setMovesMap] = useState([])
+  const [itemsMap, setItemsMap] = useState([])
   const [encountersUrl, setEncountersUrl] = useState('')
 
   // maps of urls to get more data, updates when states above update
   useDetailsData(abilitiesMap, dataCategories.abilities)
   useDetailsData(movesMap, dataCategories.moves)
+  useDetailsData(itemsMap, dataCategories.items)
   useArrayData(encountersUrl, dataCategories.encounters)
 
   const [dataValues, setDataValues] = useState({
@@ -69,8 +69,9 @@ export const useAssignedFullData = (pokemon) => {
     name: '',
     height: '',
     weight: '',
-    abilities: [{ name: '', url: '' }],
     location_area_encounters: '',
+    held_items: [{ name: '', url: '' }],
+    abilities: [{ name: '', url: '' }],
     moves: [
       {
         name: '',
@@ -122,6 +123,7 @@ export const useAssignedFullData = (pokemon) => {
         weight,
         abilities,
         location_area_encounters,
+        held_items,
         moves,
         sprites: {
           front_default,
@@ -144,6 +146,7 @@ export const useAssignedFullData = (pokemon) => {
         weight,
         abilities,
         location_area_encounters,
+        held_items,
         moves,
         sprites: {
           front_default,
@@ -199,7 +202,7 @@ export const useAssignedFullData = (pokemon) => {
       })
     )
 
-    // console.log(dataValues)
+    setItemsMap(dataValues.held_items.map((el) => el.url))
 
     setEncountersUrl(dataValues.location_area_encounters)
   }, [dataValues])

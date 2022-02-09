@@ -257,20 +257,53 @@ export const dataCategories = {
         transformation: null,
       },
       {
-        key: 'effect_changes',
-        transformation: () => {},
+        key: 'sprites',
+        transformation: null,
       },
       {
         key: 'effect_entries',
-        transformation: () => {},
+        transformation: (value, urlIndex) => {
+          return {
+            effect: value
+              ? value.filter((el) => {
+                  return el.language.name == 'en'
+                })[0]?.effect
+              : {},
+            short_effect: value
+              ? value.filter((el) => {
+                  return el.language.name == 'en'
+                })[0]?.short_effect
+              : {},
+          }
+        },
       },
       {
         key: 'flavor_text_entries',
-        transformation: () => {},
+        transformation: (value, urlIndex) => {
+          return {
+            text: value
+              ? value.filter((el) => {
+                  return el.language.name == 'en'
+                })[0]?.flavor_text
+              : {},
+          }
+        },
       },
       {
-        key: 'pokemon',
-        transformation: () => {},
+        key: 'held_by_pokemon',
+        transformation: (value, urlIndex, urlLimit) => {
+          return value
+            .filter((el, i) => {
+              const regex = /https:\/\/pokeapi.co\/api\/v2\/pokemon\/(\d+)/
+              const match = el.pokemon.url.match(regex)
+              return match ? parseInt(match[1]) <= urlLimit : false
+            })
+            .map((el) => {
+              return {
+                pokemon: el.pokemon,
+              }
+            })
+        },
       },
     ],
   },
