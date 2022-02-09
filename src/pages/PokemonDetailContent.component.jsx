@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 
 // import CIndex from '../components/components.index.js'
 import { useAssignedFullData, useTitle } from '../utils/hooks.js'
-import { useDetailsData } from '../utils/dataHooks.js'
+import { useDetailsData, useDataFromUrl } from '../utils/dataHooks.js'
 import dataCategories from '../utils/dataCategories.js'
 
 const PokemonDetailContent = ({ pokemon }) => {
@@ -11,8 +11,10 @@ const PokemonDetailContent = ({ pokemon }) => {
   const [dataValues] = useAssignedFullData(pokemon)
   const [abilitiesMap, setAbilitiesMap] = useState([])
   const [movesMap, setMovesMap] = useState([])
+  const [encountersUrl, setEncountersUrl] = useState('')
   useDetailsData(abilitiesMap, dataCategories.abilities)
   useDetailsData(movesMap, dataCategories.moves)
+  useDataFromUrl(encountersUrl, dataCategories.encounters)
 
   const {
     id,
@@ -30,7 +32,6 @@ const PokemonDetailContent = ({ pokemon }) => {
   } = dataValues
 
   useEffect(() => {
-    // console.log(dataValues)
     setAbilitiesMap(
       dataValues.abilities.map((el) => {
         return el.url
@@ -42,6 +43,8 @@ const PokemonDetailContent = ({ pokemon }) => {
         return el.url
       })
     )
+
+    setEncountersUrl(dataValues.location_area_encounters)
   }, [dataValues])
 
   return (

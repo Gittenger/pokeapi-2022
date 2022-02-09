@@ -1,6 +1,6 @@
 export const dataCategories = {
   abilities: {
-    options: { useUrlIndex: false },
+    options: { useUrlIndex: false, arrayOnly: false },
     category: 'abilities',
     localKey: 'abilitiesData',
     transformationKeys: [
@@ -69,7 +69,7 @@ export const dataCategories = {
     ],
   },
   moves: {
-    options: { useUrlIndex: false },
+    options: { useUrlIndex: false, arrayOnly: false },
     category: 'moves',
     localKey: 'movesData',
     transformationKeys: [
@@ -147,7 +147,7 @@ export const dataCategories = {
     ],
   },
   items: {
-    options: { useUrlIndex: false },
+    options: { useUrlIndex: false, arrayOnly: false },
     category: 'items',
     localKey: 'itemsData',
     transformationKeys: [
@@ -178,33 +178,28 @@ export const dataCategories = {
     ],
   },
   encounters: {
-    options: { useUrlIndex: false },
-    category: 'items',
-    localKey: 'itemsData',
+    options: {
+      useUrlIndex: false,
+      arrayOnly: true,
+    },
+    category: 'encounters',
+    localKey: 'encountersData',
     transformationKeys: [
       {
-        key: 'id',
-        transformation: null,
+        key: 'location_area',
+        transformation: (value) => {
+          return {
+            name: value.name,
+          }
+        },
       },
       {
-        key: 'name',
-        transformation: null,
-      },
-      {
-        key: 'effect_changes',
-        transformation: () => {},
-      },
-      {
-        key: 'effect_entries',
-        transformation: () => {},
-      },
-      {
-        key: 'flavor_text_entries',
-        transformation: () => {},
-      },
-      {
-        key: 'pokemon',
-        transformation: () => {},
+        key: 'version_details',
+        transformation: (value) => {
+          return value.map((el) => {
+            return { version_name: el.version.name }
+          })
+        },
       },
     ],
   },

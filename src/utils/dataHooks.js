@@ -7,12 +7,15 @@ import { SET_DATA } from '../reducer/actions.js'
 export const useDetailsData = (urls, dataCategory) => {
   const { urlLimit } = useContext(MainContext)
   const [reducerState, dispatch] = useReducer(reducer, reducerInit)
+  let dependencyUrl = ''
+  if ((urls.length = 1)) dependencyUrl = urls[0]
 
   const { localKey, category, options, transformationKeys } = dataCategory
+  const { arrayOnly } = options
 
   let localData = JSON.parse(localStorage.getItem(localKey))
   let objectToSave = {}
-  const arrayToSave = []
+  let arrayToSave = []
 
   // if local data exists and has values, prepare for re-saving
   if (!!localData && Object.keys(localData).length > 0) {
@@ -24,7 +27,7 @@ export const useDetailsData = (urls, dataCategory) => {
     // if no urls exit
     if (urls.length === 0) return
     // await resolved map
-    const result = await Promise.all(
+    let result = await Promise.all(
       urls.map((url, urlIndex) => {
         // if local key exists, use-- else fetch
         if (!url) return
@@ -33,57 +36,86 @@ export const useDetailsData = (urls, dataCategory) => {
           return fetch(url).then((res) => res.json())
         } else {
           console.log(`fetching/setting ${category} from local!`)
-          // no transformations from local
-          // each key has val from local data
-          transformationKeys.forEach((el) => {
-            objectToSave[url][el.key] = localData[url][el.key]
-          })
+          if (!arrayOnly) {
+            // no transformations from local
+            // each key has val from local data
+            transformationKeys.forEach((el) => {
+              objectToSave[url][el.key] = localData[url][el.key]
+            })
 
-          // array--component, object--local
-          arrayToSave[urlIndex] = localData[url]
-          objectToSave[urls[urlIndex]] = localData[url]
-          return localData[url]
+            // array--component, object--local
+            arrayToSave[urlIndex] = localData[url]
+            objectToSave[urls[urlIndex]] = localData[url]
+            return localData[url]
+          } else {
+            arrayToSave = localData[url]
+          }
         }
       })
     )
 
-    // if (dataCategory.category == 'moves') console.log(result)
+    // if (dataCategory.category == 'encounters') console.log(result)
 
-    // set from API
-    urls.forEach((url, urlIndex) => {
-      if (!url) return
-      // if using url limit for data
-      if (options.useUrlLimit && urlIndex > parseInt(urlLimit) - 1) return
-      if (localData == null || !localData[url]) {
-        console.log(`setting ${category} from API`)
+    if (arrayOnly) {
+      if (localData == null || !localData[urls[0]]) {
+        if (category == 'encounters') result = result[0]
+        result.forEach((obj, resultIndex) => {
+          const dataFromApi = {}
 
-        const dataFromApi = {}
-
-        // transform and save data
-        transformationKeys.forEach((el) => {
-          if (el.transformation == null)
-            dataFromApi[el.key] = result[urlIndex][el.key]
-          else {
-            dataFromApi[el.key] = el.transformation(
-              result[urlIndex][el.key],
-              urlIndex,
-              urlLimit
-            )
-          }
+          // transform and save data
+          transformationKeys.forEach((el) => {
+            if (el.transformation == null)
+              dataFromApi[el.key] = result[resultIndex][el.key]
+            else {
+              dataFromApi[el.key] = el.transformation(
+                result[resultIndex][el.key],
+                resultIndex,
+                urlLimit
+              )
+            }
+          })
+          arrayToSave.push(dataFromApi)
         })
-
-        // array for sending to component
-        arrayToSave[urlIndex] = { ...arrayToSave[urlIndex], ...dataFromApi }
-        // object for saving to local
-        objectToSave[urls[urlIndex]] = {
-          ...objectToSave[urls[urlIndex]],
-          ...dataFromApi,
-        }
+        objectToSave[urls[0]] = arrayToSave
+        localStorage.setItem(localKey, JSON.stringify(objectToSave))
       }
-    })
+    } else {
+      // set from API
+      urls.forEach((url, urlIndex) => {
+        if (!url) return
+        // if using url limit for data
+        if (options.useUrlLimit && urlIndex > parseInt(urlLimit) - 1) return
+        if (localData == null || !localData[url]) {
+          console.log(`setting ${category} from API`)
 
-    // save obj to local
-    localStorage.setItem(localKey, JSON.stringify(objectToSave))
+          const dataFromApi = {}
+
+          // transform and save data
+          transformationKeys.forEach((el) => {
+            if (el.transformation == null)
+              dataFromApi[el.key] = result[urlIndex][el.key]
+            else {
+              dataFromApi[el.key] = el.transformation(
+                result[urlIndex][el.key],
+                urlIndex,
+                urlLimit
+              )
+            }
+          })
+
+          // array for sending to component
+          arrayToSave[urlIndex] = { ...arrayToSave[urlIndex], ...dataFromApi }
+          // object for saving to local
+          objectToSave[urls[urlIndex]] = {
+            ...objectToSave[urls[urlIndex]],
+            ...dataFromApi,
+          }
+        }
+      })
+      // save obj to local
+      localStorage.setItem(localKey, JSON.stringify(objectToSave))
+    }
+
     dispatch({ type: SET_DATA, payload: arrayToSave })
     // setDataProcessed(true)
   }
@@ -91,6 +123,65 @@ export const useDetailsData = (urls, dataCategory) => {
   useEffect(() => {
     fetchData(urls, localData)
   }, [urls])
+
+  return [reducerState]
+}
+
+export const useDataFromUrl = (url, dataCategory) => {
+  const { urlLimit } = useContext(MainContext)
+  const [reducerState, dispatch] = useReducer(reducer, reducerInit)
+
+  const { localKey, category, options, transformationKeys } = dataCategory
+  const { arrayOnly } = options
+
+  let localData = JSON.parse(localStorage.getItem(localKey))
+  let updatedLocalData = {}
+  let arrayToSave = []
+
+  // if local data exists and has values, prepare for re-saving
+  if (!!localData && Object.keys(localData).length > 0) {
+    updatedLocalData = { ...localData }
+  }
+
+  const fetchData = async (url, localData) => {
+    //  setDataProcessed(false)
+    // if no urls exit
+    if (!url) return
+
+    // if local key exists, use-- else fetch
+    if (localData == null || !localData[url]) {
+      console.log(`fetching ${category} from ${url}`)
+      let result = await fetch(url).then((res) => res.json())
+
+      if (result.length === 0) {
+        arrayToSave = []
+      } else {
+        result.forEach((obj, i) => {
+          let newObj = {}
+          transformationKeys.forEach((el) => {
+            if (el.transformation == null) {
+              newObj[el.key] = obj[el.key]
+            } else {
+              newObj[el.key] = el.transformation(obj[el.key])
+            }
+          })
+          result[i] = newObj
+        })
+        arrayToSave = result
+      }
+
+      updatedLocalData[url] = arrayToSave
+      localStorage.setItem(localKey, JSON.stringify(updatedLocalData))
+    } else {
+      console.log(`fetching ${category} from local`)
+      arrayToSave = localData[url]
+    }
+    dispatch({ type: SET_DATA, payload: arrayToSave })
+  }
+
+  useEffect(() => {
+    fetchData(url, localData)
+  }, [url])
 
   return [reducerState]
 }

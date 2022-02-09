@@ -246,6 +246,7 @@ export const useAssignedFullData = (pokemon) => {
     height: '',
     weight: '',
     abilities: [{ name: '', url: '' }],
+    location_area_encounters: '',
     moves: [
       {
         name: '',
@@ -293,6 +294,7 @@ export const useAssignedFullData = (pokemon) => {
         height,
         weight,
         abilities,
+        location_area_encounters,
         moves,
         sprites: {
           front_default,
@@ -312,6 +314,7 @@ export const useAssignedFullData = (pokemon) => {
         height,
         weight,
         abilities,
+        location_area_encounters,
         moves,
         sprites: {
           front_default,
