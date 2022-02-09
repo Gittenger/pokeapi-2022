@@ -1,4 +1,10 @@
 export const dataCategories = {
+  urlsInit: {
+    options: { useUrlIndex: false, arrayOnly: true },
+    category: 'urlsInit',
+    localKey: 'urlsInitData',
+    transformationKeys: [],
+  },
   abilities: {
     options: { useUrlIndex: false, arrayOnly: false },
     category: 'abilities',
