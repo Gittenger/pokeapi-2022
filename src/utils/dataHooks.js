@@ -8,8 +8,6 @@ import dataCategories from './dataCategories'
 export const useDetailsData = (urls, dataCategory) => {
   const { urlLimit } = useContext(MainContext)
   const [reducerState, dispatch] = useReducer(reducer, reducerInit)
-  let dependencyUrl = ''
-  if ((urls.length = 1)) dependencyUrl = urls[0]
 
   const { localKey, category, options, transformationKeys } = dataCategory
   const { arrayOnly } = options
@@ -57,65 +55,40 @@ export const useDetailsData = (urls, dataCategory) => {
 
     // if (dataCategory.category == 'encounters') console.log(result)
 
-    if (arrayOnly) {
-      if (localData == null || !localData[urls[0]]) {
-        if (category == 'encounters') result = result[0]
-        result.forEach((obj, resultIndex) => {
-          const dataFromApi = {}
+    // set from API
+    urls.forEach((url, urlIndex) => {
+      if (!url) return
+      // if using url limit for data
+      if (options.useUrlLimit && urlIndex > parseInt(urlLimit) - 1) return
+      if (localData == null || !localData[url]) {
+        console.log(`setting ${category} from API`)
 
-          // transform and save data
-          transformationKeys.forEach((el) => {
-            if (el.transformation == null)
-              dataFromApi[el.key] = result[resultIndex][el.key]
-            else {
-              dataFromApi[el.key] = el.transformation(
-                result[resultIndex][el.key],
-                resultIndex,
-                urlLimit
-              )
-            }
-          })
-          arrayToSave.push(dataFromApi)
-        })
-        objectToSave[urls[0]] = arrayToSave
-        localStorage.setItem(localKey, JSON.stringify(objectToSave))
-      }
-    } else {
-      // set from API
-      urls.forEach((url, urlIndex) => {
-        if (!url) return
-        // if using url limit for data
-        if (options.useUrlLimit && urlIndex > parseInt(urlLimit) - 1) return
-        if (localData == null || !localData[url]) {
-          console.log(`setting ${category} from API`)
+        const dataFromApi = {}
 
-          const dataFromApi = {}
-
-          // transform and save data
-          transformationKeys.forEach((el) => {
-            if (el.transformation == null)
-              dataFromApi[el.key] = result[urlIndex][el.key]
-            else {
-              dataFromApi[el.key] = el.transformation(
-                result[urlIndex][el.key],
-                urlIndex,
-                urlLimit
-              )
-            }
-          })
-
-          // array for sending to component
-          arrayToSave[urlIndex] = { ...arrayToSave[urlIndex], ...dataFromApi }
-          // object for saving to local
-          objectToSave[urls[urlIndex]] = {
-            ...objectToSave[urls[urlIndex]],
-            ...dataFromApi,
+        // transform and save data
+        transformationKeys.forEach((el) => {
+          if (el.transformation == null)
+            dataFromApi[el.key] = result[urlIndex][el.key]
+          else {
+            dataFromApi[el.key] = el.transformation(
+              result[urlIndex][el.key],
+              urlIndex,
+              urlLimit
+            )
           }
+        })
+
+        // array for sending to component
+        arrayToSave[urlIndex] = { ...arrayToSave[urlIndex], ...dataFromApi }
+        // object for saving to local
+        objectToSave[urls[urlIndex]] = {
+          ...objectToSave[urls[urlIndex]],
+          ...dataFromApi,
         }
-      })
-      // save obj to local
-      localStorage.setItem(localKey, JSON.stringify(objectToSave))
-    }
+      }
+    })
+    // save obj to local
+    localStorage.setItem(localKey, JSON.stringify(objectToSave))
 
     dispatch({ type: SET_DATA, payload: arrayToSave })
     // setDataProcessed(true)
@@ -128,12 +101,11 @@ export const useDetailsData = (urls, dataCategory) => {
   return [reducerState]
 }
 
-export const useDataFromUrl = (url, dataCategory) => {
-  const { urlLimit } = useContext(MainContext)
+export const useArrayData = (url, dataCategory) => {
+  // const { urlLimit } = useContext(MainContext)
   const [reducerState, dispatch] = useReducer(reducer, reducerInit)
 
   const { localKey, category, options, transformationKeys } = dataCategory
-  const { arrayOnly } = options
 
   let localData = JSON.parse(localStorage.getItem(localKey))
   let updatedLocalData = {}
@@ -146,21 +118,25 @@ export const useDataFromUrl = (url, dataCategory) => {
 
   const fetchData = async (url, localData) => {
     //  setDataProcessed(false)
+
     // if no urls exit
     if (!url) return
-
     // if local key exists, use-- else fetch
     if (localData == null || !localData[url]) {
       console.log(`fetching ${category} from ${url}`)
-      let result = await fetch(url).then((res) => res.json())
+      const result = await fetch(url).then((res) => res.json())
+
+      let transformedResult = [...result]
 
       if (result.length === 0) {
         arrayToSave = []
       } else if (category == dataCategories.urlsInit.category) {
         arrayToSave = result.results.map((el) => el.url)
       } else {
-        result.forEach((obj, i) => {
+        // create transformations on each element of result, then prepare for saving
+        transformedResult.forEach((obj, i) => {
           let newObj = {}
+
           transformationKeys.forEach((el) => {
             if (el.transformation == null) {
               newObj[el.key] = obj[el.key]
@@ -168,17 +144,21 @@ export const useDataFromUrl = (url, dataCategory) => {
               newObj[el.key] = el.transformation(obj[el.key])
             }
           })
-          result[i] = newObj
+          transformedResult[i] = newObj
         })
-        arrayToSave = result
+
+        arrayToSave = transformedResult
       }
 
+      // save array in local url key
+      // updatedLocal preserves old
       updatedLocalData[url] = arrayToSave
       localStorage.setItem(localKey, JSON.stringify(updatedLocalData))
     } else {
       console.log(`fetching ${category} from local`)
       arrayToSave = localData[url]
     }
+    // dispatch transformed/local array to component state
     dispatch({ type: SET_DATA, payload: arrayToSave })
   }
 

@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 
 import data from './test.data.json'
 // data.results.map((el) => el.url)
-import { useDetailsData, useDataFromUrl } from '../utils/dataHooks'
+import { useDetailsData, useArrayData } from '../utils/dataHooks'
 import dataCategories from '../utils/dataCategories'
 
 const TestPage = () => {
-  useDataFromUrl(
+  useArrayData(
     'https://pokeapi.co/api/v2/pokemon/7/encounters',
     dataCategories.encounters
   )

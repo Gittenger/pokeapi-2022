@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 
 // import CIndex from '../components/components.index.js'
 import { useAssignedFullData, useTitle } from '../utils/hooks.js'
-import { useDetailsData, useDataFromUrl } from '../utils/dataHooks.js'
+import { useDetailsData, useArrayData } from '../utils/dataHooks.js'
 import dataCategories from '../utils/dataCategories.js'
 
 const PokemonDetailContent = ({ pokemon }) => {
@@ -14,7 +14,7 @@ const PokemonDetailContent = ({ pokemon }) => {
   const [encountersUrl, setEncountersUrl] = useState('')
   useDetailsData(abilitiesMap, dataCategories.abilities)
   useDetailsData(movesMap, dataCategories.moves)
-  useDataFromUrl(encountersUrl, dataCategories.encounters)
+  useArrayData(encountersUrl, dataCategories.encounters)
 
   const {
     id,

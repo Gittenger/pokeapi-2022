@@ -5,7 +5,7 @@ import {
   pokemonReducer,
 } from '../reducer/pokemonReducer.js'
 import { SET_POKEMON_DATA } from '../reducer/actions.js'
-import { useDataFromUrl } from './dataHooks.js'
+import { useArrayData } from './dataHooks.js'
 import dataCategories from './dataCategories'
 
 export const useTitle = (title) => {
@@ -46,7 +46,7 @@ export const usePokemonData = () => {
   const { urlLimit } = useContext(MainContext)
   const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
 
-  const [urlsInitState] = useDataFromUrl(urlInit, dataCategories.urlsInit)
+  const [urlsInitState] = useArrayData(urlInit, dataCategories.urlsInit)
   const [pokemonDataProcessed, setDataProcessed] = useState(false)
 
   let localPokemonData = JSON.parse(localStorage.getItem('pokemonData'))
