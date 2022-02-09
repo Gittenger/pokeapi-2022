@@ -47,6 +47,10 @@ interface abilityData {
 
 interface itemData {
 	name: string,
+	effect_entries: [{effect: string}],
+	flavor_text_entries: [{
+		flavor_text: string
+	}],
 	sprites: {
 		default: string
 	}
