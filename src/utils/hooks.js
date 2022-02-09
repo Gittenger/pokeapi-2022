@@ -87,7 +87,7 @@ export const usePokemonData = () => {
           console.log(`fetching from ${url}`)
           return fetch(url).then((res) => res.json())
         } else {
-          console.log('from local!')
+          console.log('pokemon data from local!')
           return localPokemonData[url]
         }
       })
@@ -246,6 +246,12 @@ export const useAssignedFullData = (pokemon) => {
     height: '',
     weight: '',
     abilities: [{ name: '', url: '' }],
+    moves: [
+      {
+        name: '',
+        url: '',
+      },
+    ],
     sprites: {
       front_default: '',
       other: {
@@ -287,6 +293,7 @@ export const useAssignedFullData = (pokemon) => {
         height,
         weight,
         abilities,
+        moves,
         sprites: {
           front_default,
           other: { dream_world, home },
@@ -305,6 +312,7 @@ export const useAssignedFullData = (pokemon) => {
         height,
         weight,
         abilities,
+        moves,
         sprites: {
           front_default,
           other: {

@@ -74,8 +74,7 @@ interface moveData {
 	power: number,
 	damage_class: {
 		name: string,
-	}
-	,
+	},
 	effect_changes: [],
 	stat_changes: [],
 	effect_entries: [{effect: string}],

@@ -1,134 +1,96 @@
 import { useEffect, useState, useContext, useReducer } from 'react'
 import MainContext from '../contexts/MainContext'
-import {
-  abilitiesReducer,
-  abilitiesReducerInit,
-} from '../reducer/abilitiesReducer.js'
-import { SET_ABILITIES_DATA } from '../reducer/actions.js'
 
-export const useAbilitiesData = (urls) => {
-  const [abilitiesState, dispatch] = useReducer(
-    abilitiesReducer,
-    abilitiesReducerInit
-  )
+import { reducer, reducerInit } from '../reducer/reducer.js'
+import { SET_DATA } from '../reducer/actions.js'
 
+export const useDetailsData = (urls, dataCategory) => {
   const { urlLimit } = useContext(MainContext)
+  const [reducerState, dispatch] = useReducer(reducer, reducerInit)
 
-  let localAbilitiesData = JSON.parse(localStorage.getItem('abilitiesData'))
-  let abilitiesData = {}
+  const { localKey, category, options, transformationKeys } = dataCategory
 
-  if (!!localAbilitiesData && Object.keys(localAbilitiesData).length > 0) {
-    abilitiesData = { ...localAbilitiesData }
+  let localData = JSON.parse(localStorage.getItem(localKey))
+  let objectToSave = {}
+  const arrayToSave = []
+
+  // if local data exists and has values, prepare for re-saving
+  if (!!localData && Object.keys(localData).length > 0) {
+    objectToSave = { ...localData }
   }
 
-  const fetchData = async (urls, localAbilitiesData) => {
+  const fetchData = async (urls, localData) => {
     //  setDataProcessed(false)
     // if no urls exit
     if (urls.length === 0) return
     // await resolved map
     const result = await Promise.all(
-      urls.map((url) => {
-        // if local key exists, use, else fetch
+      urls.map((url, urlIndex) => {
+        // if local key exists, use-- else fetch
         if (!url) return
-        if (localAbilitiesData == null || !localAbilitiesData[url]) {
-          console.log(`fetching abilities from ${url}`)
+        if (localData == null || !localData[url]) {
+          console.log(`fetching ${category} from ${url}`)
           return fetch(url).then((res) => res.json())
         } else {
-          console.log('abilities from local!')
-          return localAbilitiesData[url]
+          console.log(`fetching/setting ${category} from local!`)
+          // no transformations from local
+          // each key has val from local data
+          transformationKeys.forEach((el) => {
+            objectToSave[url][el.key] = localData[url][el.key]
+          })
+
+          // array--component, object--local
+          arrayToSave[urlIndex] = localData[url]
+          objectToSave[urls[urlIndex]] = localData[url]
+          return localData[url]
         }
       })
     )
 
-    const finalData = []
+    // if (dataCategory.category == 'moves') console.log(result)
 
-    urls.map((url, i) => {
-      if (i > parseInt(urlLimit) - 1 || !url) return
-      if (!!localAbilitiesData && localAbilitiesData[url]) {
-        console.log('setting from local')
-        const {
-          id,
-          name,
-          effect_changes,
-          flavor_text,
-          effect_entries,
-          pokemon,
-        } = localAbilitiesData[url]
+    // set from API
+    urls.forEach((url, urlIndex) => {
+      if (!url) return
+      // if using url limit for data
+      if (options.useUrlLimit && urlIndex > parseInt(urlLimit) - 1) return
+      if (localData == null || !localData[url]) {
+        console.log(`setting ${category} from API`)
 
-        const dataFromLocal = {
-          id,
-          name,
-          effect_changes,
-          flavor_text,
-          effect_entries,
-          pokemon,
+        const dataFromApi = {}
+
+        // transform and save data
+        transformationKeys.forEach((el) => {
+          if (el.transformation == null)
+            dataFromApi[el.key] = result[urlIndex][el.key]
+          else {
+            dataFromApi[el.key] = el.transformation(
+              result[urlIndex][el.key],
+              urlIndex,
+              urlLimit
+            )
+          }
+        })
+
+        // array for sending to component
+        arrayToSave[urlIndex] = { ...arrayToSave[urlIndex], ...dataFromApi }
+        // object for saving to local
+        objectToSave[urls[urlIndex]] = {
+          ...objectToSave[urls[urlIndex]],
+          ...dataFromApi,
         }
-
-        finalData[i] = dataFromLocal
-        abilitiesData[urls[i]] = dataFromLocal
-      } else {
-        const {
-          id,
-          name,
-          effect_changes,
-          flavor_text_entries,
-          effect_entries,
-          pokemon,
-        } = result[i]
-
-        const dataFromApi = {
-          id,
-          name,
-          effect_changes:
-            effect_changes.length > 0
-              ? effect_changes.map((el) => {
-                  return {
-                    effect: el.effect_entries.filter(
-                      (el) => el.language.name == 'en'
-                    )[0]?.effect,
-                  }
-                })
-              : //  maybe shrink to first entry only, later
-                [],
-          flavor_text: {
-            text: flavor_text_entries
-              ? flavor_text_entries.filter((el) => {
-                  return el.language.name == 'en'
-                })[0]?.flavor_text
-              : {},
-          },
-          effect_entries: {
-            effect: effect_entries
-              ? effect_entries.filter((el) => {
-                  return el.language.name == 'en'
-                })[0]?.effect
-              : {},
-            short_effect: effect_entries
-              ? effect_entries.filter((el) => {
-                  return el.language.name == 'en'
-                })[0]?.short_effect
-              : {},
-          },
-          pokemon: pokemon.filter((el, i) => {
-            const regex = /https:\/\/pokeapi.co\/api\/v2\/pokemon\/(\d+)/
-            const match = el.pokemon.url.match(regex)
-            return match ? parseInt(match[1]) <= urlLimit : false
-          }),
-        }
-
-        finalData[i] = { ...finalData[i], ...dataFromApi }
-        abilitiesData[urls[i]] = { ...abilitiesData[urls[i]], ...dataFromApi }
       }
-
-      localStorage.setItem('abilitiesData', JSON.stringify(abilitiesData))
-      dispatch({ type: SET_ABILITIES_DATA, payload: finalData })
-      // setDataProcessed(true)
     })
+
+    // save obj to local
+    localStorage.setItem(localKey, JSON.stringify(objectToSave))
+    dispatch({ type: SET_DATA, payload: arrayToSave })
+    // setDataProcessed(true)
   }
 
   useEffect(() => {
-    fetchData(urls, localAbilitiesData)
+    fetchData(urls, localData)
   }, [urls])
 
-  return [abilitiesState]
+  return [reducerState]
 }

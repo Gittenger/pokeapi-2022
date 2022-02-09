@@ -2,14 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 
 // import CIndex from '../components/components.index.js'
 import { useAssignedFullData, useTitle } from '../utils/hooks.js'
-import { useAbilitiesData } from '../utils/dataHooks.js'
+import { useDetailsData } from '../utils/dataHooks.js'
+import dataCategories from '../utils/dataCategories.js'
 
 const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
 
   const [dataValues] = useAssignedFullData(pokemon)
   const [abilitiesMap, setAbilitiesMap] = useState([])
-  useAbilitiesData(abilitiesMap)
+  const [movesMap, setMovesMap] = useState([])
+  useDetailsData(abilitiesMap, dataCategories.abilities)
+  useDetailsData(movesMap, dataCategories.moves)
 
   const {
     id,
@@ -30,6 +33,12 @@ const PokemonDetailContent = ({ pokemon }) => {
     // console.log(dataValues)
     setAbilitiesMap(
       dataValues.abilities.map((el) => {
+        return el.url
+      })
+    )
+
+    setMovesMap(
+      dataValues.moves.map((el) => {
         return el.url
       })
     )
