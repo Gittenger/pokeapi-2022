@@ -3,6 +3,7 @@ import MainContext from '../contexts/MainContext'
 
 import { reducer, reducerInit } from '../reducer/reducer.js'
 import { SET_DATA } from '../reducer/actions.js'
+import dataCategories from './dataCategories'
 
 export const useDetailsData = (urls, dataCategory) => {
   const { urlLimit } = useContext(MainContext)
@@ -155,6 +156,8 @@ export const useDataFromUrl = (url, dataCategory) => {
 
       if (result.length === 0) {
         arrayToSave = []
+      } else if (category == dataCategories.urlsInit.category) {
+        arrayToSave = result.results.map((el) => el.url)
       } else {
         result.forEach((obj, i) => {
           let newObj = {}

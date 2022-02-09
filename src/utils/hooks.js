@@ -4,8 +4,9 @@ import {
   pokemonReducerInit,
   pokemonReducer,
 } from '../reducer/pokemonReducer.js'
-import { urlsReducerInit, urlsReducer } from '../reducer/urlsReducer.js'
-import { SET_URLS, SET_POKEMON_DATA } from '../reducer/actions.js'
+import { SET_POKEMON_DATA } from '../reducer/actions.js'
+import { useDataFromUrl } from './dataHooks.js'
+import dataCategories from './dataCategories'
 
 export const useTitle = (title) => {
   useEffect(() => {
@@ -37,30 +38,6 @@ export const usePagination = (currentPage) => {
   return { pageCount, offset }
 }
 
-export const useUrlsInit = (urlInit) => {
-  const [urlsInitState, dispatch] = useReducer(urlsReducer, urlsReducerInit)
-  const { urlLimit } = useContext(MainContext)
-
-  const fetchUrls = async (urlInit) => {
-    const data = await fetch(urlInit).then((res) => res.json())
-    // map payload as urls, dispatch, cache
-    const payload = data.results.map((el) => el.url)
-    dispatch({ type: SET_URLS, payload })
-    localStorage.setItem('urlsInit', JSON.stringify(payload))
-  }
-
-  useEffect(() => {
-    // if cached & correct length, dispatch from cache, else fetch
-    const localUrlsInit = JSON.parse(localStorage.getItem('urlsInit'))
-    if (!localUrlsInit || localUrlsInit.length != urlLimit) fetchUrls(urlInit)
-    else {
-      dispatch({ type: SET_URLS, payload: localUrlsInit })
-    }
-  }, [])
-
-  return [urlsInitState]
-}
-
 export const usePokemonData = () => {
   const [pokemonState, dispatch] = useReducer(
     pokemonReducer,
@@ -69,7 +46,7 @@ export const usePokemonData = () => {
   const { urlLimit } = useContext(MainContext)
   const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
 
-  const [urlsInitState] = useUrlsInit(urlInit)
+  const [urlsInitState] = useDataFromUrl(urlInit, dataCategories.urlsInit)
   const [pokemonDataProcessed, setDataProcessed] = useState(false)
 
   let localPokemonData = JSON.parse(localStorage.getItem('pokemonData'))
