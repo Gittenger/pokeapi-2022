@@ -93,16 +93,49 @@ const EncountersRender = React.memo(function ({ encountersData, versionsMap }) {
               <li key={i}>
                 <p className="font-bold text-xl underline">{el.name}</p>
                 {encountersData
-                  .map((enc) => {
-                    return {
-                      ...enc,
-                      version_details: enc.version_details.filter(
-                        (ver) => ver.version_name == el.name
-                      ),
-                    }
+                  // map of only locations matching current pokemon encountersData
+                  .filter((enc) => {
+                    return enc.version_details.some((version) => {
+                      return version.version_name == el.name
+                    })
+                  })
+                  // transform location string
+                  .map((el, i, arr) => {
+                    const str = el.location_area.name
+                    const regex = /.*(-\d+.*)/
+                    let transformed = str
+
+                    transformed =
+                      str.search(regex) != -1
+                        ? str.replace(str.match(regex)[1], '')
+                        : str
+
+                    transformed =
+                      transformed.search(regex) != -1
+                        ? transformed.replace(transformed.match(regex)[1], '')
+                        : transformed
+
+                    transformed =
+                      transformed.search(/-area$/) != -1
+                        ? transformed.replace(
+                            transformed.match(/-area$/)[0],
+                            ''
+                          )
+                        : transformed
+
+                    return transformed
+                      .split('-')
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                      )
+                      .join(' ')
+                  })
+                  // filter remaining duplicates, then display
+                  .filter((el, i, arr) => {
+                    return arr.indexOf(el) == i
                   })
                   .map((el, i) => (
-                    <p key={i}>{el.location_area.name}</p>
+                    <p key={i}>{el}</p>
                   ))}
               </li>
             )
