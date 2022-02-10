@@ -97,7 +97,7 @@ export const useDetailsData = (urls, dataCategory) => {
 
 export const useArrayData = (url, dataCategory) => {
   // const { urlLimit } = useContext(MainContext)
-  const [reducerState, dispatch] = useReducer(reducer, reducerInit)
+  const [reducerState, dispatch] = useReducer(reducer, reducerInit.array)
 
   const { localKey, category, options, transformationKeys } = dataCategory
 
@@ -112,7 +112,6 @@ export const useArrayData = (url, dataCategory) => {
 
   const fetchData = async (url, localData) => {
     //  setDataProcessed(false)
-
     // if no urls exit
     if (!url) return
     // if local key exists, use-- else fetch
@@ -122,9 +121,10 @@ export const useArrayData = (url, dataCategory) => {
 
       if (result.length === 0) {
         arrayToSave = []
-      } else if (category == dataCategories.urlsInit.category) {
-        arrayToSave = result.results.map((el) => el.url)
-      } else if (category == dataCategories.versions.category) {
+      } else if (
+        category == dataCategories.urlsInit.category ||
+        category == dataCategories.versions.category
+      ) {
         arrayToSave = [...result.results]
       } else {
         let transformedResult = [...result]

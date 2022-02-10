@@ -2,7 +2,10 @@ import actions from './actions'
 
 const { SET_DATA } = actions
 
-export const reducerInit = []
+export const reducerInit = {
+  object: {},
+  array: [],
+}
 
 export const reducer = (state, action) => {
   switch (action.type) {

@@ -52,11 +52,11 @@ const Display = ({ id: currentPage }) => {
                   >
                     <div className="">
                       <ul className="flex space-x-2">
-                        {pokemonObject[el]?.types.map((type, i) => (
+                        {pokemonObject[el.url]?.types.map((type, i) => (
                           <li key={i}>{type.name}</li>
                         ))}
                       </ul>
-                      {pokemonObject[el]?.stats
+                      {pokemonObject[el.url]?.stats
                         .filter((el) => {
                           return el.name == 'hp'
                         })
@@ -65,15 +65,16 @@ const Display = ({ id: currentPage }) => {
                         ))}
                     </div>
                     <h3 className="capitalize text-gray-800 text-2xl underline font-bold">
-                      <Link to={`/pokemon/${pokemonObject[el]?.name}`}>
-                        {pokemonObject[el]?.name}
+                      <Link to={`/pokemon/${pokemonObject[el.url]?.name}`}>
+                        {pokemonObject[el.url]?.name}
                       </Link>
                     </h3>
                     <div className="mt-2">
                       <img
                         src={
-                          pokemonObject[el]?.sprites.other['official-artwork']
-                            .front_default
+                          pokemonObject[el.url]?.sprites.other[
+                            'official-artwork'
+                          ].front_default
                         }
                         alt=""
                       />

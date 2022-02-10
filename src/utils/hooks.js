@@ -37,13 +37,17 @@ export const usePokemonData = () => {
   const { urlLimit } = useContext(MainContext)
 
   const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
-  const [urlsMap] = useArrayData(urlInit, dataCategories.urlsInit)
+  const [urlResults] = useArrayData(urlInit, dataCategories.urlsInit)
+  const [urlsMap, setUrlsMap] = useState([])
 
   const [pokemonObject] = useDetailsData(urlsMap, dataCategories.pokemon)
 
   // const [pokemonDataProcessed, setDataProcessed] = useState(false)
+  useEffect(() => {
+    setUrlsMap(urlResults.map((el) => el.url))
+  }, [urlResults])
 
-  return [pokemonObject, urlsMap]
+  return [pokemonObject, urlResults]
 }
 
 export const useAssignedFullData = (pokemon) => {
@@ -99,7 +103,9 @@ export const useAssignedFullData = (pokemon) => {
   useEffect(() => {
     if (Object.keys(pokemonObject).length > 0) {
       let currentPokemon = urlsMap
-        .map((url) => pokemonObject[url])
+        .map((el) => {
+          return pokemonObject[el.url]
+        })
         .filter((el) => el.name == pokemon)
 
       currentPokemon = {
