@@ -1,11 +1,5 @@
 import { useEffect, useState, useContext, useReducer } from 'react'
 import MainContext from '../contexts/MainContext'
-import {
-  pokemonReducerInit,
-  pokemonReducer,
-} from '../reducer/pokemonReducer.js'
-import { SET_POKEMON_DATA } from '../reducer/actions.js'
-import { reducer, reducerInit } from '../reducer/reducer'
 import { useArrayData, useDetailsData } from './dataHooks.js'
 import dataCategories from './dataCategories'
 
