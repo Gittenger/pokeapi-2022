@@ -8,18 +8,15 @@ import dataCategories from './dataCategories'
 
 export const useDetailsData = (urls, dataCategory) => {
   const { urlLimit } = useContext(MainContext)
-  const [reducerState, dispatch] = useReducer(reducer, reducerInit)
   const [objectReducerState, dispatchObject] = useReducer(
     objectReducer,
     objectReducerInit
   )
 
   const { localKey, category, options, transformationKeys } = dataCategory
-  const { arrayOnly } = options
 
   let localData = JSON.parse(localStorage.getItem(localKey))
   let objectToSave = {}
-  let arrayToSave = []
 
   // if local data exists and has values, prepare for re-saving
   if (!!localData && Object.keys(localData).length > 0) {
@@ -40,20 +37,14 @@ export const useDetailsData = (urls, dataCategory) => {
           return fetch(url).then((res) => res.json())
         } else {
           console.log(`fetching/setting ${category} from local!`)
-          if (!arrayOnly) {
-            // no transformations from local
-            // each key has val from local data
-            transformationKeys.forEach((el) => {
-              objectToSave[url][el.key] = localData[url][el.key]
-            })
+          // no transformations from local
+          // each key has val from local data
+          transformationKeys.forEach((el) => {
+            objectToSave[url][el.key] = localData[url][el.key]
+          })
 
-            // array--component, object--local
-            arrayToSave[urlIndex] = localData[url]
-            objectToSave[urls[urlIndex]] = localData[url]
-            return localData[url]
-          } else {
-            arrayToSave = localData[url]
-          }
+          objectToSave[urls[urlIndex]] = localData[url]
+          return localData[url]
         }
       })
     )
@@ -83,8 +74,6 @@ export const useDetailsData = (urls, dataCategory) => {
           }
         })
 
-        // array for sending to component
-        arrayToSave[urlIndex] = { ...arrayToSave[urlIndex], ...dataFromApi }
         // object for saving to local
         objectToSave[urls[urlIndex]] = {
           ...objectToSave[urls[urlIndex]],
@@ -96,7 +85,6 @@ export const useDetailsData = (urls, dataCategory) => {
     localStorage.setItem(localKey, JSON.stringify(objectToSave))
     dispatchObject({ type: SET_OBJECT, payload: objectToSave })
 
-    dispatch({ type: SET_DATA, payload: arrayToSave })
     // setDataProcessed(true)
   }
 
@@ -104,7 +92,7 @@ export const useDetailsData = (urls, dataCategory) => {
     fetchData(urls, localData)
   }, [urls])
 
-  return [reducerState, objectReducerState]
+  return [objectReducerState]
 }
 
 export const useArrayData = (url, dataCategory) => {

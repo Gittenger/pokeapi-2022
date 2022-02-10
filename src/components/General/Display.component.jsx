@@ -14,7 +14,7 @@ const Display = ({ id: currentPage }) => {
   const { pageCount, offset } = usePagination(currentPage, 13)
 
   // get pokemon data
-  const [pokemonData] = usePokemonData()
+  const [pokemonObject, urlsMap] = usePokemonData()
 
   useEffect(() => {
     if (currentPage) setActivePage(currentPage)
@@ -34,7 +34,7 @@ const Display = ({ id: currentPage }) => {
             activePage={activePage}
           />
           <div className="grid gap-y-14 gap-x-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {pokemonData
+            {urlsMap
               // .map((el) => {
               //   return {
               //     ...el,
@@ -52,22 +52,29 @@ const Display = ({ id: currentPage }) => {
                   >
                     <div className="">
                       <ul className="flex space-x-2">
-                        {el.types.map((type, i) => (
+                        {pokemonObject[el]?.types.map((type, i) => (
                           <li key={i}>{type.name}</li>
                         ))}
                       </ul>
-                      {el.stats
-                        .filter((el) => el.name == 'hp')
+                      {pokemonObject[el]?.stats
+                        .filter((el) => {
+                          return el.name == 'hp'
+                        })
                         .map((el, i) => (
                           <p key={i}>hp: {el.base_stat}</p>
                         ))}
                     </div>
                     <h3 className="capitalize text-gray-800 text-2xl underline font-bold">
-                      <Link to={`/pokemon/${el.name}`}>{el.name}</Link>
+                      <Link to={`/pokemon/${pokemonObject[el]?.name}`}>
+                        {pokemonObject[el]?.name}
+                      </Link>
                     </h3>
                     <div className="mt-2">
                       <img
-                        src={el.sprites.other['official-artwork'].front_default}
+                        src={
+                          pokemonObject[el]?.sprites.other['official-artwork']
+                            .front_default
+                        }
                         alt=""
                       />
                     </div>

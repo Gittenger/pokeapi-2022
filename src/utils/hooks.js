@@ -37,13 +37,13 @@ export const usePokemonData = () => {
   const { urlLimit } = useContext(MainContext)
 
   const urlInit = `https://pokeapi.co/api/v2/pokemon/?limit=${urlLimit}`
-  const [urlsInitState] = useArrayData(urlInit, dataCategories.urlsInit)
+  const [urlsMap] = useArrayData(urlInit, dataCategories.urlsInit)
 
-  const [pokemonState] = useDetailsData(urlsInitState, dataCategories.pokemon)
+  const [pokemonObject] = useDetailsData(urlsMap, dataCategories.pokemon)
 
   // const [pokemonDataProcessed, setDataProcessed] = useState(false)
 
-  return [pokemonState]
+  return [pokemonObject, urlsMap]
 }
 
 export const useAssignedFullData = (pokemon) => {
@@ -54,21 +54,16 @@ export const useAssignedFullData = (pokemon) => {
     'https://pokeapi.co/api/v2/version/',
     dataCategories.versions
   )
+  // encounter url from currentPokemon
   const [encountersUrl, setEncountersUrl] = useState('')
 
   // maps of urls to get more data, updates when states above update
-  const [abilitiesData, abilitiesObject] = useDetailsData(
+  const [abilitiesObject] = useDetailsData(
     abilitiesMap,
     dataCategories.abilities
   )
-  const [movesData, movesObject] = useDetailsData(
-    movesMap,
-    dataCategories.moves
-  )
-  const [itemsData, itemsObject] = useDetailsData(
-    itemsMap,
-    dataCategories.items
-  )
+  const [movesObject] = useDetailsData(movesMap, dataCategories.moves)
+  const [itemsObject] = useDetailsData(itemsMap, dataCategories.items)
   const [encountersData] = useArrayData(
     encountersUrl,
     dataCategories.encounters
@@ -98,12 +93,14 @@ export const useAssignedFullData = (pokemon) => {
   })
 
   // get top level pokemon data (usually just from local)
-  const [pokemonData] = usePokemonData()
+  const [pokemonObject, urlsMap] = usePokemonData()
 
   // create curated data from incoming pokemonData
   useEffect(() => {
-    if (pokemonData.length > 0) {
-      let currentPokemon = pokemonData.filter((el) => el.name == pokemon)
+    if (Object.keys(pokemonObject).length > 0) {
+      let currentPokemon = urlsMap
+        .map((url) => pokemonObject[url])
+        .filter((el) => el.name == pokemon)
 
       currentPokemon = {
         ...currentPokemon[0],
@@ -125,7 +122,7 @@ export const useAssignedFullData = (pokemon) => {
       // set vals
       setCurrentPokemonData(currentPokemon)
     }
-  }, [pokemon, pokemonData])
+  }, [pokemon, pokemonObject])
 
   // set maps of secondary urls
   // hook will return details of these maps
@@ -150,11 +147,8 @@ export const useAssignedFullData = (pokemon) => {
   return {
     versionsMap,
     currentPokemonData,
-    itemsData,
     itemsObject,
     movesObject,
-    movesData,
-    abilitiesData,
     abilitiesObject,
     encountersData,
   }

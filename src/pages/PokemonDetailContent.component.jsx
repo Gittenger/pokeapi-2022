@@ -28,9 +28,7 @@ const PokemonDetailContent = ({ pokemon }) => {
     },
   } = currentPokemonData
 
-  useEffect(() => {
-    console.log(encountersData)
-  }, [encountersData])
+  // useEffect(() => {}, [currentPokemonData])
 
   return (
     <main className="flex flex-col items-center justify-start bg-slate-800 text-white pt-8 pb-52">
@@ -75,13 +73,14 @@ const PokemonDetailContent = ({ pokemon }) => {
           <ul>
             <p className="underline">game-versions:</p>
             <li>
-              {versionsMap.map((el) => {
+              {versionsMap.map((el, i) => {
                 return (
                   <>
-                    <p className="font-bold text-xl underline">{el.name}</p>
+                    <p key={i} className="font-bold text-xl underline">
+                      {el.name}
+                    </p>
                     {encountersData
                       .map((enc) => {
-                        console.log(encountersData)
                         return {
                           ...enc,
                           version_details: enc.version_details.filter(
