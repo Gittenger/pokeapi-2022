@@ -2,33 +2,34 @@ import React, { useState, useEffect, useContext } from 'react'
 
 // import CIndex from '../components/components.index.js'
 import { useAssignedFullData, useTitle } from '../utils/hooks.js'
-import { useDetailsData, useArrayData } from '../utils/dataHooks.js'
-import dataCategories from '../utils/dataCategories.js'
 
 const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
 
-  const [dataValues] = useAssignedFullData(pokemon)
+  const {
+    currentPokemonData,
+    encountersData,
+    itemsData,
+    abilitiesData,
+    movesData,
+  } = useAssignedFullData(pokemon)
 
   const {
     id,
     name,
     height,
     weight,
-    sprites,
     sprites: {
-      other: { dream_world, home },
-      versions: {
-        generationI: { redBlue, yellow },
-        generationII: { crystal, gold, silver },
-      },
+      other: { dream_world },
     },
-  } = dataValues
+  } = currentPokemonData
 
-  // useEffect(() => {}, [])
+  useEffect(() => {
+    console.log()
+  }, [])
 
   return (
-    <main className="flex flex-col items-center justify-start bg-slate-700 pt-8 pb-52">
+    <main className="flex flex-col items-center justify-start bg-slate-800 text-white pt-8 pb-52">
       <div className="flex flex-col justify-center items-center space-x-4">
         <div className="mb-12">
           <p>{id}</p>
@@ -38,15 +39,6 @@ const PokemonDetailContent = ({ pokemon }) => {
         </div>
         <div>
           <img src={dream_world.front_default} alt="" />
-          <img src={home.front_default} alt="" />
-          <img src={home.front_shiny} alt="" />
-          <img src={crystal.front_shiny_transparent} alt="" />
-          <img src={sprites.front_default} alt="" />
-          <img src={redBlue.front_transparent} alt="" />
-          <img src={yellow.front_transparent} alt="" />
-          <img src={crystal.front_transparent} alt="" />
-          <img src={gold.front_transparent} alt="" />
-          <img src={silver.front_transparent} alt="" />
         </div>
       </div>
     </main>

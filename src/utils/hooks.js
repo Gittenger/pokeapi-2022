@@ -53,12 +53,15 @@ export const useAssignedFullData = (pokemon) => {
   const [encountersUrl, setEncountersUrl] = useState('')
 
   // maps of urls to get more data, updates when states above update
-  useDetailsData(abilitiesMap, dataCategories.abilities)
-  useDetailsData(movesMap, dataCategories.moves)
-  useDetailsData(itemsMap, dataCategories.items)
-  useArrayData(encountersUrl, dataCategories.encounters)
+  const [abilitiesData] = useDetailsData(abilitiesMap, dataCategories.abilities)
+  const [movesData] = useDetailsData(movesMap, dataCategories.moves)
+  const [itemsData] = useDetailsData(itemsMap, dataCategories.items)
+  const [encountersData] = useArrayData(
+    encountersUrl,
+    dataCategories.encounters
+  )
 
-  const [dataValues, setDataValues] = useState({
+  const [currentPokemonData, setCurrentPokemonData] = useState({
     id: 0,
     name: '',
     height: '',
@@ -75,24 +78,8 @@ export const useAssignedFullData = (pokemon) => {
     sprites: {
       front_default: '',
       other: {
-        dream_world: {
-          front_default: '',
-        },
-        home: {
-          front_default: '',
-          front_shiny: '',
-        },
-      },
-      versions: {
-        generationI: {
-          redBlue: { front_transparent: '' },
-          yellow: { front_transparent: '' },
-        },
-        generationII: {
-          crystal: { front_transparent: '', front_shiny_transparent: '' },
-          gold: { front_transparent: '' },
-          silver: { front_transparent: '' },
-        },
+        dream_world: {},
+        home: {},
       },
     },
   })
@@ -108,74 +95,22 @@ export const useAssignedFullData = (pokemon) => {
       currentPokemon = {
         ...currentPokemon[0],
       }
-      // console.log(currentPokemon)
+
       // destructure desired vals
-      const {
-        id,
-        name,
-        height,
-        weight,
-        abilities,
-        location_area_encounters,
-        held_items,
-        moves,
-        sprites: {
-          front_default,
-          other: { dream_world, home },
-          versions: {
-            'generation-i': generationI,
-            'generation-ii': generationII,
-          },
-        },
-      } = currentPokemon
+      // const {
+      //   id,
+      //   name,
+      //   height,
+      //   weight,
+      //   abilities,
+      //   location_area_encounters,
+      //   held_items,
+      //   moves,
+      //   sprites
+      // } = currentPokemon
 
       // set vals
-      setDataValues({
-        ...dataValues,
-        id,
-        name,
-        height,
-        weight,
-        abilities,
-        location_area_encounters,
-        held_items,
-        moves,
-        sprites: {
-          front_default,
-          other: {
-            dream_world: {
-              front_default: dream_world.front_default,
-            },
-            home: {
-              front_default: home.front_default,
-              front_shiny: home.front_shiny,
-            },
-          },
-          versions: {
-            generationI: {
-              redBlue: {
-                front_transparent: generationI['red-blue'].front_transparent,
-              },
-              yellow: {
-                front_transparent: generationI['yellow'].front_transparent,
-              },
-            },
-            generationII: {
-              crystal: {
-                front_transparent: generationII['crystal'].front_transparent,
-                front_shiny_transparent:
-                  generationII['crystal'].front_shiny_transparent,
-              },
-              gold: {
-                front_transparent: generationII['gold'].front_transparent,
-              },
-              silver: {
-                front_transparent: generationII['silver'].front_transparent,
-              },
-            },
-          },
-        },
-      })
+      setCurrentPokemonData(currentPokemon)
     }
   }, [pokemon, pokemonData])
 
@@ -183,21 +118,27 @@ export const useAssignedFullData = (pokemon) => {
   // hook will return details of these maps
   useEffect(() => {
     setAbilitiesMap(
-      dataValues.abilities.map((el) => {
+      currentPokemonData.abilities.map((el) => {
         return el.url
       })
     )
 
     setMovesMap(
-      dataValues.moves.map((el) => {
+      currentPokemonData.moves.map((el) => {
         return el.url
       })
     )
 
-    setItemsMap(dataValues.held_items.map((el) => el.url))
+    setItemsMap(currentPokemonData.held_items.map((el) => el.url))
 
-    setEncountersUrl(dataValues.location_area_encounters)
-  }, [dataValues])
+    setEncountersUrl(currentPokemonData.location_area_encounters)
+  }, [currentPokemonData])
 
-  return [dataValues]
+  return {
+    currentPokemonData,
+    itemsData,
+    movesData,
+    abilitiesData,
+    encountersData,
+  }
 }
