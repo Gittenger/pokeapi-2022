@@ -1,0 +1,21 @@
+create object with keys: evolution-chain-urls
+each contains chain obj:
+	chain.species -> { name, url }
+	chain.evolves-to -> [ { species: { name, url } , evolves-to: [ { species: {name, url} , evolves-to: [] } ] }]
+
+	iterate through chain, each species pair, add species url to a local object as key, with object containing evolution chain url as one value,
+	as other value place a list, listing each url in order from chain
+		-- so when getting current pokemon data, can associate current url w/ evolution chain.
+			--loop through chain & find which pokemon it evolves from/to
+				--add each to page
+				
+{
+	'bulbasaurUrl': {
+		evolutionChainUrl: 'url',
+											 chain: [ 
+											 	 1st, // bulba
+												 2nd, // ivy
+												 3rd, // venus
+											 ]
+	}
+}
