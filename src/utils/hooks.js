@@ -135,8 +135,6 @@ export const useAssignedFullData = (pokemon) => {
         },
       } = currentPokemon
 
-      console.log(currentPokemon)
-
       // set vals
       setDataValues({
         ...dataValues,
