@@ -2,12 +2,17 @@ import { useEffect, useState, useContext, useReducer } from 'react'
 import MainContext from '../contexts/MainContext'
 
 import { reducer, reducerInit } from '../reducer/reducer.js'
-import { SET_DATA } from '../reducer/actions.js'
+import { objectReducer, objectReducerInit } from '../reducer/objectReducer.js'
+import { SET_DATA, SET_OBJECT } from '../reducer/actions.js'
 import dataCategories from './dataCategories'
 
 export const useDetailsData = (urls, dataCategory) => {
   const { urlLimit } = useContext(MainContext)
   const [reducerState, dispatch] = useReducer(reducer, reducerInit)
+  const [objectReducerState, dispatchObject] = useReducer(
+    objectReducer,
+    objectReducerInit
+  )
 
   const { localKey, category, options, transformationKeys } = dataCategory
   const { arrayOnly } = options
@@ -89,6 +94,7 @@ export const useDetailsData = (urls, dataCategory) => {
     })
     // save obj to local
     localStorage.setItem(localKey, JSON.stringify(objectToSave))
+    dispatchObject({ type: SET_OBJECT, payload: objectToSave })
 
     dispatch({ type: SET_DATA, payload: arrayToSave })
     // setDataProcessed(true)
@@ -98,7 +104,7 @@ export const useDetailsData = (urls, dataCategory) => {
     fetchData(urls, localData)
   }, [urls])
 
-  return [reducerState]
+  return [reducerState, objectReducerState]
 }
 
 export const useArrayData = (url, dataCategory) => {

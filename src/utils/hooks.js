@@ -53,7 +53,10 @@ export const useAssignedFullData = (pokemon) => {
   const [encountersUrl, setEncountersUrl] = useState('')
 
   // maps of urls to get more data, updates when states above update
-  const [abilitiesData] = useDetailsData(abilitiesMap, dataCategories.abilities)
+  const [abilitiesData, abilitiesObject] = useDetailsData(
+    abilitiesMap,
+    dataCategories.abilities
+  )
   const [movesData] = useDetailsData(movesMap, dataCategories.moves)
   const [itemsData] = useDetailsData(itemsMap, dataCategories.items)
   const [encountersData] = useArrayData(
@@ -68,7 +71,7 @@ export const useAssignedFullData = (pokemon) => {
     weight: '',
     location_area_encounters: '',
     held_items: [{ name: '', url: '' }],
-    abilities: [{ name: '', url: '' }],
+    abilities: [],
     moves: [
       {
         name: '',
@@ -139,6 +142,7 @@ export const useAssignedFullData = (pokemon) => {
     itemsData,
     movesData,
     abilitiesData,
+    abilitiesObject,
     encountersData,
   }
 }
