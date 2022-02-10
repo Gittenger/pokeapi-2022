@@ -125,7 +125,18 @@ export const useArrayData = (url, dataCategory) => {
         category == dataCategories.urlsInit.category ||
         category == dataCategories.versions.category
       ) {
-        arrayToSave = [...result.results]
+        arrayToSave =
+          category == dataCategories.versions.category
+            ? // manually adding x/y versions since not in versions API, but are in encounters
+              [
+                ...result.results,
+                {
+                  name: 'x',
+                  url: '',
+                },
+                { name: 'y', url: '' },
+              ]
+            : [...result.results]
       } else {
         let transformedResult = [...result]
         // create transformations on each element of result, then prepare for saving
