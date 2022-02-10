@@ -50,6 +50,10 @@ export const useAssignedFullData = (pokemon) => {
   const [abilitiesMap, setAbilitiesMap] = useState([])
   const [movesMap, setMovesMap] = useState([])
   const [itemsMap, setItemsMap] = useState([])
+  const [versionsMap] = useArrayData(
+    'https://pokeapi.co/api/v2/version/',
+    dataCategories.versions
+  )
   const [encountersUrl, setEncountersUrl] = useState('')
 
   // maps of urls to get more data, updates when states above update
@@ -57,8 +61,14 @@ export const useAssignedFullData = (pokemon) => {
     abilitiesMap,
     dataCategories.abilities
   )
-  const [movesData] = useDetailsData(movesMap, dataCategories.moves)
-  const [itemsData] = useDetailsData(itemsMap, dataCategories.items)
+  const [movesData, movesObject] = useDetailsData(
+    movesMap,
+    dataCategories.moves
+  )
+  const [itemsData, itemsObject] = useDetailsData(
+    itemsMap,
+    dataCategories.items
+  )
   const [encountersData] = useArrayData(
     encountersUrl,
     dataCategories.encounters
@@ -138,8 +148,11 @@ export const useAssignedFullData = (pokemon) => {
   }, [currentPokemonData])
 
   return {
+    versionsMap,
     currentPokemonData,
     itemsData,
+    itemsObject,
+    movesObject,
     movesData,
     abilitiesData,
     abilitiesObject,

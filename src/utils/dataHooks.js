@@ -136,6 +136,8 @@ export const useArrayData = (url, dataCategory) => {
         arrayToSave = []
       } else if (category == dataCategories.urlsInit.category) {
         arrayToSave = result.results.map((el) => el.url)
+      } else if (category == dataCategories.versions.category) {
+        arrayToSave = [...result.results]
       } else {
         let transformedResult = [...result]
         // create transformations on each element of result, then prepare for saving

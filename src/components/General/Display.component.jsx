@@ -58,8 +58,8 @@ const Display = ({ id: currentPage }) => {
                       </ul>
                       {el.stats
                         .filter((el) => el.name == 'hp')
-                        .map((el) => (
-                          <p>hp: {el.base_stat}</p>
+                        .map((el, i) => (
+                          <p key={i}>hp: {el.base_stat}</p>
                         ))}
                     </div>
                     <h3 className="capitalize text-gray-800 text-2xl underline font-bold">

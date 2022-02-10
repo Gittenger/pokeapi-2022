@@ -5,6 +5,12 @@ export const dataCategories = {
     localKey: 'urlsInitData',
     transformationKeys: [],
   },
+  versions: {
+    options: { useUrlIndex: false, arrayOnly: true },
+    category: 'versions',
+    localKey: 'versionsData',
+    transformationKeys: [],
+  },
   pokemon: {
     options: { useUrlIndex: true, arrayOnly: false },
     category: 'pokemon',
@@ -192,6 +198,10 @@ export const dataCategories = {
       },
       {
         key: 'effect_changes',
+        transformation: null,
+      },
+      {
+        key: 'effect_chance',
         transformation: null,
       },
       {
