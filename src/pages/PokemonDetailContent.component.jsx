@@ -184,9 +184,9 @@ const PokemonDetailContent = ({ pokemon }) => {
 
   useEffect(() => {
     if (stats.length > 0) {
-      var margin = { top: 30, right: 30, bottom: 150, left: 60 },
-        width = 460 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom
+      var margin = { top: 30, right: 30, bottom: 180, left: 60 },
+        width = 500 - margin.left - margin.right,
+        height = 530 - margin.top - margin.bottom
 
       var svg = d3
         .select(ref.current)
