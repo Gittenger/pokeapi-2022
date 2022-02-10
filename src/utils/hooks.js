@@ -78,6 +78,7 @@ export const useAssignedFullData = (pokemon) => {
     name: '',
     height: '',
     weight: '',
+    stats: [],
     location_area_encounters: '',
     held_items: [{ name: '', url: '' }],
     abilities: [],

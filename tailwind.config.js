@@ -4,6 +4,8 @@ module.exports = {
     extend: {
       fontFamily: {
         body: ['Georama'],
+        pokemon: ['Pokemon'],
+        'pokemon-hollow': ['Pokemon-Hollow'],
       },
     },
   },
@@ -11,4 +13,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-};
+}
