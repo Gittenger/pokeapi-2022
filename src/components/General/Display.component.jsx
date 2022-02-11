@@ -7,6 +7,7 @@ import { usePagination, usePokemonData } from '../../utils/hooks'
 import isIndexInBounds from '../../utils/checkBounds'
 import CIndex from '../components.index.js'
 import images from '../../assets/img/img-index.js'
+import styles from './styles/Display.module.css'
 
 const Display = ({ id: currentPage }) => {
   // page settings
@@ -70,7 +71,7 @@ const Display = ({ id: currentPage }) => {
               .map((el, i) => {
                 return isIndexInBounds(offset, pageLimit, i) ? (
                   <div
-                    className="flex flex-col justify-start items-center p-5 bg-indigo-900 ring-4 ring-gray-800 shadow-2xl rounded-3xl h-[430px] w-[99%] xs:w-3/4  sm:w-full relative"
+                    className={`${styles.card} flex flex-col justify-start items-center p-5 bg-indigo-900 ring-4 ring-gray-800 shadow-2xl rounded-3xl h-[430px] w-[99%] xs:w-3/4  sm:w-full relative`}
                     key={i}
                   >
                     <div className="w-full">

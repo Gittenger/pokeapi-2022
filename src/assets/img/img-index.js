@@ -1,4 +1,7 @@
 import PokeLogo from './img/pokeapi.png'
+import GrassBg from './img/grass.png'
+
+// icons
 import BugIcon from './icons/bug.png'
 import DarkIcon from './icons/dark.png'
 import DragonIcon from './icons/dragon.png'
@@ -21,6 +24,7 @@ import WaterIcon from './icons/water.png'
 export const images = {
   img: {
     PokeLogo,
+    GrassBg
   },
   icons: {
     BugIcon,
