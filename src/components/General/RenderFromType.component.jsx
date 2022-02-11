@@ -84,33 +84,38 @@ const RenderIcons = ({ types, className }) => {
 
 const RenderCard = ({ types, key, className, name, sprites }) => {
   return (
-    <div
-      className={`${returnClassName(types, styles)} ${
-        styles.bgImg
-      } ${className} flex fade-in flex-col justify-start items-center p-5 bg-transparent ring-4 ring-gray-800 shadow-2xl rounded-3xl h-[430px] w-[99%] xs:w-3/4  sm:w-full relative`}
-      key={key}
+    <Link
+      className={`${className} bg-transparent rounded-3xl shadow-2xl  h-[430px] w-[99%] xs:w-3/4 group sm:w-full relative`}
+      to={`/pokemon/${name}`}
     >
-      <div className="w-full">
-        {/* icons */}
-        <RenderFromType render="icons" types={types} />
-      </div>
       <div
-        className={`${styles.text} mb-10 mt-5 bg-slate-800 p-2 bg-opacity-30`}
+        className={`${returnClassName(types, styles)} ${
+          styles.bgImg
+        } rounded-3xl ring-4 ring-gray-800 flex fade-in flex-col justify-start items-center p-5 w-full h-full absolute top-0 left-0`}
+        key={key}
       >
-        <h3
-          className={`scale-in-right uppercase text-gray-100 text-4xl font-bold`}
+        <div className="w-full">
+          {/* icons */}
+          <RenderFromType render="icons" types={types} />
+        </div>
+        <div
+          className={`${styles.text} mb-10 mt-5 duration-300 bg-slate-800 group-hover:bg-red-900 p-2 bg-opacity-30 group-hover:bg-opacity-40`}
         >
-          <Link to={`/pokemon/${name}`}>{name}</Link>
-        </h3>
+          <h3
+            className={`scale-in-right uppercase text-gray-100 text-4xl font-bold`}
+          >
+            {name}
+          </h3>
+        </div>
+        <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full">
+          <img
+            className="w-44"
+            src={sprites?.other['official-artwork'].front_default}
+            alt=""
+          />
+        </div>
       </div>
-      <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full">
-        <img
-          className="w-44"
-          src={sprites?.other['official-artwork'].front_default}
-          alt=""
-        />
-      </div>
-    </div>
+    </Link>
   )
 }
 
