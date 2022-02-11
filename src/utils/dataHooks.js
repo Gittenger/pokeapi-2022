@@ -89,7 +89,6 @@ export const useDetailsData = (urls, dataCategory) => {
     dispatchObject({ type: SET_OBJECT, payload: objectToSave })
 
     setDataProcessed(true)
-    console.log(dataProcessed)
   }
 
   useEffect(() => {
