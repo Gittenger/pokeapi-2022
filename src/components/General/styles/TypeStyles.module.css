@@ -8,7 +8,8 @@
   transform: skewX(-10deg);
 
   h3 {
-    transform: skewX(10deg);
+    /* need to add skew to custom keyframes animation */
+    /* transform: skewX(10deg); */
   }
 }
 
