@@ -83,22 +83,27 @@ const RenderIcons = ({ types, className }) => {
 }
 
 const RenderCard = ({ types, key, className, name, sprites }) => {
-  // pokemonObject[url.url]?.name
   return (
     <div
       className={`${returnClassName(types, styles)} ${
         styles.bgImg
-      } ${className} flex flex-col justify-start items-center p-5 bg-indigo-900 ring-4 ring-gray-800 shadow-2xl rounded-3xl h-[430px] w-[99%] xs:w-3/4  sm:w-full relative`}
+      } ${className} flex fade-in flex-col justify-start items-center p-5 bg-transparent ring-4 ring-gray-800 shadow-2xl rounded-3xl h-[430px] w-[99%] xs:w-3/4  sm:w-full relative`}
       key={key}
     >
       <div className="w-full">
         {/* icons */}
         <RenderFromType render="icons" types={types} />
       </div>
-      <h3 className="uppercase mb-10 mt-5 text-gray-100 text-4xl font-bold">
-        <Link to={`/pokemon/${name}`}>{name}</Link>
-      </h3>
-      <div className="flex justify-center items-center bg-slate-100 bg-opacity-50 rounded-full">
+      <div
+        className={`${styles.text} mb-10 mt-5 bg-slate-800 p-2 bg-opacity-30`}
+      >
+        <h3
+          className={`scale-in-right uppercase text-gray-100 text-4xl font-bold`}
+        >
+          <Link to={`/pokemon/${name}`}>{name}</Link>
+        </h3>
+      </div>
+      <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full">
         <img
           className="w-44"
           src={sprites?.other['official-artwork'].front_default}

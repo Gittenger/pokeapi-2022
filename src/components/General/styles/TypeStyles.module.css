@@ -4,6 +4,14 @@
   background-position: center center;
 }
 
+.text {
+  transform: skewX(-10deg);
+
+  h3 {
+    transform: skewX(10deg);
+  }
+}
+
 .bug {
   background-image: url('../../../assets/img/img/bug.png');
 }
