@@ -43,6 +43,7 @@ const PostCSSLoader = {
 module.exports = {
   // need this for async/await
   entry: [
+    // 'webpack-dev-server/client?http://127.0.0.0:4000/',
     'regenerator-runtime/runtime.js',
     path.join(__dirname, 'src/index.js'),
   ],
@@ -55,6 +56,10 @@ module.exports = {
     hot: true,
     static: path.join(__dirname, 'public'),
     historyApiFallback: true,
+    client: {
+      webSocketTransport: 'ws',
+      overlay: true,
+    },
   },
   devtool: 'source-map',
   resolve: {
