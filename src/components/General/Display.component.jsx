@@ -8,15 +8,21 @@ import CIndex from '../components.index.js'
 
 const Display = ({ id: currentPage }) => {
   // page settings
-  const { pageLimit } = useContext(MainContext)
-  const [activePage, setActivePage] = useState('1')
+  const { pageLimit, activePageNumber, setActivePageNumber } =
+    useContext(MainContext)
   const { pageCount, offset } = usePagination(currentPage, 13)
 
   // get pokemon data
   const [pokemonObject, urlsMap] = usePokemonData()
 
   useEffect(() => {
-    if (currentPage) setActivePage(currentPage)
+    if (currentPage) {
+      setActivePageNumber(currentPage)
+      localStorage.setItem('activePageNumber', currentPage)
+    } else {
+      setActivePageNumber('1')
+      localStorage.setItem('activePageNumber', '1')
+    }
   }, [])
 
   const { Pagination, RenderFromType } = CIndex
@@ -30,7 +36,7 @@ const Display = ({ id: currentPage }) => {
           <Pagination
             className={`mb-7`}
             pageCount={pageCount}
-            activePage={activePage}
+            activePage={activePageNumber}
           />
           <div className="w-full grid gap-y-14 gap-x-5 place-content-center place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
             {urlsMap
@@ -60,7 +66,7 @@ const Display = ({ id: currentPage }) => {
           <Pagination
             className="mt-7"
             pageCount={pageCount}
-            activePage={activePage}
+            activePage={activePageNumber}
           />
         </>
       )}
