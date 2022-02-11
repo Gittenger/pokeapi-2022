@@ -100,7 +100,7 @@ export const useAssignedFullData = (pokemon) => {
   })
 
   // get top level pokemon data (usually just from local)
-  const [pokemonObject, urlsMap] = usePokemonData()
+  const [pokemonObject, urlsMap, dataProcessed] = usePokemonData()
 
   // create curated data from incoming pokemonData
   useEffect(() => {
@@ -156,6 +156,7 @@ export const useAssignedFullData = (pokemon) => {
   return {
     versionsMap,
     currentPokemonData,
+    dataProcessed,
     itemsObject,
     movesObject,
     abilitiesObject,
