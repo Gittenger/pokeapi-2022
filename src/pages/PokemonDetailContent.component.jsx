@@ -154,32 +154,7 @@ const EncountersRender = React.memo(function ({ encountersData, versionsMap }) {
   )
 })
 
-const PokemonDetailContent = ({ pokemon }) => {
-  useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
-
-  const {
-    currentPokemonData,
-    encountersData,
-    abilitiesObject,
-    movesObject,
-    itemsObject,
-    versionsMap,
-  } = useAssignedFullData(pokemon)
-
-  const {
-    id,
-    name,
-    height,
-    weight,
-    abilities,
-    moves,
-    stats,
-    held_items,
-    sprites: {
-      other: { dream_world },
-    },
-  } = currentPokemonData
-
+const GraphRender = React.memo(function ({ stats }) {
   const ref = useRef()
 
   useEffect(() => {
@@ -233,7 +208,35 @@ const PokemonDetailContent = ({ pokemon }) => {
         })
         .attr('fill', '#69b3a2')
     }
-  }, [currentPokemonData])
+  }, [stats])
+
+  return <div className={`${styles.graph}`} ref={ref}></div>
+})
+
+const PokemonDetailContent = ({ pokemon }) => {
+  useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
+
+  const {
+    currentPokemonData,
+    encountersData,
+    abilitiesObject,
+    movesObject,
+    itemsObject,
+    versionsMap,
+  } = useAssignedFullData(pokemon)
+
+  const {
+    id,
+    name,
+    height,
+    weight,
+    abilities,
+    moves,
+    held_items,
+    sprites: {
+      other: { dream_world },
+    },
+  } = currentPokemonData
 
   return (
     <main className="flex flex-col items-center justify-start bg-slate-800 text-white pt-8 pb-52">
@@ -246,8 +249,6 @@ const PokemonDetailContent = ({ pokemon }) => {
           <p>weight: {weight}</p>
         </div>
 
-        <div className={`${styles.graph}`} ref={ref}></div>
-
         <AbilitiesRender
           className="mt-10"
           abilities={abilities}
@@ -257,6 +258,9 @@ const PokemonDetailContent = ({ pokemon }) => {
         <div>
           <img src={dream_world.front_default} alt="" />
         </div>
+
+        <GraphRender stats={currentPokemonData?.stats} />
+
         <EncountersRender
           encountersData={encountersData}
           versionsMap={versionsMap}
