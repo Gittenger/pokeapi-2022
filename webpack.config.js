@@ -81,7 +81,7 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: [path.resolve(__dirname, 'src/index.css'), /\.module.css$/],
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', PostCSSLoader],
       },
       {
         test: /\.css$/,
