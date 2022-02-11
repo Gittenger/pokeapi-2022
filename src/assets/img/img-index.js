@@ -20,11 +20,50 @@ import PsychicIcon from './icons/psychic.png'
 import RockIcon from './icons/rock.png'
 import SteelIcon from './icons/steel.png'
 import WaterIcon from './icons/water.png'
+import BugCard from './img/bug.png'
+import DarkCard from './img/dark.png'
+import DragonCard from './img/dragon.png'
+import ElectricCard from './img/electric.png'
+import FairyCard from './img/fairy.png'
+import FightingCard from './img/fighting.png'
+import FireCard from './img/fire.png'
+import FlyingCard from './img/flying.png'
+import GhostCard from './img/ghost.png'
+import GrassCard from './img/grass.png'
+import GroundCard from './img/ground.png'
+import IceCard from './img/ice.png'
+import NormalCard from './img/normal.png'
+import PoisonCard from './img/poison.png'
+import PsychicCard from './img/psychic.png'
+import RockCard from './img/rock.png'
+import ShadowCard from './img/shadow.png'
+import SteelCard from './img/steel.png'
+import UnknownCard from './img/unknown.png'
+import WaterCard from './img/water.png'
 
 export const images = {
   img: {
     PokeLogo,
-    GrassBg
+    BugCard,
+    DarkCard,
+    DragonCard,
+    ElectricCard,
+    FairyCard,
+    FightingCard,
+    FireCard,
+    FlyingCard,
+    GhostCard,
+    GrassCard,
+    GroundCard,
+    IceCard,
+    NormalCard,
+    PoisonCard,
+    PsychicCard,
+    RockCard,
+    ShadowCard,
+    SteelCard,
+    UnknownCard,
+    WaterCard,
   },
   icons: {
     BugIcon,
