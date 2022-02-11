@@ -237,6 +237,7 @@ const PokemonDetailContent = ({ pokemon }) => {
     abilities,
     moves,
     held_items,
+    sprites,
     sprites: {
       other: { dream_world },
     },
@@ -267,7 +268,14 @@ const PokemonDetailContent = ({ pokemon }) => {
         />
         <ItemsRender held_items={held_items} itemsObject={itemsObject} />
         <div>
-          <img src={dream_world.front_default} alt="" />
+          <img
+            className="w-20"
+            src={
+              sprites?.versions['generation-v']['black-white']?.animated
+                .front_default
+            }
+            alt=""
+          />
         </div>
 
         <GraphRender stats={currentPokemonData?.stats} />
