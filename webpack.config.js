@@ -56,6 +56,9 @@ module.exports = {
     hot: true,
     static: path.join(__dirname, 'public'),
     historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, 'public/assets'),
+    },
     client: {
       webSocketTransport: 'ws',
       overlay: true,
