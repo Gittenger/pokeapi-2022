@@ -91,7 +91,7 @@ const RenderCard = ({ types, key, className, name, sprites }) => {
       <div
         className={`${returnClassName(types, styles)} ${
           styles.bgImg
-        } rounded-3xl ring-4 ring-gray-800 flex fade-in flex-col justify-start items-center p-5 w-full h-full absolute top-0 left-0`}
+        } rounded-3xl ring-4 ring-gray-800 flex fade-in flex-col justify-start items-center p-5 w-full h-full absolute top-0 left-0 duration-300 group-hover:-top-1`}
         key={key}
       >
         <div className="w-full">
