@@ -40,14 +40,16 @@ export const usePokemonData = () => {
   const [urlResults] = useArrayData(urlInit, dataCategories.urlsInit)
   const [urlsMap, setUrlsMap] = useState([])
 
-  const [pokemonObject] = useDetailsData(urlsMap, dataCategories.pokemon)
+  const [pokemonObject, dataProcessed] = useDetailsData(
+    urlsMap,
+    dataCategories.pokemon
+  )
 
-  // const [pokemonDataProcessed, setDataProcessed] = useState(false)
   useEffect(() => {
     setUrlsMap(urlResults.map((el) => el.url))
   }, [urlResults])
 
-  return [pokemonObject, urlResults]
+  return [pokemonObject, urlResults, dataProcessed]
 }
 
 export const useAssignedFullData = (pokemon) => {

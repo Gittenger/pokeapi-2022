@@ -12,6 +12,7 @@ export const useDetailsData = (urls, dataCategory) => {
     objectReducer,
     objectReducerInit
   )
+  const [dataProcessed, setDataProcessed] = useState(false)
 
   const { localKey, category, options, transformationKeys } = dataCategory
 
@@ -24,9 +25,9 @@ export const useDetailsData = (urls, dataCategory) => {
   }
 
   const fetchData = async (urls, localData) => {
-    //  setDataProcessed(false)
     // if no urls exit
     if (urls.length === 0) return
+    setDataProcessed(false)
     // await resolved map
     let result = await Promise.all(
       urls.map((url, urlIndex) => {
@@ -54,8 +55,9 @@ export const useDetailsData = (urls, dataCategory) => {
     // set from API
     urls.forEach((url, urlIndex) => {
       if (!url) return
-      // if using url limit for data
+      // if using url limit for data, check
       if (options.useUrlLimit && urlIndex > parseInt(urlLimit) - 1) return
+      // if no local data, set from api
       if (localData == null || !localData[url]) {
         console.log(`setting ${category} from API`)
 
@@ -81,18 +83,20 @@ export const useDetailsData = (urls, dataCategory) => {
         }
       }
     })
+
     // save obj to local
     localStorage.setItem(localKey, JSON.stringify(objectToSave))
     dispatchObject({ type: SET_OBJECT, payload: objectToSave })
 
-    // setDataProcessed(true)
+    setDataProcessed(true)
+    console.log(dataProcessed)
   }
 
   useEffect(() => {
     fetchData(urls, localData)
   }, [urls])
 
-  return [objectReducerState]
+  return [objectReducerState, dataProcessed]
 }
 
 export const useArrayData = (url, dataCategory) => {

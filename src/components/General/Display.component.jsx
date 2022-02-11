@@ -13,7 +13,7 @@ const Display = ({ id: currentPage }) => {
   const { pageCount, offset } = usePagination(currentPage, 13)
 
   // get pokemon data
-  const [pokemonObject, urlsMap] = usePokemonData()
+  const [pokemonObject, urlsMap, dataProcessed] = usePokemonData()
 
   useEffect(() => {
     if (currentPage) {
@@ -23,13 +23,13 @@ const Display = ({ id: currentPage }) => {
       setActivePageNumber('1')
       localStorage.setItem('activePageNumber', '1')
     }
-  }, [])
+  }, [dataProcessed])
 
   const { Pagination, RenderFromType } = CIndex
 
   return (
-    <div className="flex-col items-center px-10 py-8 w-full">
-      {false ? (
+    <div className="flex flex-col justify-center items-center px-10 py-8 w-full">
+      {!dataProcessed ? (
         <MDSpinner />
       ) : (
         <>
