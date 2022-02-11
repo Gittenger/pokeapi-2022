@@ -1,5 +1,7 @@
 .navBar {
+  min-height: 125px;
   margin-bottom: 0 !important;
+
   & > div {
     justify-content: center;
   }
