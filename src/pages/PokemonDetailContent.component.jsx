@@ -66,17 +66,19 @@ const MovesRender = React.memo(function ({ moves, movesObject }) {
 const ItemsRender = React.memo(function ({ held_items, itemsObject }) {
   return (
     <div className="mt-4">
-      <h2>ITEMS</h2>
-      <ul>
-        {held_items.map((el, i) => {
-          return (
+      <h2 className="underline">ITEMS</h2>
+      {held_items?.length === 0 ? (
+        <p>NONE</p>
+      ) : (
+        <ul>
+          {held_items.map((el, i) => (
             <li key={i}>
               <p className="underline">{el.name}</p>
               <p>{itemsObject[el.url]?.effect_entries.short_effect}</p>
             </li>
-          )
-        })}
-      </ul>
+          ))}
+        </ul>
+      )}
     </div>
   )
 })
@@ -242,9 +244,12 @@ const PokemonDetailContent = ({ pokemon }) => {
     <main className="flex flex-col items-center justify-start bg-slate-800 text-white pt-8 pb-52">
       <div className="flex flex-col justify-center items-center space-x-4">
         <div className="mb-12">
-          <p className="text-6xl font-pokemon tracking-widest bg-gradient-to-r from-red-900 to-orange-700 text-blue-500 rounded-xl">
-            {name.charAt(0).toUpperCase() + name.slice(1)}
-          </p>
+          <div className="relative mb-5">
+            <div className="absolute w-full h-1 -bottom-1 left-0 bg-teal-500/70 rounded-xl "></div>
+            <p className="text-6xl font-pokemon tracking-widest text-blue-200 ">
+              {name.charAt(0).toUpperCase() + name.slice(1)}
+            </p>
+          </div>
           <p>height: {height}</p>
           <p>weight: {weight}</p>
         </div>
