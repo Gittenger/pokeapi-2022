@@ -75,6 +75,8 @@ export const useAssignedFullData = (pokemon) => {
     dataCategories.encounters
   )
 
+  const [dataProcessed, setDataProcessed] = useState(false)
+
   const [currentPokemonData, setCurrentPokemonData] = useState({
     id: 0,
     name: '',
@@ -100,7 +102,7 @@ export const useAssignedFullData = (pokemon) => {
   })
 
   // get top level pokemon data (usually just from local)
-  const [pokemonObject, urlsMap, dataProcessed] = usePokemonData()
+  const [pokemonObject, urlsMap] = usePokemonData()
 
   // create curated data from incoming pokemonData
   useEffect(() => {
@@ -130,6 +132,7 @@ export const useAssignedFullData = (pokemon) => {
 
       // set vals
       setCurrentPokemonData(currentPokemon)
+      setDataProcessed(true)
     }
   }, [pokemon, pokemonObject])
 
