@@ -18,6 +18,22 @@
   }
 
   @font-face {
+    font-family: 'Yanone';
+    src: url('./assets/fonts/yanone/YanoneKaffeesatz-Regular.ttf')
+      format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Yanone';
+    src: url('./assets/fonts/yanone/YanoneKaffeesatz-Medium.ttf')
+      format('truetype');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
     font-family: 'Pokemon';
     src: url('./assets/fonts/pokemon/pokemon.ttf') format('truetype');
     font-weight: 400;

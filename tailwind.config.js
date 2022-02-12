@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         body: ['Georama'],
+        card: ['Yanone'],
         pokemon: ['Pokemon'],
         'pokemon-hollow': ['Pokemon-Hollow'],
       },
