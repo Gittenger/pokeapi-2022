@@ -256,30 +256,10 @@ export const useAssignedFullData = (pokemon) => {
   // create curated data from incoming pokemonData
   useEffect(() => {
     if (Object.keys(pokemonObject).length > 0) {
-      let currentPokemon = urlsMap
-        .map((el) => {
-          return pokemonObject[el.url]
-        })
-        .filter((el) => el.name == pokemon)
+      let currentPokemon =
+        pokemonObject[urlsMap.find((el) => el.name === pokemon).url]
+      console.log(currentPokemon)
 
-      currentPokemon = {
-        ...currentPokemon[0],
-      }
-
-      // destructure desired vals
-      // const {
-      //   id,
-      //   name,
-      //   height,
-      //   weight,
-      //   abilities,
-      //   location_area_encounters,
-      //   held_items,
-      //   moves,
-      //   sprites
-      // } = currentPokemon
-
-      // set vals
       setCurrentPokemonData(currentPokemon)
       setDataProcessed(true)
     }
