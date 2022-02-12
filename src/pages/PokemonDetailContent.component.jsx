@@ -1,7 +1,8 @@
 import React from 'react'
 
 import CIndex from '../components/components.index.js'
-import { useAssignedFullData, useTitle } from '../utils/hooks.js'
+import { useAssignedFullData } from '../utils/dataHooks.js'
+import { useTitle } from '../utils/hooks.js'
 import MDSpinner from 'react-md-spinner'
 
 const PokemonDetailContent = ({ pokemon }) => {

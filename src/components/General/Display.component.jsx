@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext, useReducer } from 'react'
 import MDSpinner from 'react-md-spinner'
 import MainContext from '../../contexts/MainContext'
 
-import { usePagination, usePokemonData } from '../../utils/hooks'
+import { usePagination } from '../../utils/hooks'
+import { usePokemonData } from '../../utils/dataHooks'
 import { isIndexInBounds } from '../../utils/utilFunctions.js'
 import CIndex from '../components.index.js'
 
