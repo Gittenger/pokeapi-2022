@@ -6,6 +6,7 @@ import styles from './styles/graph.module.css'
 import { useAssignedFullData, useTitle } from '../utils/hooks.js'
 import MDSpinner from 'react-md-spinner'
 import transformAreaString from '../utils/transformAreaString'
+import checkVersionEncounters from '../utils/checkVersionEncounters'
 
 const AbilitiesRender = React.memo(function Abilities({
   abilities,
@@ -99,22 +100,12 @@ const EncountersRender = React.memo(function ({ encountersData, versionsMap }) {
                   {thisVersion.name}
                 </p>
                 {
-                  // check if version has any encounters matching current version
-                  // if so, return them filtered below
-                  encountersData.some((enc) =>
-                    enc.version_details.some(
-                      (versionForEncounter) =>
-                        versionForEncounter.version_name == thisVersion.name
-                    )
-                  ) ? (
+                  // check if this version has some encounter matching current version
+                  // if so, return them filtered out below
+                  encountersData.some(checkVersionEncounters(thisVersion)) ? (
                     encountersData
-                      // map of only locations matching current pokemon encountersData
-                      .filter((enc) =>
-                        enc.version_details.some(
-                          (versionForEncounter) =>
-                            versionForEncounter.version_name == thisVersion.name
-                        )
-                      )
+                      .filter(checkVersionEncounters(thisVersion))
+                      // transform encounter location strings for presentation
                       ?.map(({ location_area }) =>
                         transformAreaString(location_area.name)
                       )
