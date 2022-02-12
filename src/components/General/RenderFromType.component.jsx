@@ -3,79 +3,16 @@ import { Link } from 'react-router-dom'
 
 import styles from './styles/TypeStyles.module.css'
 import returnClassName from '../../utils/returnClassName'
-import images from '../../assets/img/img-index.js'
+import typeObject from '../../utils/typeObject'
 
-const RenderIcons = ({ types, className }) => {
-  const {
-    icons: {
-      BugIcon,
-      DarkIcon,
-      DragonIcon,
-      ElectricIcon,
-      FairyIcon,
-      FightingIcon,
-      FireIcon,
-      FlyingIcon,
-      GhostIcon,
-      GrassIcon,
-      GroundIcon,
-      IceIcon,
-      NormalIcon,
-      PoisonIcon,
-      PsychicIcon,
-      RockIcon,
-      SteelIcon,
-      WaterIcon,
-    },
-  } = images
-
+const RenderIcons = ({ typeObject, types, className }) => {
   return (
     <ul
       className={`${className} w-full flex justify-start items-center space-x-2`}
     >
       {types?.map((type, i) => (
         <li className="w-16" key={i}>
-          {type.name === 'bug' ? (
-            <img src={BugIcon} alt="" />
-          ) : type.name === 'dark' ? (
-            <img src={DarkIcon} />
-          ) : type.name === 'dragon' ? (
-            <img src={DragonIcon} />
-          ) : type.name === 'electric' ? (
-            <img src={ElectricIcon} />
-          ) : type.name === 'fairy' ? (
-            <img src={FairyIcon} />
-          ) : type.name === 'fighting' ? (
-            <img src={FightingIcon} />
-          ) : type.name === 'fire' ? (
-            <img src={FireIcon} />
-          ) : type.name === 'flying' ? (
-            <img src={FlyingIcon} />
-          ) : type.name === 'ghost' ? (
-            <img src={GhostIcon} />
-          ) : type.name === 'grass' ? (
-            <img src={GrassIcon} />
-          ) : type.name === 'ground' ? (
-            <img src={GroundIcon} />
-          ) : type.name === 'ice' ? (
-            <img src={IceIcon} />
-          ) : type.name === 'rock' ? (
-            <img src={RockIcon} />
-          ) : type.name === 'poison' ? (
-            <img src={PoisonIcon} />
-          ) : type.name === 'psychic' ? (
-            <img src={PsychicIcon} />
-          ) : type.name === 'rock' ? (
-            <img src={RockIcon} />
-          ) : type.name === 'steel' ? (
-            <img src={SteelIcon} />
-          ) : type.name === 'water' ? (
-            <img src={WaterIcon} />
-          ) : type.name === 'normal' ? (
-            <img src={NormalIcon} />
-          ) : (
-            <img src={NormalIcon} alt="" />
-          )}
+          <img src={typeObject ? typeObject[type.name].icon : ''} alt="" />
         </li>
       ))}
     </ul>
@@ -96,7 +33,11 @@ const RenderCard = ({ types, key, className, name, sprites }) => {
       >
         <div className="w-full">
           {/* icons */}
-          <RenderFromType render="icons" types={types} />
+          <RenderFromType
+            render="icons"
+            types={types}
+            typeObject={typeObject}
+          />
         </div>
         <div
           className={`${styles.text} mb-10 mt-5 duration-300 bg-slate-800/30 group-hover:bg-red-900/40 p-2`}
