@@ -21,7 +21,7 @@ export default function NavBar() {
   // const [openNavbar, setOpenNavbar] = useState(false)
 
   return (
-    <Navbar className={`${styles.navBar}`} color="cyan" navbar>
+    <Navbar className={`${styles.navBar}`} color="teal" navbar>
       <NavbarContainer>
         <NavbarWrapper>
           <NavbarBrand>

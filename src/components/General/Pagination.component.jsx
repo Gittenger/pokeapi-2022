@@ -14,7 +14,7 @@ export default function Pagination({ className, pageCount, activePage }) {
         {Array.from(Array(pageCount)).map((el, i) => (
           <PaginationItem
             key={i}
-            color={`${i + 1 == activePage ? 'red' : ''}`}
+            color={`${i + 1 == activePage ? 'deepOrange' : ''}`}
             href={`${(i + 1).toString()}`}
             ripple="light"
           >

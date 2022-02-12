@@ -11,13 +11,13 @@ const Card = ({ types, key, className, name, sprites }) => {
 
   return (
     <Link
-      className={`${className} bg-transparent rounded-3xl shadow-2xl  h-[430px] w-[99%] xs:w-3/4 group sm:w-full relative`}
+      className={`${className} ${styles.boxShadow} bg-transparent rounded-3xl h-[430px] w-[99%] xs:w-3/4 group sm:w-full relative`}
       to={`/pokemon/${name}`}
     >
       <div
         className={`${returnClassName(types, styles)} ${
           styles.bgImg
-        } rounded-3xl ring-4 ring-gray-800 flex fade-in flex-col justify-start items-center p-5 w-full h-full absolute top-0 left-0 duration-300 group-hover:-top-1`}
+        } rounded-xl ring-2 ring-gray-100 flex fade-in flex-col justify-start items-center p-5 w-full h-full absolute top-0 left-0 duration-300 group-hover:-top-1`}
         key={key}
       >
         <div className="w-full">
