@@ -5,6 +5,7 @@ import styles from './styles/graph.module.css'
 // import CIndex from '../components/components.index.js'
 import { useAssignedFullData, useTitle } from '../utils/hooks.js'
 import MDSpinner from 'react-md-spinner'
+import transformAreaString from '../utils/transformAreaString'
 
 const AbilitiesRender = React.memo(function Abilities({
   abilities,
@@ -114,41 +115,9 @@ const EncountersRender = React.memo(function ({ encountersData, versionsMap }) {
                             versionForEncounter.version_name == thisVersion.name
                         )
                       )
-                      ?.map((el, i, arr) => {
-                        // transform location string
-                        const str = el.location_area.name
-                        const regex = /.*(-\d+.*)/
-                        let transformed = str
-
-                        transformed =
-                          str.search(regex) != -1
-                            ? str.replace(str.match(regex)[1], '')
-                            : str
-
-                        transformed =
-                          transformed.search(regex) != -1
-                            ? transformed.replace(
-                                transformed.match(regex)[1],
-                                ''
-                              )
-                            : transformed
-
-                        transformed =
-                          transformed.search(/-area$/) != -1
-                            ? transformed.replace(
-                                transformed.match(/-area$/)[0],
-                                ''
-                              )
-                            : transformed
-
-                        return transformed
-                          .split('-')
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                          )
-                          .join(' ')
-                      })
+                      ?.map(({ location_area }) =>
+                        transformAreaString(location_area.name)
+                      )
                       // filter remaining duplicates, then display
                       .filter((el, i, arr) => {
                         return arr.indexOf(el) == i
