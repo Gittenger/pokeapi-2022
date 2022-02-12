@@ -1,15 +1,13 @@
-import Nav from '@material-tailwind/react/Nav'
-import React, { useContext, useEffect, useState, useCallback } from 'react'
+import React from 'react'
 import CIndex from '../components.index.js'
 
 const Layout = ({ children }) => {
-  const { Navbar, Footer } = CIndex
+  const { Navbar } = CIndex
 
   return (
     <>
       <Navbar />
       {children}
-      {/* <Footer /> */}
     </>
   )
 }

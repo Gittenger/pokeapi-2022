@@ -3,7 +3,7 @@ import MDSpinner from 'react-md-spinner'
 import MainContext from '../../contexts/MainContext'
 
 import { usePagination, usePokemonData } from '../../utils/hooks'
-import isIndexInBounds from '../../utils/checkBounds'
+import { isIndexInBounds } from '../../utils/utilFunctions.js'
 import CIndex from '../components.index.js'
 
 const Display = ({ id: currentPage }) => {

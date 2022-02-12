@@ -1,25 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import CIndex from '../components.index'
 import styles from './styles/TypeStyles.module.css'
-import returnClassName from '../../utils/returnClassName'
 import typeObject from '../../utils/typeObject'
+import { returnClassName } from '../../utils/utilFunctions'
 
-const RenderIcons = ({ typeObject, types, className }) => {
-  return (
-    <ul
-      className={`${className} w-full flex justify-start items-center space-x-2`}
-    >
-      {types?.map((type, i) => (
-        <li className="w-16" key={i}>
-          <img src={typeObject ? typeObject[type.name].icon : ''} alt="" />
-        </li>
-      ))}
-    </ul>
-  )
-}
+const Card = ({ types, key, className, name, sprites }) => {
+  const { RenderFromType } = CIndex
 
-const RenderCard = ({ types, key, className, name, sprites }) => {
   return (
     <Link
       className={`${className} bg-transparent rounded-3xl shadow-2xl  h-[430px] w-[99%] xs:w-3/4 group sm:w-full relative`}
@@ -60,14 +49,4 @@ const RenderCard = ({ types, key, className, name, sprites }) => {
   )
 }
 
-const RenderFromType = ({ render, ...props }) => {
-  return render === 'card' ? (
-    <RenderCard {...props} />
-  ) : render === 'icons' ? (
-    <RenderIcons {...props} />
-  ) : (
-    ''
-  )
-}
-
-export default RenderFromType
+export default Card

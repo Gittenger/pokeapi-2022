@@ -1,192 +1,8 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
-import * as d3 from 'd3'
-import styles from './styles/graph.module.css'
+import React from 'react'
 
-// import CIndex from '../components/components.index.js'
+import CIndex from '../components/components.index.js'
 import { useAssignedFullData, useTitle } from '../utils/hooks.js'
 import MDSpinner from 'react-md-spinner'
-import transformAreaString from '../utils/transformAreaString'
-import checkVersionEncounters from '../utils/checkVersionEncounters'
-
-const AbilitiesRender = React.memo(function Abilities({
-  abilities,
-  abilitiesObject,
-  className,
-}) {
-  return (
-    <div className={`${className}`}>
-      <h2>ABILITIES</h2>
-      <ul>
-        {abilities.map((el, i) => {
-          return (
-            <li key={i}>
-              <p className="underline">{el.name}</p>
-              <p>{abilitiesObject[el.url]?.effect_entries.short_effect}</p>
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
-})
-
-const MovesRender = React.memo(function ({ moves, movesObject }) {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold underline">MOVES</h2>
-      <ul>
-        {moves.map((el, i) => {
-          return (
-            <li key={i}>
-              <p className="underline">{el.name}</p>
-              <p>
-                effect:{' '}
-                {movesObject[el.url]?.effect_entries?.short_effect?.replace(
-                  '$effect_chance%',
-                  `${movesObject[el.url]?.effect_chance}%`
-                )}
-              </p>
-              <p>damage-class: {movesObject[el.url]?.damage_class?.name}</p>
-              <p>
-                "
-                {movesObject[el.url]?.flavor_text_entries?.text
-                  .replace('\f', '\n')
-                  .replace('\u00ad\n', '')
-                  .replace('\u00ad', '')
-                  .replace(' -\n', ' - ')
-                  .replace('-\n', '-')
-                  .replace('\n', ' ')}
-                "
-              </p>
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
-})
-
-const ItemsRender = React.memo(function ({ held_items, itemsObject }) {
-  return (
-    <div className="mt-4">
-      <h2 className="underline">ITEMS</h2>
-      {held_items?.length === 0 ? (
-        <p>NONE</p>
-      ) : (
-        <ul>
-          {held_items.map((el, i) => (
-            <li key={i}>
-              <p className="underline">{el.name}</p>
-              <p>{itemsObject[el.url]?.effect_entries.short_effect}</p>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  )
-})
-
-const EncountersRender = React.memo(function ({ encountersData, versionsMap }) {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold underline">LOCATIONS</h2>
-      {encountersData.length > 0 ? (
-        <ul>
-          <p className="underline">game-versions:</p>
-          {versionsMap.map((thisVersion, versionIndex) => {
-            return (
-              <li key={versionIndex}>
-                <p className="font-bold text-xl underline">
-                  {thisVersion.name}
-                </p>
-                {
-                  // check if this version has some encounter matching current version
-                  // if so, return them filtered out below
-                  encountersData.some(checkVersionEncounters(thisVersion)) ? (
-                    encountersData
-                      .filter(checkVersionEncounters(thisVersion))
-                      // transform encounter location strings for presentation
-                      ?.map(({ location_area }) =>
-                        transformAreaString(location_area.name)
-                      )
-                      // filter remaining duplicates, then display
-                      .filter((el, i, arr) => {
-                        return arr.indexOf(el) == i
-                      })
-                      .map((el, i) => <p key={i}>{el}</p>)
-                  ) : (
-                    <p>NONE</p>
-                  )
-                }
-              </li>
-            )
-          })}
-        </ul>
-      ) : (
-        'none'
-      )}
-    </div>
-  )
-})
-
-const GraphRender = React.memo(function ({ stats }) {
-  const ref = useRef()
-
-  useEffect(() => {
-    if (stats.length > 0) {
-      var margin = { top: 30, right: 30, bottom: 180, left: 60 },
-        width = 500 - margin.left - margin.right,
-        height = 530 - margin.top - margin.bottom
-
-      var svg = d3
-        .select(ref.current)
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      var x = d3
-        .scaleBand()
-        .range([0, width])
-        .domain(
-          stats.map(function (d) {
-            return d.name
-          })
-        )
-        .padding(0.2)
-      svg
-        .append('g')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(x))
-        .selectAll('text')
-        .attr('transform', 'translate(-10,0)rotate(-45)')
-        .style('text-anchor', 'end')
-
-      // Add Y axis
-      var y = d3.scaleLinear().domain([0, 100]).range([height, 0])
-      svg.append('g').call(d3.axisLeft(y))
-
-      svg
-        .selectAll('mybar')
-        .data(stats)
-        .enter()
-        .append('rect')
-        .attr('x', function (d) {
-          return x(d.name)
-        })
-        .attr('y', function (d) {
-          return y(d.base_stat)
-        })
-        .attr('width', x.bandwidth())
-        .attr('height', function (d) {
-          return height - y(d.base_stat)
-        })
-        .attr('fill', '#69b3a2')
-    }
-  }, [stats])
-
-  return <div className={`${styles.graph}`} ref={ref}></div>
-})
 
 const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
@@ -215,6 +31,8 @@ const PokemonDetailContent = ({ pokemon }) => {
     },
   } = currentPokemonData
 
+  const { Abilities, Encounters, Graph, Items, Moves } = CIndex
+
   return !dataProcessed ? (
     <div className="w-full flex justify-center">
       <MDSpinner />
@@ -233,12 +51,12 @@ const PokemonDetailContent = ({ pokemon }) => {
           <p>weight: {weight}</p>
         </div>
 
-        <AbilitiesRender
+        <Abilities
           className="mt-10"
           abilities={abilities}
           abilitiesObject={abilitiesObject}
         />
-        <ItemsRender held_items={held_items} itemsObject={itemsObject} />
+        <Items held_items={held_items} itemsObject={itemsObject} />
         <div>
           <img
             className="w-20"
@@ -250,14 +68,11 @@ const PokemonDetailContent = ({ pokemon }) => {
           />
         </div>
 
-        <GraphRender stats={currentPokemonData?.stats} />
+        <Graph stats={currentPokemonData?.stats} />
 
-        <EncountersRender
-          encountersData={encountersData}
-          versionsMap={versionsMap}
-        />
+        <Encounters encountersData={encountersData} versionsMap={versionsMap} />
 
-        <MovesRender moves={moves} movesObject={movesObject} />
+        <Moves moves={moves} movesObject={movesObject} />
       </div>
     </main>
   )
