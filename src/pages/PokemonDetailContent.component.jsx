@@ -91,61 +91,73 @@ const EncountersRender = React.memo(function ({ encountersData, versionsMap }) {
       {encountersData.length > 0 ? (
         <ul>
           <p className="underline">game-versions:</p>
-          {versionsMap.map((el, versionIndex) => {
+          {versionsMap.map((thisVersion, versionIndex) => {
             return (
               <li key={versionIndex}>
-                <p className="font-bold text-xl underline">{el.name}</p>
-                {encountersData.some((enc) => {
-                  return enc.version_details.some(
-                    (version) => version.version_name == el.name
-                  )
-                }) ? (
-                  encountersData
-                    // map of only locations matching current pokemon encountersData
-                    .filter((enc) => {
-                      return enc.version_details.some((version) => {
-                        return version.version_name == el.name
-                      })
-                    })
-                    ?.map((el, i, arr) => {
-                      // transform location string
-                      const str = el.location_area.name
-                      const regex = /.*(-\d+.*)/
-                      let transformed = str
-
-                      transformed =
-                        str.search(regex) != -1
-                          ? str.replace(str.match(regex)[1], '')
-                          : str
-
-                      transformed =
-                        transformed.search(regex) != -1
-                          ? transformed.replace(transformed.match(regex)[1], '')
-                          : transformed
-
-                      transformed =
-                        transformed.search(/-area$/) != -1
-                          ? transformed.replace(
-                              transformed.match(/-area$/)[0],
-                              ''
-                            )
-                          : transformed
-
-                      return transformed
-                        .split('-')
-                        .map(
-                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                <p className="font-bold text-xl underline">
+                  {thisVersion.name}
+                </p>
+                {
+                  // check if version has any encounters matching current version
+                  // if so, return them filtered below
+                  encountersData.some((enc) =>
+                    enc.version_details.some(
+                      (versionForEncounter) =>
+                        versionForEncounter.version_name == thisVersion.name
+                    )
+                  ) ? (
+                    encountersData
+                      // map of only locations matching current pokemon encountersData
+                      .filter((enc) =>
+                        enc.version_details.some(
+                          (versionForEncounter) =>
+                            versionForEncounter.version_name == thisVersion.name
                         )
-                        .join(' ')
-                    })
-                    // filter remaining duplicates, then display
-                    .filter((el, i, arr) => {
-                      return arr.indexOf(el) == i
-                    })
-                    .map((el, i) => <p key={i}>{el}</p>)
-                ) : (
-                  <p>NONE</p>
-                )}
+                      )
+                      ?.map((el, i, arr) => {
+                        // transform location string
+                        const str = el.location_area.name
+                        const regex = /.*(-\d+.*)/
+                        let transformed = str
+
+                        transformed =
+                          str.search(regex) != -1
+                            ? str.replace(str.match(regex)[1], '')
+                            : str
+
+                        transformed =
+                          transformed.search(regex) != -1
+                            ? transformed.replace(
+                                transformed.match(regex)[1],
+                                ''
+                              )
+                            : transformed
+
+                        transformed =
+                          transformed.search(/-area$/) != -1
+                            ? transformed.replace(
+                                transformed.match(/-area$/)[0],
+                                ''
+                              )
+                            : transformed
+
+                        return transformed
+                          .split('-')
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1)
+                          )
+                          .join(' ')
+                      })
+                      // filter remaining duplicates, then display
+                      .filter((el, i, arr) => {
+                        return arr.indexOf(el) == i
+                      })
+                      .map((el, i) => <p key={i}>{el}</p>)
+                  ) : (
+                    <p>NONE</p>
+                  )
+                }
               </li>
             )
           })}
