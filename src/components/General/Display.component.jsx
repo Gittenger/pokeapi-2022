@@ -41,13 +41,10 @@ const Display = ({ id: currentPage }) => {
           />
           <div className="w-full grid gap-y-14 gap-x-5 place-content-center place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
             {urlsMap
-              // .map((el) => {
-              //   return {
-              //     ...el,
-              //     types: el.types.filter((type) => {
-              //       return type.type.name == 'grass'
-              //     }),
-              //   }
+              // .filter((url) => {
+              //   return pokemonObject[url.url]?.types.some(
+              //     (type) => type.name == 'poison'
+              //   )
               // })
               // .filter((el) => el.types.length > 0)
               .map((url, i) => {
