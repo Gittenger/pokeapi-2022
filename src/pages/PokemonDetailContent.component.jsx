@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import CIndex from '../components/components.index.js'
 import { useAssignedFullData } from '../utils/dataHooks.js'
@@ -7,6 +7,7 @@ import MDSpinner from 'react-md-spinner'
 
 const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
+  const [pokemonImage, setPokemonImage] = useState('')
 
   const {
     currentPokemonData,
@@ -18,19 +19,29 @@ const PokemonDetailContent = ({ pokemon }) => {
     versionsMap,
   } = useAssignedFullData(pokemon)
 
-  const {
-    id,
-    name,
-    height,
-    weight,
-    abilities,
-    moves,
-    held_items,
-    sprites,
-    sprites: {
-      other: { dream_world },
-    },
-  } = currentPokemonData
+  const { id, name, height, weight, abilities, moves, held_items, sprites } =
+    currentPokemonData
+
+  useEffect(() => {
+    console.log(sprites)
+    if (sprites.versions)
+      setPokemonImage(sprites.other['dream_world'].front_default)
+  }, [currentPokemonData])
+
+  const handleUpdateImage = (el) => {
+    const getImage = (key) =>
+      key === 'animated'
+        ? sprites.versions['generation-v']['black-white'].animated.front_default
+        : key === 'dream-world'
+        ? sprites.other['dream_world'].front_default
+        : key === 'main'
+        ? sprites.other['official-artwork'].front_default
+        : key === 'home'
+        ? sprites.other['home'].front_default
+        : sprites.other['official-artwork'].front_default
+
+    setPokemonImage(getImage(el.target.value))
+  }
 
   const { Abilities, Encounters, Graph, Items, Moves } = CIndex
 
@@ -48,8 +59,35 @@ const PokemonDetailContent = ({ pokemon }) => {
               {name.charAt(0).toUpperCase() + name.slice(1)}
             </p>
           </div>
-          <p>height: {height}</p>
-          <p>weight: {weight}</p>
+        </div>
+
+        <div>
+          <img className="w-20" src={pokemonImage} alt="" />
+        </div>
+        <div>
+          <h1>SELECT IMAGE</h1>
+          <ul>
+            <li>
+              <button value="main" onClick={handleUpdateImage}>
+                Main
+              </button>
+            </li>
+            <li>
+              <button value="dream-world" onClick={handleUpdateImage}>
+                Dream World
+              </button>
+            </li>
+            <li>
+              <button value="home" onClick={handleUpdateImage}>
+                Home
+              </button>
+            </li>
+            <li>
+              <button value="animated" onClick={handleUpdateImage}>
+                Animated
+              </button>
+            </li>
+          </ul>
         </div>
 
         <Abilities
@@ -58,16 +96,9 @@ const PokemonDetailContent = ({ pokemon }) => {
           abilitiesObject={abilitiesObject}
         />
         <Items held_items={held_items} itemsObject={itemsObject} />
-        <div>
-          <img
-            className="w-20"
-            src={
-              sprites?.versions['generation-v']['black-white']?.animated
-                .front_default
-            }
-            alt=""
-          />
-        </div>
+
+        <p>height: {height}</p>
+        <p>weight: {weight}</p>
 
         <Graph stats={currentPokemonData?.stats} />
 
