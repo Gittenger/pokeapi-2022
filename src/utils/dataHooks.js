@@ -258,7 +258,7 @@ export const useAssignedFullData = (pokemon) => {
     if (Object.keys(pokemonObject).length > 0) {
       let currentPokemon =
         pokemonObject[urlsMap.find((el) => el.name === pokemon).url]
-      console.log(currentPokemon)
+      // console.log(currentPokemon)
 
       setCurrentPokemonData(currentPokemon)
       setDataProcessed(true)
