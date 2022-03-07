@@ -29,7 +29,7 @@ const Card = ({ types, key, className, name, sprites }) => {
           />
         </div>
         <div
-          className={`${styles.text} mb-10 mt-5 duration-300 bg-slate-800/30 group-hover:bg-red-900/40 p-2`}
+          className={`${styles.text} mb-10 mt-5 duration-300 bg-zinc-800/30 group-hover:bg-red-900/40 p-2`}
         >
           <h3
             className={`scale-in-right uppercase text-gray-100 text-4xl font-card font-medium`}

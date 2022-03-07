@@ -39,7 +39,7 @@ const PokemonDetailContent = ({ pokemon }) => {
       <MDSpinner />
     </div>
   ) : (
-    <main className="flex flex-col items-center justify-start bg-slate-900 text-white pt-8 pb-52">
+    <main className="flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52">
       <div className="flex flex-col justify-center items-center space-x-4">
         <div className="mb-12">
           <div className="relative mb-5">
