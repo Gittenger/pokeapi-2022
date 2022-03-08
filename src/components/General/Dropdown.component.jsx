@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import MainContext from '../../contexts/MainContext'
 import Dropdown from '@material-tailwind/react/Dropdown'
 import DropdownItem from '@material-tailwind/react/DropdownItem'
-import DropdownLink from '@material-tailwind/react/DropdownLink'
 
 export default function DropdownComponent({ className }) {
+  const { imageStyle, setImageStyle } = useContext(MainContext)
+
+  const updateImageStyle = (el) => {
+    const value = el.target.attributes.value.value
+
+    console.log(value)
+    // setImageStyle()
+  }
+
   return (
     <div className={`${className} flex justify-center`}>
       <Dropdown
@@ -16,16 +25,36 @@ export default function DropdownComponent({ className }) {
         block={false}
         ripple="light"
       >
-        <DropdownItem color="teal" ripple="light">
+        <DropdownItem
+          value="main"
+          color="teal"
+          ripple="light"
+          onClick={updateImageStyle}
+        >
           Main
         </DropdownItem>
-        <DropdownItem color="teal" ripple="light">
+        <DropdownItem
+          value="dream-world"
+          color="teal"
+          ripple="light"
+          onClick={updateImageStyle}
+        >
           Dream World
         </DropdownItem>
-        <DropdownItem color="teal" ripple="light">
+        <DropdownItem
+          value="home"
+          color="teal"
+          ripple="light"
+          onClick={updateImageStyle}
+        >
           Home
         </DropdownItem>
-        <DropdownItem color="teal" ripple="light">
+        <DropdownItem
+          value="animated"
+          color="teal"
+          ripple="light"
+          onClick={updateImageStyle}
+        >
           Animated
         </DropdownItem>
       </Dropdown>
