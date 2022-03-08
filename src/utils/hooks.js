@@ -26,7 +26,7 @@ export const usePagination = (currentPage) => {
 
   useEffect(() => {
     setLimits(currentPage, urlLimit, pageLimit)
-  }, [])
+  }, [currentPage])
 
   return { pageCount, offset }
 }
