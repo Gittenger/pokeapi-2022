@@ -1,13 +1,14 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 import CIndex from '../components.index.js'
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const { Navbar } = CIndex
 
   return (
     <>
       <Navbar />
-      {children}
+      <Outlet />
     </>
   )
 }
