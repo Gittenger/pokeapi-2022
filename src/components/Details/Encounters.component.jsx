@@ -17,31 +17,27 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => (
           return (
             <li key={versionIndex}>
               <p className="font-bold text-xl underline">{thisVersion.name}</p>
-              <ul>
-                {
-                  // check if this version has some encounter matching current version
-                  // if so, return them filtered out below
-                  encountersData.some(checkVersionEncounters(thisVersion)) ? (
-                    encountersData
-                      .filter(checkVersionEncounters(thisVersion))
-                      // transform encounter location strings for presentation
-                      ?.map(({ location_area }) =>
-                        transformAreaString(location_area.name)
-                      )
-                      // filter remaining duplicates, then display
-                      .filter((el, i, arr) => {
-                        return arr.indexOf(el) == i
-                      })
-                      .map((el, i) => (
-                        <li key={i}>
-                          <p>{el}</p>
-                        </li>
-                      ))
-                  ) : (
-                    <p>NONE</p>
-                  )
-                }
-              </ul>
+              {
+                <p>
+                  {
+                    // check if this version has some encounter matching current version
+                    // if so, return them filtered out below
+                    encountersData.some(checkVersionEncounters(thisVersion))
+                      ? encountersData
+                          .filter(checkVersionEncounters(thisVersion))
+                          // transform encounter location strings for presentation
+                          ?.map(({ location_area }) =>
+                            transformAreaString(location_area.name)
+                          )
+                          // filter remaining duplicates, then display
+                          .filter((el, i, arr) => {
+                            return arr.indexOf(el) == i
+                          })
+                          .join(', ')
+                      : 'NONE'
+                  }
+                </p>
+              }
             </li>
           )
         })}
