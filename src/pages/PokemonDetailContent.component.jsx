@@ -4,6 +4,7 @@ import CIndex from '../components/components.index.js'
 import { useAssignedFullData } from '../utils/dataHooks.js'
 import { useTitle } from '../utils/hooks.js'
 import MDSpinner from 'react-md-spinner'
+import styles from './styles/PokemonDetail.module.css'
 
 const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
@@ -43,7 +44,7 @@ const PokemonDetailContent = ({ pokemon }) => {
     setPokemonImage(getImage(el.target.value))
   }
 
-  const { Abilities, Encounters, Graph, Items, Moves } = CIndex
+  const { Abilities, Encounters, Graph, Items, Moves, Dropdown } = CIndex
 
   return !dataProcessed ? (
     <div className="w-full flex justify-center">
@@ -52,6 +53,7 @@ const PokemonDetailContent = ({ pokemon }) => {
   ) : (
     <main className="flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52">
       <div className="flex flex-col justify-center items-center">
+        {/* name */}
         <div className="mb-12">
           <div className="relative mb-5">
             <div className="absolute z-0 w-full h-1 -bottom-1 left-0 bg-teal-500/70 rounded-xl "></div>
@@ -61,46 +63,30 @@ const PokemonDetailContent = ({ pokemon }) => {
           </div>
         </div>
 
-        <div>
-          <img className="w-44" src={pokemonImage} alt="" />
-        </div>
-        <div>
-          <h1>SELECT IMAGE</h1>
-          <ul>
-            <li>
-              <button value="main" onClick={handleUpdateImage}>
-                Main
-              </button>
-            </li>
-            <li>
-              <button value="dream-world" onClick={handleUpdateImage}>
-                Dream World
-              </button>
-            </li>
-            <li>
-              <button value="home" onClick={handleUpdateImage}>
-                Home
-              </button>
-            </li>
-            <li>
-              <button value="animated" onClick={handleUpdateImage}>
-                Animated
-              </button>
-            </li>
-          </ul>
+        <div className={`${styles.heroGrid} w-full`}>
+          {/* image */}
+          <div className="">
+            <div className="w-44">
+              <img src={pokemonImage} alt="" />
+            </div>
+            {/* img opt */}
+
+            <Dropdown className="mt-8" />
+          </div>
+
+          <Graph stats={currentPokemonData?.stats} />
+
+          <Abilities
+            className="mt-10"
+            abilities={abilities}
+            abilitiesObject={abilitiesObject}
+          />
         </div>
 
-        <Abilities
-          className="mt-10"
-          abilities={abilities}
-          abilitiesObject={abilitiesObject}
-        />
         <Items held_items={held_items} itemsObject={itemsObject} />
 
         <p>height: {height}</p>
         <p>weight: {weight}</p>
-
-        <Graph stats={currentPokemonData?.stats} />
 
         <Encounters encountersData={encountersData} versionsMap={versionsMap} />
 
