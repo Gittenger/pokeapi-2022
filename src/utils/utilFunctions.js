@@ -11,7 +11,7 @@ export const checkVersionEncounters = (versionToMatch) => (encounter) =>
   )
 
 export const transformAreaString = (areaName) => {
-  const regex = /.*?(-\d+.*)$/
+  const regex = /.*?(-\w?\d+.*)$/
   let transformed = areaName
 
   transformed =
