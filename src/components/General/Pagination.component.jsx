@@ -1,16 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import MainContext from '../../contexts/MainContext'
 import { Link } from 'react-router-dom'
 import styles from './styles/Pagination.module.css'
 
-export default function Pagination({ className, pageCount }) {
+export default function Pagination({
+  className,
+  pageCount,
+  filteredPageCount,
+}) {
   const { activePageNumber } = useContext(MainContext)
+  const [finalCount, setFinalCount] = useState(13)
 
+  useEffect(() => {
+    if (filteredPageCount > 0) {
+      setFinalCount(filteredPageCount)
+    } else {
+      setFinalCount(pageCount)
+    }
+  }, [pageCount, filteredPageCount])
   return (
     <div className={`${styles.listWrap} ${className}`}>
       <div className="block">
         <ul className="flex list-none p-0">
-          {Array.from(Array(pageCount)).map((el, i) => (
+          {Array.from(Array(finalCount)).map((el, i) => (
             <li
               className={`${
                 i + 1 == activePageNumber ? styles.active : ''
