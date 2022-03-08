@@ -47,8 +47,8 @@ const Card = ({ types, key, className, name, sprites }) => {
             {name}
           </h3>
         </div>
-        <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full">
-          <img className="w-44" src={pokemonImage} alt="" />
+        <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full w-44 h-44">
+          <img className="w-40" src={pokemonImage} alt="" />
         </div>
       </div>
     </Link>
