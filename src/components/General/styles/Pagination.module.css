@@ -5,3 +5,7 @@
     justify-content: center;
   }
 }
+
+.active {
+  background-color: theme('colors.red.700');
+}
