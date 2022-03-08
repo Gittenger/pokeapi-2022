@@ -1,4 +1,5 @@
 import Abilities from './Details/Abilities.component.jsx'
+import Dropdown from './General/Dropdown.component.jsx'
 import Encounters from './Details/Encounters.component.jsx'
 import Graph from './Details/Graph.component.jsx'
 import Items from './Details/Items.component.jsx'
@@ -12,6 +13,7 @@ import Icons from './Home/Icons.component.jsx'
 import RenderFromType from './Home/RenderFromType.component.jsx'
 export const CIndex = {
   Abilities,
+  Dropdown,
   Encounters,
   Graph,
   Items,
