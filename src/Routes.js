@@ -1,23 +1,19 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-import HomePage from './pages/HomePageContent.component.jsx'
-import TestPage from './pages/TestPage.component.jsx'
-import PokemonDetailContent from './pages/PokemonDetailContent.component.jsx'
-import Page from './components/General/Page.Component.jsx'
+import Layout from './components/General/Layout.component.jsx'
+import Home from './pages/Home.page.jsx'
+import PokemonDetails from './pages/PokemonDetails.page.jsx'
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" exact element={<Page Component={HomePage} />} />
-        <Route path="/test" exact element={<Page Component={TestPage} />} />
-        <Route path="/:id" exact element={<Page Component={HomePage} />} />
-        <Route
-          path="/pokemon/:pokemon"
-          exact
-          element={<Page Component={PokemonDetailContent} />}
-        />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate replace to="/1" />} />
+          <Route path=":currentPage" element={<Home title="Home" />} />
+          <Route path="/pokemon/:pokemon" element={<PokemonDetails />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
