@@ -1,31 +1,27 @@
-import React from 'react'
-import PaginationComponent from '@material-tailwind/react/Pagination'
-import PaginationItem from '@material-tailwind/react/PaginationItem'
-import Icon from '@material-tailwind/react/Icon'
+import React, { useContext } from 'react'
+import MainContext from '../../contexts/MainContext'
+import { Link } from 'react-router-dom'
 import styles from './styles/Pagination.module.css'
 
-export default function Pagination({ className, pageCount, activePage }) {
+export default function Pagination({ className, pageCount }) {
+  const { activePageNumber } = useContext(MainContext)
+
   return (
     <div className={`${styles.listWrap} ${className}`}>
-      <PaginationComponent>
-        {/* <PaginationItem href="#last" ripple="dark">
-          <Icon name="keyboard_arrow_left" />
-        </PaginationItem> */}
-        {Array.from(Array(pageCount)).map((el, i) => (
-          <PaginationItem
-            className="text-gray-200"
-            key={i}
-            color={`${i + 1 == activePage ? 'deepOrange' : ''}`}
-            href={`${(i + 1).toString()}`}
-            ripple="light"
-          >
-            {i + 1}
-          </PaginationItem>
-        ))}
-        {/* <PaginationItem href="#last" ripple="dark">
-          <Icon name="keyboard_arrow_right" />
-        </PaginationItem> */}
-      </PaginationComponent>
+      <div className="block">
+        <ul className="flex list-none p-0">
+          {Array.from(Array(pageCount)).map((el, i) => (
+            <li
+              className={`${
+                i + 1 == activePageNumber ? styles.active : ''
+              }  text-gray-200 rounded-full mx-2 p-2 w-10 h-10 grid place-content-center place-items-center`}
+              key={i}
+            >
+              <Link to={`/${(i + 1).toString()}`}>{i + 1}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
