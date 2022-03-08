@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '@material-tailwind/react/Navbar'
 import NavbarContainer from '@material-tailwind/react/NavbarContainer'
 import NavbarWrapper from '@material-tailwind/react/NavbarWrapper'
@@ -25,9 +26,9 @@ export default function NavBar() {
       <NavbarContainer>
         <NavbarWrapper>
           <NavbarBrand>
-            <a href="/1">
+            <Link to="/1">
               <img className="w-52" src={PokeLogo} alt="" />
-            </a>
+            </Link>
           </NavbarBrand>
           {/* <NavbarToggler
             className={`${styles.navBtn}`}
