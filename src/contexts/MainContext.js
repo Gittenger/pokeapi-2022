@@ -5,6 +5,8 @@ export const MainContext = createContext({
   pageLimit: 13,
   activePageNumber: '1',
   setActivePageNumber: () => {},
+  imageStyle: '',
+  setImageStyle: () => {},
 })
 
 export default MainContext

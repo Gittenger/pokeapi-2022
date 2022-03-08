@@ -6,6 +6,7 @@ export const MainProvider = ({ children }) => {
   const [urlLimit] = useState('151')
   const [pageLimit] = useState(13)
   const [activePageNumber, setActivePageNumber] = useState()
+  const [imageStyle, setImageStyle] = useState('main')
 
   useEffect(() => {
     setActivePageNumber(JSON.parse(localStorage.getItem('activePageNumber')))
@@ -13,7 +14,14 @@ export const MainProvider = ({ children }) => {
 
   return (
     <MainContext.Provider
-      value={{ urlLimit, pageLimit, activePageNumber, setActivePageNumber }}
+      value={{
+        urlLimit,
+        pageLimit,
+        activePageNumber,
+        setActivePageNumber,
+        imageStyle,
+        setImageStyle,
+      }}
     >
       {children}
     </MainContext.Provider>
