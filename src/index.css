@@ -53,3 +53,7 @@
     text-shadow: 2px 2px black;
   }
 }
+
+html {
+  image-rendering: pixelated;
+}
