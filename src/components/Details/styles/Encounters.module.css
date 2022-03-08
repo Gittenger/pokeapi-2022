@@ -2,7 +2,7 @@
   width: 90%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(22, minmax(min-content, 25rem));
+  grid-template-rows: repeat(22, minmax(min-content, 15rem));
 
   & > li {
     grid-column: 1 / span 2;

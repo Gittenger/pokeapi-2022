@@ -1,6 +1,7 @@
 import React from 'react'
 
 import styles from './styles/Encounters.module.css'
+import getLogo from '../../utils/getLogo.js'
 
 import {
   transformAreaString,
@@ -16,7 +17,9 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => (
         {versionsMap.map((thisVersion, versionIndex) => {
           return (
             <li key={versionIndex}>
-              <p className="font-bold text-xl underline">{thisVersion.name}</p>
+              <div className="font-bold text-xl underline">
+                <img src={getLogo(thisVersion.name)} alt="" />
+              </div>
               {
                 <p>
                   {
