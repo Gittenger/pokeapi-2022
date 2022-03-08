@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import MainContext from '../../contexts/MainContext'
 import { Link } from 'react-router-dom'
 
 import CIndex from '../components.index'
 import styles from './styles/TypeStyles.module.css'
 import typeObject from '../../utils/typeObject'
+import getImage from '../../utils/getImage.js'
 import { returnClassName } from '../../utils/utilFunctions'
 
 const Card = ({ types, key, className, name, sprites }) => {
   const { RenderFromType } = CIndex
+  const [pokemonImage, setPokemonImage] = useState('')
+  const { imageStyle, setImageStyle } = useContext(MainContext)
+
+  useEffect(() => {
+    if (sprites.versions) {
+      setPokemonImage(getImage(imageStyle, sprites))
+    }
+  }, [imageStyle])
 
   return (
     <Link
@@ -38,11 +48,7 @@ const Card = ({ types, key, className, name, sprites }) => {
           </h3>
         </div>
         <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full">
-          <img
-            className="w-44"
-            src={sprites?.other['official-artwork'].front_default}
-            alt=""
-          />
+          <img className="w-44" src={pokemonImage} alt="" />
         </div>
       </div>
     </Link>
