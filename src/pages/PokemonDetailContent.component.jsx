@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import MainContext from '../contexts/MainContext.js'
 
 import CIndex from '../components/components.index.js'
 import { useAssignedFullData } from '../utils/dataHooks.js'
 import { useTitle } from '../utils/hooks.js'
+import getImage from '../utils/getImage.js'
 import MDSpinner from 'react-md-spinner'
 import styles from './styles/PokemonDetail.module.css'
 
 const PokemonDetailContent = ({ pokemon }) => {
   useTitle(pokemon.charAt(0).toUpperCase() + pokemon.slice(1))
   const [pokemonImage, setPokemonImage] = useState('')
+  const { imageStyle, setImageStyle } = useContext(MainContext)
 
   const {
     currentPokemonData,
@@ -25,24 +28,8 @@ const PokemonDetailContent = ({ pokemon }) => {
 
   useEffect(() => {
     console.log(sprites)
-    if (sprites.versions)
-      setPokemonImage(sprites.other['dream_world'].front_default)
-  }, [currentPokemonData])
-
-  const handleUpdateImage = (el) => {
-    const getImage = (key) =>
-      key === 'animated'
-        ? sprites.versions['generation-v']['black-white'].animated.front_default
-        : key === 'dream-world'
-        ? sprites.other['dream_world'].front_default
-        : key === 'main'
-        ? sprites.other['official-artwork'].front_default
-        : key === 'home'
-        ? sprites.other['home'].front_default
-        : sprites.other['official-artwork'].front_default
-
-    setPokemonImage(getImage(el.target.value))
-  }
+    if (sprites.versions) setPokemonImage(getImage(imageStyle, sprites))
+  }, [currentPokemonData, imageStyle])
 
   const { Abilities, Encounters, Graph, Items, Moves, Dropdown } = CIndex
 
@@ -67,7 +54,7 @@ const PokemonDetailContent = ({ pokemon }) => {
           {/* image */}
           <div className="">
             <div className="w-44">
-              <img src={pokemonImage} alt="" />
+              <img className="w-full" src={pokemonImage} alt="" />
             </div>
             {/* img opt */}
 
