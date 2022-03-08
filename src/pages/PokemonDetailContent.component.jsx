@@ -51,7 +51,7 @@ const PokemonDetailContent = ({ pokemon }) => {
     </div>
   ) : (
     <main className="flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52">
-      <div className="flex flex-col justify-center items-center space-x-4">
+      <div className="flex flex-col justify-center items-center">
         <div className="mb-12">
           <div className="relative mb-5">
             <div className="absolute z-0 w-full h-1 -bottom-1 left-0 bg-teal-500/70 rounded-xl "></div>
@@ -62,7 +62,7 @@ const PokemonDetailContent = ({ pokemon }) => {
         </div>
 
         <div>
-          <img className="w-20" src={pokemonImage} alt="" />
+          <img className="w-44" src={pokemonImage} alt="" />
         </div>
         <div>
           <h1>SELECT IMAGE</h1>
