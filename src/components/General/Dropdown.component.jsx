@@ -8,9 +8,7 @@ export default function DropdownComponent({ className }) {
 
   const updateImageStyle = (el) => {
     const value = el.target.attributes.value.value
-
-    console.log(value)
-    // setImageStyle()
+    setImageStyle(value)
   }
 
   return (
