@@ -32,10 +32,10 @@ const Home = ({ title }) => {
       setActivePageNumber('1')
       localStorage.setItem('activePageNumber', '1')
     }
-  }, [dataProcessed, currentPage, offset])
+  }, [dataProcessed, currentPage])
 
   const handleFilter = (e) => {
-    const targetType = e.target.value
+    const targetType = e.target.attributes.value.value
     setFilterType(targetType)
     const filteredLength = urlsMap.filter((url) => {
       // setFilterActive(filterType)
@@ -52,7 +52,7 @@ const Home = ({ title }) => {
     setFilteredPageCount(count)
   }
 
-  const { Pagination, RenderFromType } = CIndex
+  const { Pagination, RenderFromType, Dropdown } = CIndex
 
   return (
     <div className="flex flex-col justify-center items-center px-10 py-8 w-full text-white">
@@ -60,15 +60,78 @@ const Home = ({ title }) => {
         <MDSpinner />
       ) : (
         <>
-          <button value="poison" onClick={handleFilter}>
-            Poison
-          </button>
-          <button value="grass" onClick={handleFilter}>
-            Grass
-          </button>
-          <button value="none" onClick={handleFilter}>
-            None
-          </button>
+          <Dropdown
+            className="mb-12"
+            display="Filter By:"
+            handler={handleFilter}
+            options={[
+              {
+                value: 'none',
+                display: 'Remove filter',
+              },
+              {
+                value: 'grass',
+                display: 'Grass',
+              },
+              {
+                value: 'poison',
+                display: 'Poison',
+              },
+              {
+                value: 'fire',
+                display: 'Fire',
+              },
+              {
+                value: 'water',
+                display: 'Water',
+              },
+              {
+                value: 'bug',
+                display: 'Bug',
+              },
+              {
+                value: 'electric',
+                display: 'Electric',
+              },
+              {
+                value: 'ground',
+                display: 'Ground',
+              },
+              {
+                value: 'normal',
+                display: 'Normal',
+              },
+              {
+                value: 'flying',
+                display: 'Flying',
+              },
+              {
+                value: 'fighting',
+                display: 'Fighting',
+              },
+              {
+                value: 'psychic',
+                display: 'Psychic',
+              },
+              {
+                value: 'rock',
+                display: 'Rock',
+              },
+              {
+                value: 'fairy',
+                display: 'Fairy',
+              },
+              {
+                value: 'dragon',
+                display: 'Dragon',
+              },
+              {
+                value: 'ice',
+                display: 'Ice',
+              },
+            ]}
+          />
+
           <Pagination
             className={`mb-7`}
             pageCount={pageCount}
@@ -84,8 +147,8 @@ const Home = ({ title }) => {
                   )
                 } else return true
               })
-              // .filter((el) => el.types.length > 0)
               .map((url, i, arr) => {
+                console.log(pokemonObject[url.url])
                 return isIndexInBounds(offset, pageLimit, i) ? (
                   <RenderFromType
                     render="card"
