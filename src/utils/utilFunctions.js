@@ -1,6 +1,9 @@
 export const isIndexInBounds = (offset, pageLimit, i) =>
   i > offset - 1 && i < offset + pageLimit - 1
 
+export const calculateCount = (totalLength, pageLimit) =>
+  Math.ceil(parseInt(totalLength) / pageLimit)
+
 export const returnClassName = (types, styles) =>
   types && types.length !== 0 ? styles[types[0]?.name] : ''
 
