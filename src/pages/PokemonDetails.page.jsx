@@ -32,6 +32,11 @@ const PokemonDetails = () => {
     if (sprites.versions) setPokemonImage(getImage(imageStyle, sprites))
   }, [currentPokemonData, imageStyle])
 
+  const updateImageStyle = (el) => {
+    const value = el.target.attributes.value.value
+    setImageStyle(value)
+  }
+
   const { Abilities, Encounters, Graph, Items, Moves, Dropdown } = CIndex
 
   return !dataProcessed ? (
@@ -59,7 +64,32 @@ const PokemonDetails = () => {
             </div>
             {/* img opt */}
 
-            <Dropdown className="mt-8" />
+            <Dropdown
+              display="Select Image:"
+              className="mt-8"
+              handler={updateImageStyle}
+              options={[
+                {
+                  value: 'main',
+                  display: 'Main',
+                },
+
+                {
+                  value: 'dream-world',
+                  display: 'Dream World',
+                },
+
+                {
+                  value: 'home',
+                  display: 'Home',
+                },
+
+                {
+                  value: 'animated',
+                  display: 'Animated',
+                },
+              ]}
+            />
           </div>
 
           <Graph stats={currentPokemonData?.stats} />
