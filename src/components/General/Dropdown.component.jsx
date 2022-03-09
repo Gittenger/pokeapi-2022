@@ -1,60 +1,36 @@
-import React, { useContext } from 'react'
-import MainContext from '../../contexts/MainContext'
+import React from 'react'
 import Dropdown from '@material-tailwind/react/Dropdown'
 import DropdownItem from '@material-tailwind/react/DropdownItem'
 
-export default function DropdownComponent({ className }) {
-  const { imageStyle, setImageStyle } = useContext(MainContext)
-
-  const updateImageStyle = (el) => {
-    const value = el.target.attributes.value.value
-    setImageStyle(value)
-  }
-
+export default function DropdownComponent({
+  className,
+  display,
+  options,
+  handler,
+}) {
   return (
     <div className={`${className} flex justify-center`}>
       <Dropdown
         color="teal"
         placement="bottom-start"
-        buttonText="Select image"
+        buttonText={display}
         buttonType="filled"
         size="regular"
         rounded={false}
         block={false}
         ripple="light"
       >
-        <DropdownItem
-          value="main"
-          color="teal"
-          ripple="light"
-          onClick={updateImageStyle}
-        >
-          Main
-        </DropdownItem>
-        <DropdownItem
-          value="dream-world"
-          color="teal"
-          ripple="light"
-          onClick={updateImageStyle}
-        >
-          Dream World
-        </DropdownItem>
-        <DropdownItem
-          value="home"
-          color="teal"
-          ripple="light"
-          onClick={updateImageStyle}
-        >
-          Home
-        </DropdownItem>
-        <DropdownItem
-          value="animated"
-          color="teal"
-          ripple="light"
-          onClick={updateImageStyle}
-        >
-          Animated
-        </DropdownItem>
+        {options.map((opt, i) => (
+          <DropdownItem
+            key={i}
+            value={opt.value}
+            color="teal"
+            ripple="light"
+            onClick={handler}
+          >
+            {opt.display}
+          </DropdownItem>
+        ))}
       </Dropdown>
     </div>
   )
