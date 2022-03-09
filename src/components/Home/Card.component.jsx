@@ -17,7 +17,7 @@ const Card = ({ types, key, className, name, sprites }) => {
     if (sprites.versions) {
       setPokemonImage(getImage(imageStyle, sprites))
     }
-  }, [imageStyle])
+  }, [imageStyle, sprites])
 
   return (
     <Link
