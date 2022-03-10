@@ -41,7 +41,7 @@ export default function DropdownWithOpts({ type, ...props }) {
     />
   ) : type === 'filter' ? (
     <DropdownComponent
-      display="Filter By:"
+      display="Filter Type:"
       options={dropdownData.filterDropdownOpt}
       {...props}
     />
