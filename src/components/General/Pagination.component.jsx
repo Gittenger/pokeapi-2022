@@ -14,13 +14,23 @@ export default function Pagination({
 
   useEffect(() => {
     setFinalCount(
-      filteredPageCount && !searchPageCount
+      // filtered + no search
+      filteredPageCount && searchPageCount === null
         ? filteredPageCount
-        : searchPageCount
+        : // filtered + search return empty
+        filteredPageCount && searchPageCount === 0
+        ? 0
+        : // empty search result
+        searchPageCount === 0
+        ? 0
+        : // search result
+        searchPageCount
         ? searchPageCount
-        : pageCount
+        : // default
+          pageCount
     )
   }, [pageCount, filteredPageCount, searchPageCount])
+
   return (
     <div className={`${styles.listWrap} ${className}`}>
       <div className="block">
