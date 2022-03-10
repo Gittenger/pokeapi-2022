@@ -7,6 +7,9 @@ export const MainProvider = ({ children }) => {
   const [pageLimit] = useState(13)
   const [activePageNumber, setActivePageNumber] = useState()
   const [imageStyle, setImageStyle] = useState('main')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchPageCount, setSearchPageCount] = useState(null)
+  const [redirectedFromSearch, setRedirectedFromSearch] = useState(false)
 
   useEffect(() => {
     setActivePageNumber(JSON.parse(localStorage.getItem('activePageNumber')))
@@ -21,6 +24,12 @@ export const MainProvider = ({ children }) => {
         setActivePageNumber,
         imageStyle,
         setImageStyle,
+        searchQuery,
+        setSearchQuery,
+        searchPageCount,
+        setSearchPageCount,
+        redirectedFromSearch,
+        setRedirectedFromSearch,
       }}
     >
       {children}

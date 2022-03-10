@@ -7,6 +7,12 @@ export const MainContext = createContext({
   setActivePageNumber: () => {},
   imageStyle: '',
   setImageStyle: () => {},
+  searchQuery: '',
+  setSearchQuery: () => {},
+  searchPageCount: null,
+  setSearchPageCount: () => {},
+  redirectedFromSearch: false,
+  setRedirectedFromSearch: () => {},
 })
 
 export default MainContext
