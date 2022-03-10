@@ -15,16 +15,18 @@ const Home = ({ title }) => {
   useTitle(title)
 
   // pagination hooks
-  const { pageLimit, activePageNumber, setActivePageNumber } =
+  const { pageLimit, activePageNumber, setActivePageNumber, urlLimit } =
     useContext(MainContext)
   const { pageCount, offset } = usePagination(currentPage)
   const [filteredPageCount, setFilteredPageCount] = useState(0)
+  const [searchPageCount, setSearchPageCount] = useState(null)
 
   // pokemon data hook
   const [pokemonObject, urlsMap, dataProcessed] = usePokemonData()
 
   // filter state
   const [filterType, setFilterType] = useState('none')
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     // set active page from url param
@@ -46,6 +48,26 @@ const Home = ({ title }) => {
     setFilteredPageCount(calculateCount(filteredLength, pageLimit))
   }
 
+  const handleSearch = (e) => {
+    const localSearchQuery = e.target.value
+    setSearchQuery(localSearchQuery)
+
+    const filteredLength = !localSearchQuery
+      ? urlLimit
+      : urlsMap.filter(
+          (url) =>
+            pokemonObject[url.url]?.name
+              .toLowerCase()
+              .indexOf(localSearchQuery) == 0
+        ).length
+
+    navigate('/1', {
+      replace: true,
+    })
+
+    setSearchPageCount(calculateCount(filteredLength, pageLimit))
+  }
+
   const { Pagination, RenderFromType, Dropdown } = CIndex
 
   return (
@@ -55,11 +77,18 @@ const Home = ({ title }) => {
       ) : (
         <>
           <Dropdown className="mb-12" handler={handleFilter} type="filter" />
+          <input
+            className="text-black w-32"
+            type="search"
+            name="search"
+            onChange={handleSearch}
+          />
 
           <Pagination
             className={`mb-7`}
             pageCount={pageCount}
             filteredPageCount={filteredPageCount}
+            searchPageCount={searchPageCount}
             activePage={activePageNumber}
           />
           <div className="w-full grid gap-y-14 gap-x-5 place-content-center place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
@@ -70,6 +99,13 @@ const Home = ({ title }) => {
                   : pokemonObject[url.url]?.types.some(
                       (type) => type.name == filterType
                     )
+              )
+              .filter((url) =>
+                !searchQuery
+                  ? true
+                  : pokemonObject[url.url]?.name
+                      .toLowerCase()
+                      .indexOf(searchQuery) == 0
               )
               .map((url, i) =>
                 isIndexInBounds(offset, pageLimit, i) ? (
@@ -87,6 +123,7 @@ const Home = ({ title }) => {
             className="mt-7"
             pageCount={pageCount}
             filteredPageCount={filteredPageCount}
+            searchPageCount={searchPageCount}
             activePage={activePageNumber}
           />
         </>
