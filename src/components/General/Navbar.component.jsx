@@ -26,7 +26,7 @@ export default function NavBar() {
       <NavbarContainer>
         <NavbarWrapper>
           <NavbarBrand>
-            <Link to="/1">
+            <Link to="/">
               <img className="w-52" src={PokeLogo} alt="" />
             </Link>
           </NavbarBrand>
