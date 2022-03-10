@@ -1,13 +1,9 @@
 import React from 'react'
 import Dropdown from '@material-tailwind/react/Dropdown'
 import DropdownItem from '@material-tailwind/react/DropdownItem'
+import dropdownData from './Dropdown.data.js'
 
-export default function DropdownComponent({
-  className,
-  display,
-  options,
-  handler,
-}) {
+function DropdownComponent({ className, display, options, handler }) {
   return (
     <div className={`${className} flex justify-center`}>
       <Dropdown
@@ -33,5 +29,27 @@ export default function DropdownComponent({
         ))}
       </Dropdown>
     </div>
+  )
+}
+
+export default function DropdownWithOpts({ type, ...props }) {
+  return type === 'image' ? (
+    <DropdownComponent
+      display="Select Image:"
+      options={dropdownData.imageDropdownOpt}
+      {...props}
+    />
+  ) : type === 'filter' ? (
+    <DropdownComponent
+      display="Filter By:"
+      options={dropdownData.filterDropdownOpt}
+      {...props}
+    />
+  ) : (
+    <DropdownComponent
+      display="Select Image:"
+      options={dropdownData.imageDropdownOpt}
+      {...props}
+    />
   )
 }
