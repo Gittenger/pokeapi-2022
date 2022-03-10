@@ -19,20 +19,16 @@ const Home = ({ title }) => {
     pageLimit,
     activePageNumber,
     setActivePageNumber,
-    urlLimit,
-    imageStyle,
     setImageStyle,
   } = useContext(MainContext)
   const { pageCount, offset } = usePagination(currentPage)
   const [filteredPageCount, setFilteredPageCount] = useState(0)
-  const [searchPageCount, setSearchPageCount] = useState(null)
 
   // pokemon data hook
   const [pokemonObject, urlsMap, dataProcessed] = usePokemonData()
 
   // filter state
   const [filterType, setFilterType] = useState('none')
-  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     // set active page from url param
@@ -52,26 +48,6 @@ const Home = ({ title }) => {
     })
 
     setFilteredPageCount(calculateCount(filteredLength, pageLimit))
-  }
-
-  const handleSearch = (e) => {
-    const localSearchQuery = e.target.value
-    setSearchQuery(localSearchQuery)
-
-    const filteredLength = !localSearchQuery
-      ? urlLimit
-      : urlsMap.filter(
-          (url) =>
-            pokemonObject[url.url]?.name
-              .toLowerCase()
-              .indexOf(localSearchQuery) == 0
-        ).length
-
-    navigate('/1', {
-      replace: true,
-    })
-
-    setSearchPageCount(calculateCount(filteredLength, pageLimit))
   }
 
   const handleUpdateImage = (e) => {
