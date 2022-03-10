@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import MDSpinner from 'react-md-spinner'
 import MainContext from '../contexts/MainContext'
+import Button from '@material-tailwind/react/Button'
 
 import { usePagination, useTitle } from '../utils/hooks'
 import { usePokemonData } from '../utils/dataHooks'
@@ -63,18 +64,25 @@ const Home = ({ title }) => {
         <MDSpinner />
       ) : (
         <>
-          <Dropdown className="mb-12" handler={handleFilter} type="filter" />
-          <Dropdown
-            className="mb-12"
-            handler={handleUpdateImage}
-            type="image"
-          />
-          <input
-            className="text-black w-32"
-            type="search"
-            name="search"
-            onChange={handleSearch}
-          />
+          <div className="self-end flex justify-between space-x-6">
+            <Button
+              color="teal"
+              buttonType="filled"
+              size="regular"
+              rounded={false}
+              block={false}
+              iconOnly={false}
+              ripple="light"
+              onClick={() => {
+                setFilterType('none')
+                setFilteredPageCount(0)
+              }}
+            >
+              Clear Filter
+            </Button>
+            <Dropdown className="" handler={handleFilter} type="filter" />
+            <Dropdown className="" handler={handleUpdateImage} type="image" />
+          </div>
 
           <Pagination
             className={`mb-7`}
