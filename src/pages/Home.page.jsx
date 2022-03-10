@@ -54,77 +54,7 @@ const Home = ({ title }) => {
         <MDSpinner />
       ) : (
         <>
-          <Dropdown
-            className="mb-12"
-            display="Filter By:"
-            handler={handleFilter}
-            options={[
-              {
-                value: 'none',
-                display: 'Remove filter',
-              },
-              {
-                value: 'grass',
-                display: 'Grass',
-              },
-              {
-                value: 'poison',
-                display: 'Poison',
-              },
-              {
-                value: 'fire',
-                display: 'Fire',
-              },
-              {
-                value: 'water',
-                display: 'Water',
-              },
-              {
-                value: 'bug',
-                display: 'Bug',
-              },
-              {
-                value: 'electric',
-                display: 'Electric',
-              },
-              {
-                value: 'ground',
-                display: 'Ground',
-              },
-              {
-                value: 'normal',
-                display: 'Normal',
-              },
-              {
-                value: 'flying',
-                display: 'Flying',
-              },
-              {
-                value: 'fighting',
-                display: 'Fighting',
-              },
-              {
-                value: 'psychic',
-                display: 'Psychic',
-              },
-              {
-                value: 'rock',
-                display: 'Rock',
-              },
-              {
-                value: 'fairy',
-                display: 'Fairy',
-              },
-              {
-                value: 'dragon',
-                display: 'Dragon',
-              },
-              {
-                value: 'ice',
-                display: 'Ice',
-              },
-            ]}
-          />
+          <Dropdown className="mb-12" handler={handleFilter} type="filter" />
 
           <Pagination
             className={`mb-7`}

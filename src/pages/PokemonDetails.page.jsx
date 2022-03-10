@@ -65,30 +65,9 @@ const PokemonDetails = () => {
             {/* img opt */}
 
             <Dropdown
-              display="Select Image:"
               className="mt-8"
               handler={updateImageStyle}
-              options={[
-                {
-                  value: 'main',
-                  display: 'Main',
-                },
-
-                {
-                  value: 'dream-world',
-                  display: 'Dream World',
-                },
-
-                {
-                  value: 'home',
-                  display: 'Home',
-                },
-
-                {
-                  value: 'animated',
-                  display: 'Animated',
-                },
-              ]}
+              type="image"
             />
           </div>
 
