@@ -1,20 +1,42 @@
 .grid {
-  width: 90%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(22, minmax(min-content, 15rem));
+  grid-row-gap: 5px;
 
   & > li {
     grid-column: 1 / span 2;
+    grid-column-gap: 3px;
     display: grid;
     grid-template-columns: 40% 60%;
+    align-items: center;
 
     & > * {
-      border: solid 2px theme('colors.white');
       display: grid;
       place-content: center;
       place-items: center;
-      padding: 2rem;
+      height: 100%;
+    }
+
+    & > *:nth-child(2) {
+      border: 1px solid theme('colors.white');
+      display: grid;
+      place-content: center;
+      place-items: center;
+
+      & p {
+        display: grid;
+        place-content: center;
+        place-items: center;
+      }
     }
   }
+}
+
+.imgBg {
+  background-image: linear-gradient(
+    to bottom right,
+    transparent -5%,
+    #fff 1500%
+  );
 }
