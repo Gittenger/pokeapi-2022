@@ -44,11 +44,11 @@ const PokemonDetails = () => {
       <MDSpinner />
     </div>
   ) : (
-    <main className="flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52">
-      <div className="flex flex-col justify-center items-center">
+    <main className="flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52 w-full">
+      <div className="flex flex-col justify-center items-center w-full">
         {/* name */}
-        <div className="mb-12">
-          <div className="relative mb-5">
+        <div className="mb-5">
+          <div className="relative">
             <div className="absolute z-0 w-full h-1 -bottom-1 left-0 bg-teal-500/70 rounded-xl "></div>
             <p className="text-6xl text-shadow font-pokemon tracking-widest text-blue-200 relative z-50">
               {name.charAt(0).toUpperCase() + name.slice(1)}
@@ -59,7 +59,7 @@ const PokemonDetails = () => {
         <div className={`${styles.heroGrid} w-full`}>
           {/* image */}
           <div className="">
-            <div className="w-44">
+            <div className="w-56">
               <img className="w-full" src={pokemonImage} alt="" />
             </div>
             {/* img opt */}
