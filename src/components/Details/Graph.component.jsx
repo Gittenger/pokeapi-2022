@@ -24,6 +24,7 @@ const Graph = React.memo(({ stats }) => {
         .range([0, width])
         .domain(
           stats.map(function (d) {
+            console.log(d.name)
             return d.name
           })
         )
@@ -40,6 +41,15 @@ const Graph = React.memo(({ stats }) => {
       var y = d3.scaleLinear().domain([0, 100]).range([height, 0])
       svg.append('g').call(d3.axisLeft(y))
 
+      const color = d3.scaleOrdinal([
+        '#f83e26',
+        '#2a7900',
+        '#201791',
+        '#8bd762',
+        '#638ccb',
+        '#6a23b0',
+      ])
+
       svg
         .selectAll('mybar')
         .data(stats)
@@ -55,7 +65,9 @@ const Graph = React.memo(({ stats }) => {
         .attr('height', function (d) {
           return height - y(d.base_stat)
         })
-        .attr('fill', '#69b3a2')
+        .attr('fill', function (d, i) {
+          return color(i)
+        })
     }
   }, [stats])
 
