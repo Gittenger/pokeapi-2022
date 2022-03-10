@@ -21,7 +21,12 @@ const Home = ({ title }) => {
     activePageNumber,
     setActivePageNumber,
     setImageStyle,
+    searchPageCount,
+    searchQuery,
+    setSearchQuery,
+    redirectedFromSearch,
   } = useContext(MainContext)
+
   const { pageCount, offset } = usePagination(currentPage)
   const [filteredPageCount, setFilteredPageCount] = useState(0)
 
@@ -35,6 +40,9 @@ const Home = ({ title }) => {
     // set active page from url param
     setActivePageNumber(currentPage)
     localStorage.setItem('activePageNumber', currentPage)
+    if (!redirectedFromSearch) {
+      setSearchQuery('')
+    }
   }, [dataProcessed, currentPage])
 
   const handleFilter = (e) => {
