@@ -11,7 +11,7 @@ import { returnClassName } from '../../utils/utilFunctions'
 const Card = ({ types, key, className, name, sprites }) => {
   const { RenderFromType } = CIndex
   const [pokemonImage, setPokemonImage] = useState('')
-  const { imageStyle, setImageStyle } = useContext(MainContext)
+  const { imageStyle } = useContext(MainContext)
 
   useEffect(() => {
     if (sprites.versions) {
