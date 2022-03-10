@@ -7,17 +7,20 @@ export default function Pagination({
   className,
   pageCount,
   filteredPageCount,
+  searchPageCount,
 }) {
   const { activePageNumber } = useContext(MainContext)
   const [finalCount, setFinalCount] = useState(13)
 
   useEffect(() => {
-    if (filteredPageCount > 0) {
-      setFinalCount(filteredPageCount)
-    } else {
-      setFinalCount(pageCount)
-    }
-  }, [pageCount, filteredPageCount])
+    setFinalCount(
+      filteredPageCount && !searchPageCount
+        ? filteredPageCount
+        : searchPageCount
+        ? searchPageCount
+        : pageCount
+    )
+  }, [pageCount, filteredPageCount, searchPageCount])
   return (
     <div className={`${styles.listWrap} ${className}`}>
       <div className="block">
