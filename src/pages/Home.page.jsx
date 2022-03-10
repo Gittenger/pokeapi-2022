@@ -15,8 +15,14 @@ const Home = ({ title }) => {
   useTitle(title)
 
   // pagination hooks
-  const { pageLimit, activePageNumber, setActivePageNumber, urlLimit } =
-    useContext(MainContext)
+  const {
+    pageLimit,
+    activePageNumber,
+    setActivePageNumber,
+    urlLimit,
+    imageStyle,
+    setImageStyle,
+  } = useContext(MainContext)
   const { pageCount, offset } = usePagination(currentPage)
   const [filteredPageCount, setFilteredPageCount] = useState(0)
   const [searchPageCount, setSearchPageCount] = useState(null)
@@ -68,6 +74,11 @@ const Home = ({ title }) => {
     setSearchPageCount(calculateCount(filteredLength, pageLimit))
   }
 
+  const handleUpdateImage = (e) => {
+    const value = e.target.attributes.value.value
+    setImageStyle(value)
+  }
+
   const { Pagination, RenderFromType, Dropdown } = CIndex
 
   return (
@@ -77,6 +88,11 @@ const Home = ({ title }) => {
       ) : (
         <>
           <Dropdown className="mb-12" handler={handleFilter} type="filter" />
+          <Dropdown
+            className="mb-12"
+            handler={handleUpdateImage}
+            type="image"
+          />
           <input
             className="text-black w-32"
             type="search"
