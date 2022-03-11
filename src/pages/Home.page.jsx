@@ -72,7 +72,7 @@ const Home = ({ title }) => {
         <MDSpinner />
       ) : (
         <>
-          <div className="self-end flex justify-between space-x-6">
+          <div className="self-end flex justify-between space-x-6 mb-8">
             <Button
               color="teal"
               buttonType="filled"
