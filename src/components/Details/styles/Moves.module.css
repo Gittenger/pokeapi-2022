@@ -1,13 +1,13 @@
 .grid {
-  grid-template-columns: 30% 1fr;
+  grid-template-columns: 35% 1fr;
   grid-template-rows: min-content 1fr;
 
   @media screen(sm) {
-    grid-template-columns: 25% 1fr;
+    grid-template-columns: 30% 1fr;
   }
 
   @media screen(md) {
-    grid-template-columns: 20% 1fr;
+    grid-template-columns: 25% 1fr;
   }
 
   /* name, class */
