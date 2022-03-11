@@ -1,22 +1,32 @@
 import React from 'react'
+import styles from './styles/Moves.module.css'
 
 const Moves = React.memo(({ moves, movesObject }) => (
-  <div>
-    <h2 className="text-2xl font-bold underline">MOVES</h2>
-    <ul>
+  <div className="w-full flex flex-col justify-center items-center mt-24">
+    <h2 className="text-4xl font-bold underline mb-8">MOVES</h2>
+    <ul className="w-[85%] ml-32 flex flex-col justify-center items-center">
       {moves.map((el, i) => {
         return (
-          <li key={i}>
-            <p className="underline">{el.name}</p>
+          <li className={`${styles.grid} grid w-full min-h-[8rem]`} key={i}>
+            <p className="text-2xl capitalize italic">
+              {el.name.replace('-', ' ')}
+            </p>
             <p>
-              effect:{' '}
               {movesObject[el.url]?.effect_entries?.short_effect?.replace(
                 '$effect_chance%',
                 `${movesObject[el.url]?.effect_chance}%`
               )}
             </p>
-            <p>damage-class: {movesObject[el.url]?.damage_class?.name}</p>
-            <p>
+            {movesObject[el.url]?.damage_class?.name === 'special' ? (
+              <p className="text-blue-600">Special</p>
+            ) : movesObject[el.url]?.damage_class?.name === 'physical' ? (
+              <p className="text-red-500">Physical</p>
+            ) : movesObject[el.url]?.damage_class?.name === 'status' ? (
+              <p className="text-green-600">Status</p>
+            ) : (
+              ''
+            )}
+            <p className="italic text-sm">
               "
               {movesObject[el.url]?.flavor_text_entries?.text
                 // thanks to Naramsim on github for snippet
