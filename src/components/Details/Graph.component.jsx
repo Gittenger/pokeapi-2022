@@ -24,7 +24,6 @@ const Graph = React.memo(({ stats }) => {
         .range([0, width])
         .domain(
           stats.map(function (d) {
-            console.log(d.name)
             return d.name
           })
         )
