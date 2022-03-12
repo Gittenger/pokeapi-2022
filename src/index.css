@@ -67,6 +67,10 @@
   .text-shadow {
     text-shadow: 2px 2px black;
   }
+
+  .text-heading {
+    @apply font-bold italic underline mb-3 text-3xl font-card tracking-wider uppercase;
+  }
 }
 
 html {
