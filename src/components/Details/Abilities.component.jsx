@@ -2,8 +2,7 @@ import React from 'react'
 
 const Abilities = React.memo(({ abilities, abilitiesObject, className }) => (
   <div className={`${className} pb-8 border-b border-white`}>
-    <h2 className="font-bold italic underline mb-3 text-2xl">Abilities</h2>
-    <ul className="space-y-5">
+    <h2 className="text-heading">Abilities</h2>
       {abilities.map((el, i) => {
         return (
           <li key={i}>

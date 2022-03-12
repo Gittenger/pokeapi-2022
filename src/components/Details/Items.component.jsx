@@ -5,7 +5,7 @@ import styles from './styles/Items.module.css'
 const Items = React.memo(({ held_items, itemsObject }) => {
   return (
     <div className="mt-4 w-[80%] md:w-[50%] mb-28">
-      <h2 className="font-bold italic underline mb-3 text-2xl">Items</h2>
+      <h2 className="text-heading">Items</h2>
       {held_items?.length === 0 ? (
         <p>NONE</p>
       ) : (

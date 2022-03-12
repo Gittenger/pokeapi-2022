@@ -10,7 +10,7 @@ import {
 
 export const Encounters = React.memo(({ encountersData, versionsMap }) => (
   <div className="w-full flex flex-col items-center">
-    <h2 className="font-bold italic underline mb-3 text-2xl">LOCATIONS</h2>
+    <h2 className="text-heading">Locations</h2>
     {encountersData.length > 0 ? (
       <>
         <ul

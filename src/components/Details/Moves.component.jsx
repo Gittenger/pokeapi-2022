@@ -3,7 +3,7 @@ import styles from './styles/Moves.module.css'
 
 const Moves = React.memo(({ moves, movesObject }) => (
   <div className="w-full flex flex-col justify-center items-center mt-24">
-    <h2 className="font-bold italic underline mb-3 text-2xl">MOVES</h2>
+    <h2 className="text-heading">Moves</h2>
     <ul className="w-[90%] sm:w-[85%] flex flex-col justify-center items-center space-y-7 xl:max-w-[1000px]">
       {moves.map((el, i) => {
         return (
