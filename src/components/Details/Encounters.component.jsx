@@ -19,7 +19,7 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => (
           {versionsMap.map((thisVersion, versionIndex) => {
             return (
               <li key={versionIndex}>
-                <div className="font-bold text-xl underline rounded-lg bg-[#796921] ring-inset ring-red-700 ring-4 relative">
+                <div className="font-bold text-xl underline rounded-lg bg-[#dfcc62] ring-inset ring-red-600 ring-4 relative">
                   <div
                     className={`absolute w-56 h-44 bg-zinc-900 rounded-2xl z-0`}
                   ></div>
@@ -34,7 +34,7 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => (
                 </div>
                 {
                   <div className="relative w-full h-full bg-[#000] p-3 rounded-2xl">
-                    <div className="absolute w-[97%] h-[90%] bg-zinc-900 z-0 rounded-xl"></div>
+                    <div className="absolute w-[97%] h-[90%] bg-zinc-800 z-0 rounded-xl"></div>
                     <p className="italic text-xl min-w-full min-h-full text-whit px-5 py-7 z-30">
                       {
                         // check if this version has some encounter matching current version
