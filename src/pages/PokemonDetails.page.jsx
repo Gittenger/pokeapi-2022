@@ -71,21 +71,21 @@ const PokemonDetails = () => {
             />
           </div>
 
-          <Graph stats={currentPokemonData?.stats} />
-          <div className={`${styles.statsGrid} w-[375px] grid`}>
+          <div className={`${styles.statsGrid} grid mt-16 xl:mt-0`}>
             <p className="italic">Height:</p>
             <p>{height}</p>
             <p className="italic">Weight:</p>
             <p>{weight}</p>
           </div>
 
-          <Abilities
-            className="mt-10"
-            abilities={abilities}
-            abilitiesObject={abilitiesObject}
-          />
+          <Graph stats={currentPokemonData?.stats} />
         </div>
 
+        <Abilities
+          className="mt-10 w-[80%] md:w-[50%]"
+          abilities={abilities}
+          abilitiesObject={abilitiesObject}
+        />
         <Items held_items={held_items} itemsObject={itemsObject} />
 
         <Encounters encountersData={encountersData} versionsMap={versionsMap} />

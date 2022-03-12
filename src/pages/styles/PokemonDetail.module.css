@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 1fr;
 
-  @media screen(md) {
-    grid-template-columns: 1fr 1fr;
+  @media screen(xl) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   align-items: center;
