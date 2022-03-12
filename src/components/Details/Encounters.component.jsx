@@ -19,7 +19,7 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => (
           {versionsMap.map((thisVersion, versionIndex) => {
             return (
               <li key={versionIndex}>
-                <div className="font-bold text-xl underline rounded-lg bg-[#796921] ring-inset ring-red-700 ring-4">
+                <div className="font-bold text-xl underline rounded-lg bg-[#796921] ring-inset ring-red-700 ring-4 relative">
                   <div
                     className={`absolute w-56 h-44 bg-zinc-900 rounded-2xl z-0`}
                   ></div>

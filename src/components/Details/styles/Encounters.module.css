@@ -12,12 +12,28 @@
     align-items: center;
 
     & > * {
-      display: grid;
-      place-content: center;
-      place-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100%;
     }
 
+    /* IMAGE */
+    /* absolute centering */
+    & > *:nth-child(1) {
+      & > div:last-child {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      & > div:first-child {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    /* LOCATIONS */
     & > *:nth-child(2) {
       border: 1px solid theme('colors.white');
       display: grid;
