@@ -3,8 +3,7 @@ import ImageObject from './ItemImgs.js'
 
 const Items = React.memo(({ held_items, itemsObject }) => {
   return (
-    <div className="mt-4">
-      <h2 className="underline">ITEMS</h2>
+      <h2 className="font-bold italic underline mb-3 text-2xl">Items</h2>
       {held_items?.length === 0 ? (
         <p>NONE</p>
       ) : (

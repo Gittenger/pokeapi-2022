@@ -1,9 +1,7 @@
 import React from 'react'
 
 const Abilities = React.memo(({ abilities, abilitiesObject, className }) => (
-  <div className={`${className}`}>
-    <h2>ABILITIES</h2>
-    <ul>
+    <h2 className="font-bold italic underline mb-3 text-2xl">Abilities</h2>
       {abilities.map((el, i) => {
         return (
           <li key={i}>
