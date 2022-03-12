@@ -64,6 +64,64 @@ import XDLogo from './img/logos/xd.png'
 import YLogo from './img/logos/y.png'
 import YellowLogo from './img/logos/yellow.png'
 
+import absorbBulb from './items/absorb-bulb.png'
+import aspearBerry from './items/aspear-berry.png'
+import balmMushroom from './items/balm-mushroom.png'
+import bigMushroom from './items/big-mushroom.png'
+import bigPearl from './items/big-pearl.png'
+import blackSludge from './items/black-sludge.png'
+import charcoalPng from './items/charcoal.png'
+import chestoBerry from './items/chesto-berry.png'
+import chilanBerry from './items/chilan-berry.png'
+import cometShard from './items/comet-shard.png'
+import dragonFang from './items/dragon-fang.png'
+import dragonScale from './items/dragon-scale.png'
+import electirizer from './items/electirizer.png'
+import everstonePng from './items/everstone.png'
+import focusBand from './items/focus-band.png'
+import gripClaw from './items/grip-claw.png'
+import hardStone from './items/hard-stone.png'
+import kingsRock from './items/kings-rock.png'
+import laggingTail from './items/lagging-tail.png'
+import leftoversPng from './items/leftovers.png'
+import leppaBerry from './items/leppa-berry.png'
+import lightBall from './items/light-ball.png'
+import luckyEgg from './items/lucky-egg.png'
+import luckyPunch from './items/lucky-punch.png'
+import lumBerry from './items/lum-berry.png'
+import magmarizerPng from './items/magmarizer.png'
+import magnetPng from './items/magnet.png'
+import metalCoat from './items/metal-coat.png'
+import metalPowder from './items/metal-powder.png'
+import moonStone from './items/moon-stone.png'
+import mysticWater from './items/mystic-water.png'
+import neverMeltIce from './items/never-melt-ice.png'
+import nuggetPng from './items/nugget.png'
+import oranBerry from './items/oran-berry.png'
+import ovalStone from './items/oval-stone.png'
+import payapaBerry from './items/payapa-berry.png'
+import pearlPng from './items/pearl.png'
+import poisonBarb from './items/poison-barb.png'
+import psychicSeed from './items/psychic-seed.png'
+import quickClaw from './items/quick-claw.png'
+import quickPowder from './items/quick-powder.png'
+import rawstBerry from './items/rawst-berry.png'
+import sharpBeak from './items/sharp-beak.png'
+import shedShell from './items/shed-shell.png'
+import shucaBerry from './items/shuca-berry.png'
+import silverPowder from './items/silver-powder.png'
+import sitrusBerry from './items/sitrus-berry.png'
+import smokeBall from './items/smoke-ball.png'
+import softSand from './items/soft-sand.png'
+import spellTag from './items/spell-tag.png'
+import stardustPng from './items/stardust.png'
+import starPiece from './items/star-piece.png'
+import stick from './items/stick.png'
+import thickClub from './items/thick-club.png'
+import tinyMushroom from './items/tiny-mushroom.png'
+import toxicOrb from './items/toxic-orb.png'
+import twistedSpoon from './items/twisted-spoon.png'
+
 export const images = {
   img: {
     PokeLogo,
@@ -110,6 +168,65 @@ export const images = {
       YellowLogo,
       BlackLogo,
       WhiteLogo,
+    },
+    items: {
+      absorbBulb,
+      aspearBerry,
+      balmMushroom,
+      bigMushroom,
+      bigPearl,
+      blackSludge,
+      charcoalPng,
+      chestoBerry,
+      chilanBerry,
+      cometShard,
+      dragonFang,
+      dragonScale,
+      electirizer,
+      everstonePng,
+      focusBand,
+      gripClaw,
+      hardStone,
+      kingsRock,
+      laggingTail,
+      leftoversPng,
+      leppaBerry,
+      lightBall,
+      luckyEgg,
+      luckyPunch,
+      lumBerry,
+      magmarizerPng,
+      magnetPng,
+      metalCoat,
+      metalPowder,
+      moonStone,
+      mysticWater,
+      neverMeltIce,
+      nuggetPng,
+      oranBerry,
+      ovalStone,
+      payapaBerry,
+      pearlPng,
+      poisonBarb,
+      psychicSeed,
+      quickClaw,
+      quickPowder,
+      rawstBerry,
+      sharpBeak,
+      shedShell,
+      shucaBerry,
+      silverPowder,
+      sitrusBerry,
+      smokeBall,
+      softSand,
+      spellTag,
+      stardustPng,
+      starPiece,
+      stick,
+      thickClub,
+      tinyMushroom,
+      toxicOrb,
+      twistedSpoon,
     },
   },
   icons: {
