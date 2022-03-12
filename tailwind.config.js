@@ -13,6 +13,8 @@ module.exports = {
       fontFamily: {
         body: ['Georama'],
         card: ['Yanone'],
+        sansation: ['Sansation'],
+        boismen: ['Boismen'],
         pokemon: ['Pokemon'],
         'pokemon-hollow': ['Pokemon-Hollow'],
       },
