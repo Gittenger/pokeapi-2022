@@ -24,6 +24,7 @@ const Card = ({ types, key, className, name, sprites }) => {
       className={`${className} ${styles.boxShadow} bg-transparent rounded-3xl h-[430px] w-[99%] xs:w-3/4 group sm:w-full relative`}
       to={`/pokemon/${name}`}
     >
+      {/* BG */}
       <div
         className={`${returnClassName(types, styles)} ${
           styles.bgImg
@@ -41,12 +42,14 @@ const Card = ({ types, key, className, name, sprites }) => {
         <div
           className={`${styles.text} mb-10 mt-5 duration-300 bg-zinc-800/30 group-hover:bg-red-900/40 p-2`}
         >
+          {/* name */}
           <h3
-            className={`scale-in-right uppercase text-gray-100 text-4xl font-card font-medium`}
+            className={`scale-in-right uppercase text-sky-100 text-5xl font-card font-medium`}
           >
             {name}
           </h3>
         </div>
+        {/* image */}
         <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full w-40 h-40">
           <img className="h-40" src={pokemonImage} alt="" />
         </div>
