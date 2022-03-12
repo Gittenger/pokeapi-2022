@@ -2,7 +2,10 @@
   transform: scale(0.8);
 
   text {
-    font-size: 2.5em;
+    font-family: theme('fontFamily.boismen');
+    color: theme('colors.sky.100');
+    font-size: 4em;
+    letter-spacing: 2px;
     text-transform: uppercase;
   }
 }
