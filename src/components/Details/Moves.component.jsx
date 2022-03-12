@@ -8,12 +8,12 @@ const Moves = React.memo(({ moves, movesObject }) => (
       {moves.map((el, i) => {
         return (
           <li
-            className={`${styles.grid} grid w-full min-h-[8rem] border border-white rounded-2xl`}
+            className={`${styles.grid} grid w-full min-h-[8rem] border-2 border-black rounded-2xl bg-zinc-800 shadow-xl`}
             key={i}
           >
             {/* name/category */}
-            <div className="pt-8 px-5 border-r border-white flex flex-col justify-start items-end space-y-2">
-              <p className="text-2xl capitalize italic">
+            <div className="pt-8 px-5 border-r border-sky-100 flex flex-col justify-start items-end space-y-2">
+              <p className="text-2xl capitalize italic text-sky-100">
                 {el.name.replace(/-/g, ' ')}
               </p>
               {movesObject[el.url]?.damage_class?.name === 'special' ? (
