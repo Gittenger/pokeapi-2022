@@ -2,12 +2,12 @@ import React from 'react'
 import ImageObject from './ItemImgs.js'
 import styles from './styles/Items.module.css'
 
-const Items = React.memo(({ held_items, itemsObject }) => {
+const Items = React.memo(({ className, held_items, itemsObject }) => {
   return (
-    <div className="mt-4 w-[80%] md:w-[50%] mb-28">
+    <div className={`${className} w-[80%] md:w-[50%] mb-28`}>
       <h2 className="text-heading">Items</h2>
       {held_items?.length === 0 ? (
-        <p>NONE</p>
+        <p className="mt-3">This Pokémon does not hold any items.</p>
       ) : (
         <ul className="space-y-5">
           {held_items.map((el, i) => (
