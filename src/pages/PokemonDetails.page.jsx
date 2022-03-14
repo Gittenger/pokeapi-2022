@@ -86,7 +86,11 @@ const PokemonDetails = () => {
           abilities={abilities}
           abilitiesObject={abilitiesObject}
         />
-        <Items held_items={held_items} itemsObject={itemsObject} />
+        <Items
+          className="mt-10"
+          held_items={held_items}
+          itemsObject={itemsObject}
+        />
 
         <Encounters encountersData={encountersData} versionsMap={versionsMap} />
 
