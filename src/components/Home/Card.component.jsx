@@ -21,7 +21,7 @@ const Card = ({ types, key, className, name, sprites }) => {
 
   return (
     <Link
-      className={`${className} ${styles.boxShadow} bg-transparent rounded-3xl h-[430px] w-[99%] xs:w-3/4 group sm:w-full relative`}
+      className={`${className} ${styles.boxShadow} bg-transparent rounded-3xl h-[27rem] w-[99%] xs:w-3/4 group sm:w-full relative`}
       to={`/pokemon/${name}`}
     >
       {/* BG */}
