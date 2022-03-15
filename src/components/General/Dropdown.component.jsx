@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import styles from './styles/Dropdown.module.css'
 import { useOutsideAlerter } from '../../utils/hooks'
+import CIndex from '../components.index.js'
 
 import dropdownData from './Dropdown.data.js'
 
@@ -20,22 +21,23 @@ function DropdownComponent({ className, display, options, handler }) {
   }
 
   useOutsideAlerter(wrapperRef, toggleOpen, isOpen, listRef)
+  const { Button } = CIndex
 
   return (
     <div ref={wrapperRef}>
       <div
         onChange={handler}
         defaultValue={display}
-        className={`${className} ${styles.dropdown} text-black`}
+        className={`${className} ${styles.dropdown} text-black text-xl rounded-lg`}
       >
-        <button
+        <Button
           aria-haspopup="menu"
           id="listToggle"
           onClick={handleLocalToggle}
-          className="p-3"
+          className={`${styles.button} px-4 py-3.5`}
         >
           {display}
-        </button>
+        </Button>
         <ul
           aria-labelledby="listToggle"
           ref={listRef}
