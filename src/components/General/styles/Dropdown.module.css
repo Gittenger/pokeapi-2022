@@ -20,8 +20,8 @@
     background-color: black;
     clip-path: polygon(100% 0%, 0 0%, 50% 100%);
     justify-self: end;
-    top: 24px;
-    right: 10px;
+    top: 1.5rem;
+    right: 0.625rem;
   }
 
   option {
