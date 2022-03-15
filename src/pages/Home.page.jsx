@@ -105,7 +105,7 @@ const Home = ({ title }) => {
                   ? true
                   : pokemonObject[url.url]?.name
                       .toLowerCase()
-                      .indexOf(searchQuery) == 0
+                      .indexOf(searchQuery.toLowerCase()) == 0
               )
               .map((url, i) =>
                 isIndexInBounds(offset, pageLimit, i) ? (
