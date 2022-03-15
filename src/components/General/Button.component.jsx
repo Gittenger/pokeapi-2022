@@ -9,7 +9,7 @@ const Button = ({ children, ...props }) => {
     <button
       ref={ripple}
       onMouseDown={rippleEvent}
-      className={`${styles.button} text-black text-xl px-4 py-3.5 rounded-lg flex justify-center items-center`}
+      className={`${styles.button} text-black text-lg px-3 py-2.5 md:text-xl md:px-4 md:py-3.5 rounded-lg flex justify-center items-center`}
       {...props}
     >
       {children}

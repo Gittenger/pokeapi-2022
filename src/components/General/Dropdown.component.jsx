@@ -34,7 +34,6 @@ function DropdownComponent({ className, display, options, handler }) {
           aria-haspopup="menu"
           id="listToggle"
           onClick={handleLocalToggle}
-          className={`${styles.button} px-4 py-3.5`}
         >
           {display}
         </Button>

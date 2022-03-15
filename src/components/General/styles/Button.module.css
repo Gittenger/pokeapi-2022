@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   min-width: 15ch;
-  max-width: 30ch;
+  max-width: 35ch;
   border: 1px solid var(--select-border);
   cursor: pointer;
   line-height: 1.1;
