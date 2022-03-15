@@ -66,12 +66,12 @@ const Home = ({ title }) => {
   const { Pagination, RenderFromType, Dropdown, Button } = CIndex
 
   return (
-    <div className="flex flex-col justify-center items-center px-10 py-8 w-full text-white">
+    <div className="flex flex-col justify-center items-center px-5 sm:px-10 py-8 w-full text-white">
       {!dataProcessed ? (
         <MDSpinner />
       ) : (
         <>
-          <div className="self-end flex justify-between space-x-6 mb-8">
+          <div className="sm:self-end flex flex-col md:flex-row justify-center items-center space-y-4 md:justify-between md:space-y-0 md:space-x-6 mb-8">
             <Button
               onClick={() => {
                 setFilterType('none')
