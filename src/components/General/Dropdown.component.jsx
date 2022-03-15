@@ -45,7 +45,13 @@ function DropdownComponent({ className, display, options, handler }) {
         >
           {options.map((opt, i) => (
             <li key={i}>
-              <button onClick={handler} value={opt.value}>
+              <button
+                onClick={(e) => {
+                  handleLocalToggle()
+                  handler(e)
+                }}
+                value={opt.value}
+              >
                 {opt.display}
               </button>
             </li>
