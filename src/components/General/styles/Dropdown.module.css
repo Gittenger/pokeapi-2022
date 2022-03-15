@@ -76,6 +76,7 @@
 }
 
 .listOpen {
+  visibility: visible;
   height: auto;
   opacity: 1;
   top: 60px;
