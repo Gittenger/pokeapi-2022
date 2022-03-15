@@ -26,8 +26,6 @@ export default function NavBar() {
 
   const [pokemonObject, urlsMap] = usePokemonData()
 
-  const [openNavbar, setOpenNavbar] = useState(false)
-
   const handleSearch = (e) => {
     setRedirectedFromSearch(true)
     navigate('/1', {
@@ -50,7 +48,7 @@ export default function NavBar() {
   }
 
   return (
-    <nav className="flex justify-center items-center py-3 bg-teal-500">
+    <nav className={`${styles.navbar} flex justify-center items-center py-3`}>
       <Link to="/">
         <img className="w-52" src={PokeLogo} alt="" />
       </Link>
