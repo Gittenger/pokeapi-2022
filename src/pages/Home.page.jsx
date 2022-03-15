@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import MDSpinner from 'react-md-spinner'
 import MainContext from '../contexts/MainContext'
-import Button from '@material-tailwind/react/Button'
 
 import { usePagination, useTitle } from '../utils/hooks'
 import { usePokemonData } from '../utils/dataHooks'
@@ -46,7 +45,7 @@ const Home = ({ title }) => {
   }, [dataProcessed, currentPage])
 
   const handleFilter = (e) => {
-    const targetType = e.target.attributes.value.value
+    const targetType = e.target.value
     setFilterType(targetType)
     const filteredLength = urlsMap.filter((url) =>
       pokemonObject[url.url]?.types.some((type) => type.name == targetType)
@@ -60,11 +59,11 @@ const Home = ({ title }) => {
   }
 
   const handleUpdateImage = (e) => {
-    const value = e.target.attributes.value.value
+    const value = e.target.value
     setImageStyle(value)
   }
 
-  const { Pagination, RenderFromType, Dropdown } = CIndex
+  const { Pagination, RenderFromType, Dropdown, Button } = CIndex
 
   return (
     <div className="flex flex-col justify-center items-center px-10 py-8 w-full text-white">
@@ -74,13 +73,6 @@ const Home = ({ title }) => {
         <>
           <div className="self-end flex justify-between space-x-6 mb-8">
             <Button
-              color="teal"
-              buttonType="filled"
-              size="regular"
-              rounded={false}
-              block={false}
-              iconOnly={false}
-              ripple="light"
               onClick={() => {
                 setFilterType('none')
                 setFilteredPageCount(0)
