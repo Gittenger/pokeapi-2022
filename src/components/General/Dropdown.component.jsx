@@ -1,33 +1,41 @@
-import React from 'react'
-import Dropdown from '@material-tailwind/react/Dropdown'
-import DropdownItem from '@material-tailwind/react/DropdownItem'
+import React, { useState, useRef } from 'react'
+import styles from './styles/Dropdown.module.css'
+import { useOutsideAlerter } from '../../utils/hooks'
+
 import dropdownData from './Dropdown.data.js'
 
 function DropdownComponent({ className, display, options, handler }) {
+  const [isOpen, toggleOpen] = useState(false)
+  const wrapperRef = useRef(null)
+
+  const handleLocalToggle = () => {
+    toggleOpen(!isOpen)
+  }
+
+  useOutsideAlerter(wrapperRef, toggleOpen, isOpen)
+
   return (
-    <div className={`${className} flex justify-center`}>
-      <Dropdown
-        color="teal"
-        placement="bottom-start"
-        buttonText={display}
-        buttonType="filled"
-        size="regular"
-        rounded={false}
-        block={false}
-        ripple="light"
+    <div ref={wrapperRef}>
+      <div
+        onChange={handler}
+        defaultValue={display}
+        className={`${className} ${styles.dropdown} text-black`}
       >
-        {options.map((opt, i) => (
-          <DropdownItem
-            key={i}
-            value={opt.value}
-            color="teal"
-            ripple="light"
-            onClick={handler}
-          >
-            {opt.display}
-          </DropdownItem>
-        ))}
-      </Dropdown>
+        <button onClick={handleLocalToggle} className="p-3">
+          {display}
+        </button>
+        <ul
+          className={`${styles.dropdownList} ${isOpen ? styles.listOpen : ''} `}
+        >
+          {options.map((opt, i) => (
+            <li key={i}>
+              <button onClick={handler} value={opt.value}>
+                {opt.display}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
