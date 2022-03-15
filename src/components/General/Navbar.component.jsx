@@ -10,6 +10,7 @@ import images from '../../assets/img/img-index.js'
 
 const {
   img: { PokeLogo },
+  icons: { SearchIcon },
 } = images
 
 export default function NavBar() {
@@ -48,10 +49,26 @@ export default function NavBar() {
   }
 
   return (
-    <nav className={`${styles.navbar} flex justify-center items-center py-3`}>
-      <Link to="/">
+    <nav
+      className={`${styles.navbar} flex flex-col sm:flex-row justify-center items-center py-3`}
+    >
+      <Link className="mb-5 sm:mb-0 sm:mr-20 md:mr-72" to="/">
         <img className="w-52" src={PokeLogo} alt="" />
       </Link>
+      <div
+        className={`${styles.search} mb-5 sm:mb-0 relative rounded-lg flex justify-start items-center`}
+      >
+        <div className="w-5 h-5 flex justify-center items-center absolute">
+          <SearchIcon className={`${styles.icon} left-1 absolute`} />
+        </div>
+        <input
+          className={`bg-transparent border-none w-full text-black pl-10 ring-black ring-1 rounded-lg focus:border-none focus:ring-gray-700 focus:ring-2 focus:shadow-lg`}
+          type="text"
+          value={searchPageCount === null ? '' : searchQuery}
+          placeholder="Name search"
+          onChange={handleSearch}
+        />
+      </div>
     </nav>
   )
 }

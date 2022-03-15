@@ -1,3 +1,15 @@
 .navbar {
   background-color: dodgerblue;
 }
+
+.icon {
+  transform: scale(0.7);
+}
+
+.search {
+  width: 250px;
+
+  input::placeholder {
+    color: #595959;
+  }
+}
