@@ -40,20 +40,18 @@
   overflow-y: hidden;
   visibility: hidden;
   opacity: 0;
-  background-color: #fff;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-  top: -5px;
+  top: -0.32rem;
   transition: 0.3s all;
   z-index: 50;
-  border-radius: 10px;
+  border-radius: 0.6125rem;
 
   li {
     &:first-child {
-      margin-top: 30px;
+      margin-top: 1.9rem;
     }
 
     &:last-child {
-      margin-bottom: 30px;
+      margin-bottom: 1.9rem;
     }
 
     display: flex;
@@ -68,7 +66,7 @@
     }
 
     button {
-      padding: 10px 0 10px 0;
+      padding: 0.6125rem 0 0.6125rem 0;
       height: 100%;
       width: 100%;
     }
@@ -79,5 +77,5 @@
   visibility: visible;
   height: auto;
   opacity: 1;
-  top: 60px;
+  top: 3.75rem;
 }
