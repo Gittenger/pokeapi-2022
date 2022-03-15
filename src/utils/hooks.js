@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useReducer } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import MainContext from '../contexts/MainContext'
 
 export const useTitle = (title) => {
@@ -29,4 +29,23 @@ export const usePagination = (currentPage) => {
   }, [currentPage])
 
   return { pageCount, offset }
+}
+
+export function useOutsideAlerter(ref, handleClose, openState) {
+  useEffect(() => {
+    // do something if clicked outside ref
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        if (openState === true) {
+          handleClose(false)
+        }
+      }
+    }
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [ref, openState])
 }
