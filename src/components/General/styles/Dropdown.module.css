@@ -40,6 +40,11 @@
   overflow-y: hidden;
   visibility: hidden;
   opacity: 0;
+  background-image: linear-gradient(
+    to top left,
+    rgba(246, 246, 246, 0.8),
+    rgba(255, 255, 255, 0.95) 33%
+  );
   top: -0.32rem;
   transition: 0.3s all;
   z-index: 50;
