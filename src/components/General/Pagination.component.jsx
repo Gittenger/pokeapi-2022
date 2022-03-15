@@ -39,10 +39,12 @@ export default function Pagination({
             <li
               className={`${
                 i + 1 == activePageNumber ? styles.active : ''
-              }  text-gray-200 rounded-full mx-2 p-2 w-10 h-10 grid place-content-center place-items-center`}
+              }  text-gray-200 rounded-full mx-2 w-12 h-12 grid place-content-center place-items-center`}
               key={i}
             >
-              <Link to={`/${(i + 1).toString()}`}>{i + 1}</Link>
+              <Link className="w-full h-full p-4" to={`/${(i + 1).toString()}`}>
+                {i + 1}
+              </Link>
             </li>
           ))}
         </ul>
