@@ -7,12 +7,19 @@ import dropdownData from './Dropdown.data.js'
 function DropdownComponent({ className, display, options, handler }) {
   const [isOpen, toggleOpen] = useState(false)
   const wrapperRef = useRef(null)
+  const listRef = useRef(null)
 
   const handleLocalToggle = () => {
     toggleOpen(!isOpen)
+    const ariaExpanded = listRef.current.ariaExpanded
+    if (ariaExpanded === 'false') {
+      listRef.current.ariaExpanded = 'true'
+    } else if (ariaExpanded === 'true') {
+      listRef.current.ariaExpanded = 'false'
+    }
   }
 
-  useOutsideAlerter(wrapperRef, toggleOpen, isOpen)
+  useOutsideAlerter(wrapperRef, toggleOpen, isOpen, listRef)
 
   return (
     <div ref={wrapperRef}>
@@ -21,11 +28,19 @@ function DropdownComponent({ className, display, options, handler }) {
         defaultValue={display}
         className={`${className} ${styles.dropdown} text-black`}
       >
-        <button onClick={handleLocalToggle} className="p-3">
+        <button
+          aria-haspopup="menu"
+          id="listToggle"
+          onClick={handleLocalToggle}
+          className="p-3"
+        >
           {display}
         </button>
         <ul
-          className={`${styles.dropdownList} ${isOpen ? styles.listOpen : ''} `}
+          aria-labelledby="listToggle"
+          ref={listRef}
+          aria-expanded="false"
+          className={`${styles.dropdownList} ${isOpen ? styles.listOpen : ''}`}
         >
           {options.map((opt, i) => (
             <li key={i}>

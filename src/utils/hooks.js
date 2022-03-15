@@ -31,13 +31,14 @@ export const usePagination = (currentPage) => {
   return { pageCount, offset }
 }
 
-export function useOutsideAlerter(ref, handleClose, openState) {
+export function useOutsideAlerter(ref, handleClose, openState, listRef) {
   useEffect(() => {
     // do something if clicked outside ref
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
         if (openState === true) {
           handleClose(false)
+          listRef.current.ariaExpanded = 'false'
         }
       }
     }
