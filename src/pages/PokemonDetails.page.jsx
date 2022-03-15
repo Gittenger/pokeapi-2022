@@ -18,9 +18,11 @@ const PokemonDetails = () => {
   const {
     currentPokemonData,
     encountersData,
+    encountersDataProcessed,
     abilitiesObject,
     dataProcessed,
     movesObject,
+    movesDataProcessed,
     itemsObject,
     versionsMap,
   } = useAssignedFullData(pokemon)
@@ -92,9 +94,24 @@ const PokemonDetails = () => {
           itemsObject={itemsObject}
         />
 
-        <Encounters encountersData={encountersData} versionsMap={versionsMap} />
+        {!encountersData ? (
+          <div className="w-full flex justify-center">
+            <MDSpinner />
+          </div>
+        ) : (
+          <Encounters
+            encountersData={encountersData}
+            versionsMap={versionsMap}
+          />
+        )}
 
+        {!movesDataProcessed ? (
+          <div className="w-full flex justify-center">
+            <MDSpinner />
+          </div>
+        ) : (
         <Moves moves={moves} movesObject={movesObject} />
+        )}
       </div>
     </main>
   )

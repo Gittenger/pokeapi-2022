@@ -105,6 +105,7 @@ export const useDetailsData = (urls, dataCategory) => {
 export const useArrayData = (url, dataCategory) => {
   // const { urlLimit } = useContext(MainContext)
   const [reducerState, dispatch] = useReducer(reducer, reducerInit.array)
+  const [dataProcessed, setDataProcessed] = useState(false)
 
   const { localKey, category, options, transformationKeys } = dataCategory
 
@@ -171,6 +172,7 @@ export const useArrayData = (url, dataCategory) => {
       console.log(`fetching ${category} from local`)
       arrayToSave = localData[url]
     }
+    setDataProcessed(true)
     // dispatch transformed/local array to component state
     dispatch({ type: SET_ARRAY, payload: arrayToSave })
   }
@@ -179,7 +181,7 @@ export const useArrayData = (url, dataCategory) => {
     fetchData(url, localData)
   }, [url])
 
-  return [reducerState]
+  return [reducerState, dataProcessed]
 }
 
 export const usePokemonData = () => {
@@ -217,9 +219,12 @@ export const useAssignedFullData = (pokemon) => {
     abilitiesMap,
     dataCategories.abilities
   )
-  const [movesObject] = useDetailsData(movesMap, dataCategories.moves)
+  const [movesObject, movesDataProcessed] = useDetailsData(
+    movesMap,
+    dataCategories.moves
+  )
   const [itemsObject] = useDetailsData(itemsMap, dataCategories.items)
-  const [encountersData] = useArrayData(
+  const [encountersData, encountersDataProcessed] = useArrayData(
     encountersUrl,
     dataCategories.encounters
   )
@@ -291,7 +296,9 @@ export const useAssignedFullData = (pokemon) => {
     dataProcessed,
     itemsObject,
     movesObject,
+    movesDataProcessed,
     abilitiesObject,
     encountersData,
+    encountersDataProcessed,
   }
 }
