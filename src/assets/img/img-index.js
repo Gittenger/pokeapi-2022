@@ -121,6 +121,7 @@ import thickClub from './items/thick-club.png'
 import tinyMushroom from './items/tiny-mushroom.png'
 import toxicOrb from './items/toxic-orb.png'
 import twistedSpoon from './items/twisted-spoon.png'
+import SearchIcon from './icons/search.svg?react'
 
 export const images = {
   img: {
@@ -230,6 +231,7 @@ export const images = {
     },
   },
   icons: {
+    SearchIcon,
     BugIcon,
     DarkIcon,
     DragonIcon,
