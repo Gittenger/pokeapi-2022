@@ -62,7 +62,9 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => (
         </ul>
       </>
     ) : (
-      <p>This Pokémon is not encountered in the wild.</p>
+      <p className="max-w-[85%]">
+        This Pokémon is not encountered in the wild.
+      </p>
     )}
   </div>
 ))
