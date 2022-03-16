@@ -17,6 +17,7 @@
     "react-md-spinner": "^1.0.0",
     "react-router-dom": "^6.2.1",
     "regenerator-runtime": "^0.13.9",
+    "sal.js": "^0.8.5",
     "use-ripple-hook": "^1.0.20"
   },
   "devDependencies": {
