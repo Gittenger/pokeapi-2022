@@ -1,10 +1,26 @@
 .graph {
-  transform: scale(0.8);
+  width: 90%;
+
+  @media screen('xs') {
+    width: 75%;
+  }
+
+  @media screen('sm') {
+    width: 60%;
+  }
+
+  @media screen('md') {
+    width: 45%;
+  }
+
+  @media screen('lg') {
+    width: 90%;
+  }
 
   text {
     font-family: theme('fontFamily.boismen');
     color: theme('colors.sky.100');
-    font-size: 4em;
+    font-size: 2em;
     letter-spacing: 2px;
     text-transform: uppercase;
   }
