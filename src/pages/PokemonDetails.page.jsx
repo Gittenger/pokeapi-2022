@@ -59,7 +59,9 @@ const PokemonDetails = () => {
         </div>
 
         {/* hero grid */}
-        <div className={`${styles.heroGrid} w-full sm:pt-0 pt-10`}>
+        <div
+          className={`${styles.heroGrid} w-full min-h-[690px] sm:pt-0 pt-10`}
+        >
           {/* image */}
           <div className="">
             <div className="w-56">
