@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ImageObject from './ItemImgs.js'
 import styles from './styles/Items.module.css'
+import sal from 'sal.js'
 
 const Items = React.memo(({ className, held_items, itemsObject }) => {
+  useEffect(() => {
+    sal({
+      once: true,
+    })
+  }, [])
+
   return (
-    <div className={`${className} w-[80%] md:w-[50%] mb-28`}>
-      <h2 className="text-heading">Items</h2>
+    <div
+      className={`${className} w-[80%] md:w-[50%] mb-28`}
+      data-sal-duration="500"
+      data-sal="fade"
+    >
+      <h2 className="text-heading" data-sal-duration="500" data-sal="fade">
+        Items
+      </h2>
       {held_items?.length === 0 ? (
-        <p className="mt-3">This Pokémon does not hold any items.</p>
+        <p className="mt-3" data-sal-duration="500" data-sal="fade">
+          This Pokémon does not hold any items.
+        </p>
       ) : (
         <ul className="space-y-5">
           {held_items.map((el, i) => (

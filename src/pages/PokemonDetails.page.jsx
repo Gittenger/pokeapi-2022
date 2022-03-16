@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import MainContext from '../contexts/MainContext.js'
+import sal from 'sal.js'
 
 import CIndex from '../components/components.index.js'
 import { useAssignedFullData } from '../utils/dataHooks.js'
@@ -31,6 +32,10 @@ const PokemonDetails = () => {
     currentPokemonData
 
   useEffect(() => {
+    sal({ once: true })
+  }, [])
+
+  useEffect(() => {
     if (sprites.versions) setPokemonImage(getImage(imageStyle, sprites))
   }, [currentPokemonData, imageStyle])
 
@@ -49,7 +54,7 @@ const PokemonDetails = () => {
     <main className="flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52 w-full">
       <div className="flex flex-col justify-center items-center w-full">
         {/* name */}
-        <div className="mb-5">
+        <div className="mb-5" data-sal-duration="500" data-sal="fade">
           <div className="relative">
             <div className="absolute z-0 w-full h-1 -bottom-1 left-0 bg-teal-500/70 rounded-xl "></div>
             <p className="text-4xl md:text-6xl text-shadow font-pokemon tracking-widest text-blue-200 relative z-50">
@@ -61,6 +66,8 @@ const PokemonDetails = () => {
         {/* hero grid */}
         <div
           className={`${styles.heroGrid} w-full min-h-[690px] sm:pt-0 pt-10`}
+          data-sal-duration="500"
+          data-sal="fade"
         >
           {/* image */}
           <div className="">
