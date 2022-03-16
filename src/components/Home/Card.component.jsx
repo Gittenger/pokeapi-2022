@@ -51,7 +51,7 @@ const Card = ({ types, key, className, name, sprites }) => {
         </div>
         {/* image */}
         <div className="flex justify-center items-center bg-slate-200 bg-opacity-80 rounded-full w-40 h-40">
-          <img className="h-40" src={pokemonImage} alt="" />
+          <img className="h-40 my-fade-in" src={pokemonImage} alt="" />
         </div>
       </div>
     </Link>
