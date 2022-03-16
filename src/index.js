@@ -5,6 +5,7 @@ import App from './App'
 import './index.css'
 import './styles/animista.css'
 import './styles/myAnimations.css'
+import 'sal.js/dist/sal.css'
 import MainProvider from './contexts/MainProvider.jsx'
 
 ReactDOM.render(
