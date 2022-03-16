@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr;
 
-  @media screen(xl) {
+  @media screen(lg) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 

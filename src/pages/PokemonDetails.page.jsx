@@ -52,13 +52,14 @@ const PokemonDetails = () => {
         <div className="mb-5">
           <div className="relative">
             <div className="absolute z-0 w-full h-1 -bottom-1 left-0 bg-teal-500/70 rounded-xl "></div>
-            <p className="text-6xl text-shadow font-pokemon tracking-widest text-blue-200 relative z-50">
+            <p className="text-4xl md:text-6xl text-shadow font-pokemon tracking-widest text-blue-200 relative z-50">
               {name.charAt(0).toUpperCase() + name.slice(1)}
             </p>
           </div>
         </div>
 
-        <div className={`${styles.heroGrid} w-full`}>
+        {/* hero grid */}
+        <div className={`${styles.heroGrid} w-full sm:pt-0 pt-10`}>
           {/* image */}
           <div className="">
             <div className="w-56">
@@ -83,8 +84,9 @@ const PokemonDetails = () => {
           <Graph stats={currentPokemonData?.stats} />
         </div>
 
+        {/* abilities & items */}
         <Abilities
-          className="mt-10 w-[80%] md:w-[50%]"
+          className="mt-0 sm:mt-10 w-[80%] md:w-[50%]"
           abilities={abilities}
           abilitiesObject={abilitiesObject}
         />
@@ -94,6 +96,7 @@ const PokemonDetails = () => {
           itemsObject={itemsObject}
         />
 
+        {/* encounters & moves */}
         {!encountersData ? (
           <div className="w-full flex justify-center">
             <MDSpinner />
@@ -110,7 +113,7 @@ const PokemonDetails = () => {
             <MDSpinner />
           </div>
         ) : (
-        <Moves moves={moves} movesObject={movesObject} />
+          <Moves moves={moves} movesObject={movesObject} />
         )}
       </div>
     </main>
