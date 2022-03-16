@@ -33,6 +33,13 @@
   }
 
   @font-face {
+    font-family: 'Sansation';
+    src: url('./assets/fonts/sansation/Sansation_Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
     font-family: 'Yanone';
     src: url('./assets/fonts/yanone/YanoneKaffeesatz-Regular.ttf')
       format('truetype');
