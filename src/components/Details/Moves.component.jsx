@@ -4,16 +4,18 @@ import styles from './styles/Moves.module.css'
 const Moves = React.memo(({ moves, movesObject }) => (
   <div className="w-full flex flex-col justify-center items-center mt-24">
     <h2 className="text-heading">Moves</h2>
-    <ul className="w-[90%] sm:w-[85%] flex flex-col justify-center items-center space-y-7 xl:max-w-[1000px]">
+    <ul className="w-[90%] sm:w-[80%] md:w-[70%] flex flex-col justify-center items-center space-y-7 xl:max-w-[1000px]">
       {moves.map((el, i) => {
         return (
           <li
-            className={`${styles.grid} grid w-full min-h-[8rem] border-2 border-black rounded-2xl bg-zinc-800 shadow-xl`}
+            className={`${styles.grid} grid w-full min-h-[8rem] border-2 border-black rounded-2xl shadow-xl`}
             key={i}
           >
             {/* name/category */}
-            <div className="pt-8 px-5 border-r border-sky-100 flex flex-col justify-start items-end space-y-2">
-              <p className="text-2xl capitalize italic text-sky-100">
+            <div
+              className={`${styles.nameDiv} pt-6 md:pt-8 px-5 border-r-0 border-b md:border-r md:border-b-0 border-black flex flex-col justify-start items-center md:items-end space-y-2 rounded-t-xl md:rounded-tr-none md:rounded-l-xl`}
+            >
+              <p className="text-2xl capitalize italic font-bold text-sky-100">
                 {el.name.replace(/-/g, ' ')}
               </p>
               {movesObject[el.url]?.damage_class?.name === 'special' ? (
@@ -28,7 +30,7 @@ const Moves = React.memo(({ moves, movesObject }) => (
             </div>
 
             {/* effect */}
-            <p className="pt-8 pb-5 px-10">
+            <p className="pt-5 md:pt-8 pb-5 px-10">
               {movesObject[el.url]?.effect_entries?.short_effect?.replace(
                 '$effect_chance%',
                 `${movesObject[el.url]?.effect_chance}%`
@@ -36,7 +38,7 @@ const Moves = React.memo(({ moves, movesObject }) => (
             </p>
 
             {/* flavor */}
-            <p className="italic text-sm pb-3 px-10">
+            <p className="italic text-sm pb-5 md:pb-3 px-10">
               "
               {movesObject[el.url]?.flavor_text_entries?.text
                 // thanks to Naramsim on github for snippet
