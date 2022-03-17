@@ -10,6 +10,11 @@ module.exports = {
       '2xl': '1640px',
     },
     extend: {
+      colors: {
+        'zinc': {
+          '1000': '#070708',
+        },
+      },
       fontFamily: {
         body: ['Georama'],
         card: ['Yanone'],
