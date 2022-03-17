@@ -47,11 +47,11 @@ const PokemonDetails = () => {
   const { Abilities, Encounters, Graph, Items, Moves, Dropdown } = CIndex
 
   return !dataProcessed ? (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center min-h-[1000px] py-8">
       <MDSpinner />
     </div>
   ) : (
-    <main className="flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52 w-full">
+    <main className="min-h-[1000px] flex flex-col items-center justify-start bg-zinc-900 text-white pt-8 pb-52 w-full">
       <div className="flex flex-col justify-center items-center w-full">
         {/* name */}
         <div className="mb-5" data-sal-duration="500" data-sal="fade">

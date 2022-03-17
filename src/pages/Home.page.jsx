@@ -66,7 +66,7 @@ const Home = ({ title }) => {
   const { Pagination, RenderFromType, Dropdown, Button } = CIndex
 
   return (
-    <div className="flex flex-col justify-center items-center px-5 sm:px-10 py-8 w-full text-white">
+    <div className="min-h-[1000px] flex flex-col justify-start items-center px-5 sm:px-10 py-8 w-full text-white">
       {!dataProcessed ? (
         <MDSpinner />
       ) : (

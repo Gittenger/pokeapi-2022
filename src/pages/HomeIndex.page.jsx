@@ -16,7 +16,11 @@ const HomeIndex = () => {
     })
   }, [])
 
-  return <Outlet />
+  return (
+    <main className="min-h-[1000px] py-8">
+      <Outlet />
+    </main>
+  )
 }
 
 export default HomeIndex
