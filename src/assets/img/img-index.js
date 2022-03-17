@@ -122,6 +122,8 @@ import tinyMushroom from './items/tiny-mushroom.png'
 import toxicOrb from './items/toxic-orb.png'
 import twistedSpoon from './items/twisted-spoon.png'
 import SearchIcon from './icons/search.svg?react'
+import GithubIcon from './img/github.svg?react'
+import WebIcon from './img/sphere.svg?react'
 
 export const images = {
   img: {
@@ -231,6 +233,8 @@ export const images = {
     },
   },
   icons: {
+    GithubIcon,
+    WebIcon,
     SearchIcon,
     BugIcon,
     DarkIcon,
