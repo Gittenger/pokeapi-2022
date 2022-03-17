@@ -1,0 +1,10 @@
+.iconsList {
+  svg {
+    fill: dodgerblue;
+    transition: all 0.3s;
+
+    &:hover {
+      fill: midnightblue;
+    }
+  }
+}
