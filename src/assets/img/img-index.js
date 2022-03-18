@@ -1,5 +1,5 @@
-import PokeLogo from './img/pokeapi.png'
-import GrassBg from './img/grass.png'
+import PokeLogo from './img/pokemon-logo.png'
+import ApiLogo from './img/pokeapi.png'
 
 // icons
 import BugIcon from './icons/bug.png'
@@ -128,6 +128,7 @@ import WebIcon from './img/sphere.svg?react'
 export const images = {
   img: {
     PokeLogo,
+    ApiLogo,
     BugCard,
     DarkCard,
     DragonCard,
