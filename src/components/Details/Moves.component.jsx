@@ -25,7 +25,7 @@ const Moves = React.memo(({ moves, movesObject }) => {
               <div
                 className={`${styles.nameDiv} pt-6 md:pt-8 px-5 border-r-0 border-b md:border-r md:border-b-0 border-black flex flex-col justify-start items-center md:items-end space-y-2 rounded-t-xl md:rounded-tr-none md:rounded-l-xl`}
               >
-                <p className="text-2xl capitalize italic font-bold text-sky-100">
+                <p className="text-2xl capitalize italic font-bold text-sky-100 text-shadow">
                   {el.name.replace(/-/g, ' ')}
                 </p>
                 {movesObject[el.url]?.damage_class?.name === 'special' ? (

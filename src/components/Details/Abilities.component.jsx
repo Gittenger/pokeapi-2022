@@ -21,7 +21,7 @@ const Abilities = React.memo(({ abilities, abilitiesObject, className }) => {
         {abilities.map((el, i) => {
           return (
             <li key={i}>
-              <p className="capitalize font-pokemon text-2xl sm:text-3xl tracking-widest mb-2 text-sky-100">
+              <p className="capitalize font-pokemon text-2xl sm:text-3xl tracking-widest mb-2 text-sky-100 text-shadow">
                 {el.name.replace(/-/g, ' ')}
               </p>
               <p>{abilitiesObject[el.url]?.effect_entries.short_effect}</p>
