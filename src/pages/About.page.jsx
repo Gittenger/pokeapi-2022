@@ -7,7 +7,7 @@ const About = () => {
   } = images
 
   return (
-    <main className="flex flex-col justify-start items-center min-h-[485px] text-white pt-20">
+    <main className="flex flex-col justify-start items-center min-h-[485px] bg-zinc-900 text-white pt-20">
       <h1 className="text-3xl mb-14">About this page...</h1>
       <div className="flex justify-center items-center">
         <img className="w-28 mb-3" src={ApiLogo} alt="" />

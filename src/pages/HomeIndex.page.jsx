@@ -17,7 +17,7 @@ const HomeIndex = () => {
   }, [])
 
   return (
-    <main className="min-h-[1000px] py-8">
+    <main className="min-h-[1000px] py-8 bg-zinc-900">
       <Outlet />
     </main>
   )
