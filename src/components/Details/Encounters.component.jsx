@@ -23,7 +23,6 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => {
         Locations
       </h2>
       {encountersData.length > 0 ? (
-        <>
           <ul
             className={`${styles.grid} mt-4 w-[90%] xs:w-[70%] sm:w-[60%] md:w-[80%] lg:w-[65%] xl:w-[50%]`}
           >
@@ -72,7 +71,6 @@ export const Encounters = React.memo(({ encountersData, versionsMap }) => {
               )
             })}
           </ul>
-        </>
       ) : (
         <p className="max-w-[85%]" data-sal-duration="500" data-sal="fade">
           This Pokémon is not encountered in the wild.
