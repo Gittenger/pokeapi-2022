@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --mode=development --open --hot --host 127.0.0.1",
     "build": "webpack --config webpack.prod.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -D build"
+    "deploy": "gh-pages -d build"
   },
   "keywords": [],
   "author": "",
