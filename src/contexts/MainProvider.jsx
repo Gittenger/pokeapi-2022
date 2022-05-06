@@ -12,7 +12,6 @@ export const MainProvider = ({ children }) => {
   const [redirectedFromSearch, setRedirectedFromSearch] = useState(false)
 
   useEffect(() => {
-    console.log(localStorage.getItem('activePageNumber'))
     setActivePageNumber(JSON.parse(localStorage.getItem('activePageNumber')))
   }, [])
 

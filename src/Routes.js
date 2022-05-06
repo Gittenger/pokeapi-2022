@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import Layout from './components/General/Layout.component.jsx'
@@ -7,6 +7,10 @@ import HomeIndex from './pages/HomeIndex.page.jsx'
 import About from './pages/About.page.jsx'
 import PokemonDetails from './pages/PokemonDetails.page.jsx'
 import ScrollToTop from './utils/ScrollToTop'
+
+useEffect(() => {
+  console.log(process.env.PUBLIC_URL)
+}, [])
 
 const AppRoutes = () => {
   return (
