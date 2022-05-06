@@ -106,7 +106,7 @@ const PokemonDetails = () => {
         />
 
         {/* encounters & moves */}
-        {!encountersData ? (
+        {!encountersDataProcessed ? (
           <div className="w-full flex justify-center">
             <MDSpinner />
           </div>
