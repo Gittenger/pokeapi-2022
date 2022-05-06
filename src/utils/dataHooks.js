@@ -20,6 +20,7 @@ export const useDetailsData = (urls, dataCategory) => {
 
   const { localKey, category, options, transformationKeys } = dataCategory
 
+  console.log(localStorage.getItem(localKey))
   let localData = JSON.parse(localStorage.getItem(localKey))
   let objectToSave = {}
 
@@ -109,6 +110,7 @@ export const useArrayData = (url, dataCategory) => {
 
   const { localKey, category, options, transformationKeys } = dataCategory
 
+  console.log(localStorage.getItem(localKey))
   let localData = JSON.parse(localStorage.getItem(localKey))
   let updatedLocalData = {}
   let arrayToSave = []
