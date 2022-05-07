@@ -4,7 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const DotenvPlugin = require('dotenv-webpack')
 
-const publicPath = 'https://gittenger.github.io/pokeapi-2022/'
+const publicPath =
+  'https://6276c27d9c102d000833e59d--heroic-marigold-a63d06.netlify.app/'
 
 const CSSModuleLoader = {
   loader: 'css-loader',
