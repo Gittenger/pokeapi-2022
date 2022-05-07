@@ -129,7 +129,7 @@ module.exports = {
     }),
     new HtmlWebPackPlugin({
       template: './public/index.html',
-      publicPath,
+      publicPath: '/',
     }),
     new CopyPlugin({
       patterns: [
