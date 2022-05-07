@@ -10,7 +10,7 @@ import ScrollToTop from './utils/ScrollToTop'
 
 const AppRoutes = () => {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <ScrollToTop>
         <Routes>
           <Route path="/" element={<Layout />}>
