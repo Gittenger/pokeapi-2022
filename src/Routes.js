@@ -8,10 +8,6 @@ import About from './pages/About.page.jsx'
 import PokemonDetails from './pages/PokemonDetails.page.jsx'
 import ScrollToTop from './utils/ScrollToTop'
 
-useEffect(() => {
-  console.log(process.env.PUBLIC_URL)
-}, [])
-
 const AppRoutes = () => {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
