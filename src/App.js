@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Routes from './Routes'
 
 function App() {
-	return (
-		<>
-			<Routes />
-		</>
-	)
+  useEffect(() => {
+    console.log(process.env.PUBLIC_URL)
+  }, [])
+  return (
+    <>
+      <Routes />
+    </>
+  )
 }
 
 export default App
