@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode=development --open --hot --host 127.0.0.1",
-    "build": "webpack --config webpack.prod.js",
+    "build": "webpack --config webpack.prod.js && cp _redirects build/_redirects",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
